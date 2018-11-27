@@ -1,15 +1,12 @@
-function Write-Args
-{
+function Write-Args {
     [cmdletBinding()]
     param(
-        [Parameter(Mandatory=$false,ParameterSetName='arg1')]
-        [string] $arg1='Hello',
-
-        [Parameter(Mandatory=$false,ParameterSetName='arg2')]
-        [string] $arg2="Jeffrey",
-
-        [Parameter(Mandatory=$false,ParameterSetName='arg1')]
-        [string] $arg3
+        [Parameter(Mandatory = $false, ParameterSetName = 'arg')]
+        [string] $arg="jeffrey"
     )
-    Write-Output $arg1,$arg2,$arg3
+    
+    if (![string]::IsNullOrEmpty($arg)) {
+        Write-Output "arg :$arg"
+        $arg>".\data\arg.txt"
+    }
 }

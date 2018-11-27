@@ -7,9 +7,9 @@ var Util = {
                 ret = {
                     "platform_cmd": obj.cmd,
                     "args": ["-Command",
-                        "&{import-module ./" + obj.file + ";" + obj.command,
+                        "&{import-module ./" + obj.file + " -force; " + obj.command+" }",
                         "-ExecutionPolicy",
-                        "Unrestricted}"
+                        "Unrestricted"
                     ]
                 }
             }
