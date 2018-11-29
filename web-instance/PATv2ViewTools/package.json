@@ -1,0 +1,37 @@
+{
+  "name": "patv2viewtools",
+  "version": "1.0.0",
+  "description": "a simple ,powerful,and extendable templating engine for browers to display info",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "template",
+    "html",
+    "express",
+    "block",
+    "jinja"
+  ],
+  "author": "jeffrey zhao",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.12.3",
+    "swig": "^1.4.2",
+    "minimist": "^1.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-less": "^4.0.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-uglify": "^3.0.1",
+    "open": "0.0.5"
+  }
+}
