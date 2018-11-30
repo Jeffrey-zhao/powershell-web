@@ -1,9 +1,9 @@
 var express = require('express'),
-    router = express.Router()
+    router = express.Router(),
+    base_mw=require('../middlewares/base_middleware')
 
-    router.use(function(req,res,next){
-        console.log('%s %s %s',req.method,req.url,req.path)
-        next()
-    })
-
+    router.use(base_mw.log)
+    
+    router.use('/script',base_mw.cmd)
+    
 module.exports=router

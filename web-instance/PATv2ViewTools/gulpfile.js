@@ -1,22 +1,22 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var open = require('open'),
-    run_env = require('./env').env,
-    server = require('./boot').server;
+    run_env = require('./util').run_env(),
+    server = require('./boot').server
 
 var app = {
+    rootPath:'/',
     srcPath: 'src/',
     devPath: "build/",
     prdPath: "dist/"
 };
 var port = 1337
 
+var lib_path = ['node_modules/swig*/**/*',
+    'bower_components/**/*'
+];
 gulp.task("lib", function () {
-    var paths = ['node_modules/swig*/**/*',
-        'bower_components/**/*'
-    ];
-
-    lib(paths)
+    lib(lib_path)
 })
 
 function lib(paths) {
@@ -28,19 +28,20 @@ function lib(paths) {
     });
 }
 
+var content_path = [app.srcPath + 'controllers*/**/*',
+    app.srcPath + 'routes*/**/*',
+    app.srcPath + 'models*/**/*',
+    app.srcPath + 'middlewares*/**/*',
+    app.srcPath + 'utils*/**/*',
+    app.srcPath + 'tests*/**/*'
+];
 gulp.task("content", function () {
-    var paths = ['controllers*/**/*',
-        'routes*/**/*',
-        'models*/**/*',
-        'tests*/**/*'
-    ];
-
-    mv(paths)
+    mv(content_path)
 })
 
-function mv(paths){
+function mv(paths) {
     paths.forEach(element => {
-        gulp.src(app.srcPath+element)
+        gulp.src(element)
             .pipe(gulp.dest(app.devPath))
             .pipe(gulp.dest(app.prdPath))
             .pipe($.connect.reload())
@@ -90,12 +91,12 @@ gulp.task('clean', function () {
         .pipe($.clean())
 });
 
-gulp.task('build', ['image', 'js', 'less', 'lib', 'view', 'json','content']);
+gulp.task('build', ['image', 'js', 'less', 'lib', 'view', 'json', 'content']);
 
 gulp.task('default', ['server'])
 
 gulp.task('server', ['build'], function () {
-    var env=$.if(run_env==='production','dist','build')  
+    var env = $.if(run_env === 'production', 'dist', 'build')
     console.log(env)
     $.connect.server({
         root: [env],
@@ -109,8 +110,8 @@ gulp.task('server', ['build'], function () {
     gulp.watch(app.srcPath + 'public/images/**/*', ['image']);
     gulp.watch(app.srcPath + 'public/scripts/**/*.js', ['js']);
     gulp.watch(app.srcPath + 'public/styles/**/*', ['less']);
-    gulp.watch('bower_components/**/*', ['lib']);
-    gulp.watch(app.srcPath + '**/*.html', ['html']);
+    gulp.watch(lib_path, ['lib']);
+    gulp.watch(app.srcPath + '**/*.html', ['view']);
     gulp.watch(app.srcPath + 'public/data/**/*.json', ['json']);
+    gulp.watch(content_path, ['content']);
 });
-

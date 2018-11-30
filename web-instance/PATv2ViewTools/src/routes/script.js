@@ -1,51 +1,37 @@
 var express = require('express'),
-    router = express.Router()
-
-router.param(function (param, validator) {
-    return function (req, res, next, value) {
-        if (validator(value)) {
-            if (!req.script) {
-                req.script = {}
-            }
-            console.log(param,validator)
-            req.script[param] = value
-            next()
-        } else {
-            res.sendStatus(500);
-        }
-    }
-})
-
-router.param('file_name', function (candidate) {
-    return true
-})
-
-router.param('fn_name', function (candidate) {
-    return true
-})
+    router = express.Router(),
+    param_mw=require('../middlewares/param_middleware')
 
 router.get('/script/list', function (req, res) {
-    console.log(req.path)
-    next()
+    console.log('list')
+    res.send('list')
+    res.end()
+})
+router.get('/script/:file/:fn/detail', function (req, res) {
+    console.log('detail')
+    res.end()
 })
 
-router.get('/script/:file_name/:fn_name?', function (req, res,next) {
-    console.log(req.path, req.script)
-    next()
+router.get('/script/:file/:fn/commandline', function (req, res) {
+    console.log('commandline')
+    res.end()
 })
 
-router.get('/script/detail', function (req, res,next) {
-    console.log(req.path, req.script)
-    next()
+router.post('/script/:file/:fn/execute', function (req, res) {
+    console.log('execute')
+    res.end()
 })
 
-router.get('/script/command', function (req, res,next) {
-    console.log(req.path, req.script)
-    next()
+router.param(param_mw.param)
+
+router.param('file', param_mw.validator);
+
+router.param('fn', param_mw.validator);
+
+router.get('/script/:file/:fn?', function (req, res) {
+    console.log('/script/:file/:fn?')
+    console.log(req.script)
+    res.end()
 })
 
-router.post('/script/execute', function (req, res,next) {
-    console.log(req.path, req.script)
-    next()
-})
 module.exports = router

@@ -1,22 +1,24 @@
 var express = require('express'),
     router = express.Router()
 
-router.get('/gantt/:view', function (req, res) {
+router.get('/gantt/:view?', function (req, res) {
+    console.log(req.params)
     var view = req.params.view
-    if (!view) {
-        res.render('index')
-    }
     switch (view) {
         case 'job':
             {
-                res.render('job')
+                res.render('gantt/job')
                 break;
             }
         case 'template':
             {
-                res.render('job')
+                res.render('gantt/template')
                 break;
             }
+        default:{
+            res.render('gantt/index')
+            break;
+        }
     }
 })
 

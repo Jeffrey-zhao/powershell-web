@@ -1,6 +1,6 @@
 var express = require('express'),
     path = require('path'),
-run_env = require('./env').env,
+    run_env = require('./util').run_env(),
     env
 
 if (run_env === 'production') {
@@ -10,24 +10,36 @@ if (run_env === 'production') {
 }
 
 var swig = require('./' + env + '/vendor/swig/lib/swig'),
-    http = require('http'),
     app = express(),
     routeBase = require('./' + env + '/routes/base'),
     routeIndex = require('./' + env + '/routes/index'),
     routeGantt = require('./' + env + '/routes/gantt'),
     routeScript = require('./' + env + '/routes/script')
 
-    console.log(env)
+var base_mw=require('./'+env+'/middlewares/base_middleware')
+
+//engine
 app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
 app.set('views', path.join(__dirname, env, 'views'))
 
+//custom variable
+app.set('script_dir',path.join(__dirname,'cmdlets/scripts'))
+
 //route
-app.use(routeBase) 
-app.use(routeIndex) 
-app.use(routeGantt) 
+app.use(routeBase)
+app.use(routeIndex)
+app.use(routeGantt)
 app.use(routeScript)
 
+//staic file
+app.use(express.static(path.join(__dirname, env, 'public')));
+
+//error handler
+app.use(base_mw.log_error)
+app.use(base_mw.client_error_handler)
+app.use(base_mw.error_handler)
+
 app.listen(3000, function () {
-    console.log('ready')
+    console.log('Server is Ready...')
 })
