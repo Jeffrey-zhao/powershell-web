@@ -24,7 +24,8 @@ app.set('view engine', 'html')
 app.set('views', path.join(__dirname, env, 'views'))
 
 //custom variable
-app.set('script_dir',path.join(__dirname,'cmdlets/scripts'))
+app.set('timeout',5000)
+app.set('script_dir',path.join(__dirname,'Cmdlets/scripts'))
 
 //route
 app.use(routeBase)
@@ -40,6 +41,7 @@ app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)
 app.use(base_mw.error_handler)
 
-app.listen(3000, function () {
+var server=app.listen(3000, function () {
+    console.log('env: '+ env)
     console.log('Server is Ready...')
 })

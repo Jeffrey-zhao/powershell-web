@@ -18,7 +18,7 @@ var PSRunner = {
 			})
 
 			child.stderr.on('data', function (data) {
-				reject(data)
+				reject(data.toString())
 			})
 
 			child.on('exit', function () {

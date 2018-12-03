@@ -1,7 +1,8 @@
 var path = require('path'),
-    fs = require('fs')
+    fs_promise = require('fs-promise')
 
 var Util = {
+    // format req object to command object
     getCommand: function (cmdObjct) {
         var ret = null
         try {
@@ -21,26 +22,14 @@ var Util = {
             return ret
         }
     },
-    readDirectory: function (path) {
-        var filePaths=[]
-        readDir(path)
-
-        function readDir(path){
-            fs.readdir(path,function(err,menu){	
-                if(!menu)
-                    return;
-                menu.forEach(function(ele){	
-                    fs.stat(path+"/"+ele,function(err,info){
-                        if(info.isDirectory()){
-                            readDir(path+"/"+ele);
-                        }else{
-                            filePaths.push(ele)
-                        }	
-                    })
-                })			
-            })
-        }
-        return filePaths
+    rreaddir: async function (dir, allFiles = [], directories = []) {
+        var files = (await fs_promise.readdir(dir)).map(f => path.join(dir, f))
+        allFiles.push(...files)
+        console.log(allFiles)
+        await Promise.all(files.map(async f => (
+            (await fs_promise.stat(f)).isDirectory() && this.rreaddir(f, allFiles, directories = [])
+        )))
+        return allFiles
     }
 }
 module.exports = Util

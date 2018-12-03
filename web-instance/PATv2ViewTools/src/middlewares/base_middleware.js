@@ -38,6 +38,11 @@ var middleware = {
             err_msg: err,
             url: req.originUrl
         })
+    },
+    timeout:function(req,res,next){
+        req.setTimeout(5000)
+        res.setTimeout(10000)
+        next()
     }
 }
 

@@ -32,7 +32,7 @@ var content_path = [app.srcPath + 'controllers*/**/*',
     app.srcPath + 'routes*/**/*',
     app.srcPath + 'models*/**/*',
     app.srcPath + 'middlewares*/**/*',
-    app.srcPath + 'utils*/**/*',
+    app.srcPath + 'public*/utils*/**/*',
     app.srcPath + 'tests*/**/*'
 ];
 gulp.task("content", function () {

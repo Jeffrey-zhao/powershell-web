@@ -1,28 +1,31 @@
 var util = require('./util')
 var psExecutor = {
-	send: function (cmdObejct, callback) {
-		var result = ''
+	send: function (cmdObject, results = []) {
 		var child_process = require('child_process')
 		var spawn = child_process.spawn,
 			child
-		var command = util.getCommand(cmdObejct)
-		if (!cmdObject) {
-			console.log('some errors happends...')
-			return null
+		var command = util.getCommand(cmdObject)
+		if (!command) {
+			reject('request param cmdObject enconters errors...')
 		}
 		child = spawn(command.platform_cmd, command.args)
-		child.stdout.on('data', function (data) {
-			result += data.toString()+"\n"
-		})
+		return Promise.all(
 
-		child.stderr.on('data', function (data) {
-			result += data.toString()+"\n"
-		})
+			child.stdout.on('data', function (data) {
+				results += data.toString() + "\n"
+			})
 
-		child.on('exit', function () {
-			callback(result)
+			child.stderr.on('data', function (data) {
+				results += data.toString() + "\n"
+				reject(data.toString())
+			})
+
+			child.on('exit', function () {
+				console.log(results)
+				resolve(results)
+			})
 		})
-	}
+}
 }
 
 module.exports = psExecutor
