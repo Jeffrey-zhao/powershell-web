@@ -2,8 +2,8 @@ var express = require('express'),
     router = express.Router()
 
 router.get('/gantt/:view?', function (req, res) {
-    console.log(req.params)
-    var view = req.params.view
+    var view = req.params.view ||''
+    console.log(view)
     switch (view) {
         case 'job':
             {

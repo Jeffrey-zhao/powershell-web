@@ -1,28 +1,30 @@
-var invoke = require('../public/utils/psInvoker'),
-    util = require('../public/utils/util')
-path = require('path')
+var psExecutor = require('../public/utils/psExecutor'),
+    util = require('../public/utils/util'),
+    path = require('path')
 
 var controller = {
+    // common method: invoke script
     invoker: function (req, res) {
-        var cmdObject = req.params.command
-        invoke(cmdObject, data => {
-            res.send(data)
-        })
-    },
-
-    index: function (req, res) {
+        //var cmdObject = req.params.command
         var cmdObject = {
             cmd: 'powershell.exe',
+            type: 'cmd',
             file: 'build/public/utils/test.ps1',
-            command: "Write-Args -arg 'zhao'"
+            command: "help get-help -detailed"
         }
-        var ret=invoke(cmdObject)
-        console.log(ret)
-        res.send(ret)
-        res.end()
-        //res.render('script/index')
+        psExecutor.send(cmdObject).then(data => {
+            res.send(data)
+        }, (err) => {
+            res.send(err)
+        }).catch(function (err) {
+            res.send(err)
+        })
     },
-
+    // route: index 
+    index: function (req, res) {
+        res.render('script/index')
+    },
+    // route: list
     list: function (req, res) {
         var script_dir = req.body.script_dir
         if (script_dir) {
@@ -34,16 +36,31 @@ var controller = {
                         file_path: file
                     })
                 })
-                res.send({
+                res.render('script/list',{                   
                     list: ret_files
                 })
-                res.end()
             }, () => {
                 throw new Error('reading directory encounter error...')
             }).catch((err) => {
                 console.error(err)
             })
         }
+    },
+    // route: commandLine
+    commandline: function (req, res) {
+        controller.invoker(req, res)
+    },
+    // route: file detail
+    file_detail: function (req, res) {
+        controller.invoker(req, res)
+    },
+    // route: function detail
+    fn_detail: function (req, res) {
+        controller.invoker(req, res)
+    },
+    // route: execute
+    execute: function (req, res) {
+        controller.invoker(req, res)
     }
 }
 module.exports = controller

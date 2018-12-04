@@ -7,13 +7,25 @@ var Util = {
         var ret = null
         try {
             if (cmdObjct) {
-                ret = {
-                    "platform_cmd": cmdObjct.cmd,
-                    "args": ["-Command",
-                        "&{import-module ./" + cmdObjct.file + " -force; " + cmdObjct.command + " }",
-                        "-ExecutionPolicy",
-                        "Unrestricted"
-                    ]
+                switch (cmdObjct.type) {
+                    case 'file':
+                        ret = {
+                            "platform_cmd": cmdObjct.cmd,
+                            "args": ["-Command",
+                                "&{import-module ./" + cmdObjct.file + " -force; " + cmdObjct.command + " }",
+                                "-ExecutionPolicy",
+                                "Unrestricted"
+                            ]
+                        }
+                    case 'cmd':
+                        ret = {
+                            "platform_cmd": cmdObjct.cmd,
+                            "args": ["-Command",
+                                "&{" + cmdObjct.command + " }",
+                                "-ExecutionPolicy",
+                                "Unrestricted"
+                            ]
+                        }
                 }
             }
         } catch (e) {

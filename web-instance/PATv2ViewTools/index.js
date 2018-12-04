@@ -9,7 +9,7 @@ if (run_env === 'production') {
     env = 'build'
 }
 
-var swig = require('./' + env + '/vendor/swig/lib/swig'),
+var swig = require('./' + env + '/public/vendor/swig/lib/swig'),
     app = express(),
     routeBase = require('./' + env + '/routes/base'),
     routeIndex = require('./' + env + '/routes/index'),
@@ -24,7 +24,6 @@ app.set('view engine', 'html')
 app.set('views', path.join(__dirname, env, 'views'))
 
 //custom variable
-app.set('timeout',5000)
 app.set('script_dir',path.join(__dirname,'Cmdlets/scripts'))
 
 //route
@@ -34,8 +33,8 @@ app.use(routeGantt)
 app.use(routeScript)
 
 //staic file
-app.use(express.static(path.join(__dirname, env, 'public')));
-
+app.use(express.static(path.join(__dirname, env, 'public/')));
+console.log(path.join(__dirname, env, 'public/'))
 //error handler
 app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)

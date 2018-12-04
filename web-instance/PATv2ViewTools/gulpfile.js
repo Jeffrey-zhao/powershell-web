@@ -22,8 +22,8 @@ gulp.task("lib", function () {
 function lib(paths) {
     paths.forEach(element => {
         gulp.src(element)
-            .pipe(gulp.dest(app.devPath + 'vendor'))
-            .pipe(gulp.dest(app.prdPath + 'vendor'))
+            .pipe(gulp.dest(app.devPath + 'public/vendor'))
+            .pipe(gulp.dest(app.prdPath + 'public/vendor'))
             .pipe($.connect.reload())
     });
 }
@@ -73,7 +73,7 @@ gulp.task('less', function () {
 gulp.task('js', function () {
     gulp.src(app.srcPath + 'public/scripts/**/*.js')
         .pipe(gulp.dest(app.devPath + 'public/scripts'))
-        .pipe($.uglify())
+        //.pipe($.uglify())
         .pipe(gulp.dest(app.prdPath + 'public/scripts'))
         .pipe($.connect.reload())
 });

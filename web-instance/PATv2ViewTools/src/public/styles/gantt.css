@@ -1,0 +1,178 @@
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+}
+.navbar.navbar-inverse{
+    margin-bottom: 0px;
+}
+.white {
+    color: #fff;
+}
+
+.tips tr {
+    width: 100%;
+    height: 20px;
+}
+
+.tips tr td:first-child {
+    text-align: right;
+    padding-right: 30px;
+}
+
+.gantt_line_shadow:hover .gantt_line_wrapper div {
+    border: 1px solid red;
+}
+
+.gantt_task_links .gantt_line_wrapper div {
+    border: 1px solid red;
+}
+
+/* for job.html*/
+
+.gantt-new,
+.gantt-new div {
+    font-weight: bold !important;
+    border: 1px solid #B0C4DE !important;
+    color: #fff;
+    background-color: #B0C4DE !important;
+}
+
+.gantt-pending,
+.gantt-pending div {
+    border-color: #A5A5A5;
+    color: #fff;
+    background-color: #A5A5A5 !important;
+}
+
+.gantt-running,
+.gantt-running div {
+    border-color: #5C9AD5;
+    color: #fff;
+    background-color: #5C9AD5 !important;
+}
+
+.gantt-actionrequired,
+.gantt-actionrequired div {
+    border-color: #F0E68C !important;
+    color: #fff;
+    background-color: #F0E68C !important;
+}
+
+.gantt-completed,
+.gantt-completed div {
+    border-color: #6FAD48;
+    color: #fff;
+    background-color: #6FAD48 !important;
+}
+
+.gantt-cancelled,
+.gantt-cancelled div {
+    border-color: #778899 !important;
+    color: #fff;
+    background-color: #778899 !important;
+}
+
+.gantt-paused,
+.gantt-paused div {
+    border-color: #CD853F;
+    color: #fff;
+    background-color: #CD853F !important;
+}
+
+.gantt-waiting,
+.gantt-waiting div {
+    border-color: #FFDAB9;
+    color: #fff;
+    background-color: #FFDAB9 !important;
+}
+
+.gantt-taskfailed,
+.gantt-taskfailed div {
+    border-color: #f36e6e;
+    color: #fff;
+    background-color: #f36e6e !important;
+}
+
+/* for template.html */
+.gantt-hasjobs.tag,
+.gantt-hasjobs {
+    border-color: #3DB9D3;
+    color: rgb(146, 137, 137);
+    background-color: #3DB9D3 !important;
+}
+
+.gantt-nojobs.tag,
+.gantt-nojobs {
+    border-color: #000 !important;
+    color: #fff;
+    background-color: #000 !important;
+}
+
+.gantt-not-in-group.tag,
+.gantt-not-in-group .gantt_task_progress {
+    border-color: #A5A5A5 !important;
+    color: #fff;
+    background-color: #A5A5A5 !important;
+    border-radius:2px !important; 
+}
+
+.gantt-group-int.tag,
+.gantt-group-int .gantt_task_progress {
+    border-color: #6FAD48;
+    color: #fff;
+    background-color: #6FAD48 !important;
+    border-radius:2px !important; 
+}
+
+.gantt-group-prod.tag,
+.gantt-group-prod .gantt_task_progress {
+    border-color: #CD853F;
+    color: #fff;
+    background-color: #CD853F !important;
+    border-radius:2px !important;
+}
+
+.gantt-group-alwaysprod.tag,
+.gantt-group-alwaysprod .gantt_task_progress {
+    border-color: #FFDAB9;
+    color: #fff;
+    background-color: #FFDAB9 !important;
+    border-radius:2px !important;
+}
+
+.gantt-group-dr.tag,
+.gantt-group-dr .gantt_task_progress {
+    border-color: #f36e6e;
+    color: #fff;
+    background-color: #f36e6e !important;
+    border-radius:2px !important; 
+}
+
+.gantt-not-in-group .gantt_task_progress::before{
+    content:'NIG';
+    color:#000;
+}
+.gantt-group-int .gantt_task_progress::before{
+    content:'Int';
+    color:#000;
+}
+
+.gantt-group-prod .gantt_task_progress::before{
+    content:'Prod';
+    color:#000;
+}
+
+.gantt-group-alwaysprod .gantt_task_progress::before{
+    content:'AP';
+    color:#000;
+}
+
+.gantt-group-dr .gantt_task_progress::before{
+    content:'Dr';
+    color:#000;
+}
+
+
+

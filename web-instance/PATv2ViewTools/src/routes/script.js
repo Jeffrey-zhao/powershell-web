@@ -9,20 +9,13 @@ router.use('/script/list',param_mw.req_script_dir)
 router.get('/script', script_ctl.index)
 
 router.get('/script/list', script_ctl.list)
-router.get('/script/:file_name/:fn_name/detail', function (req, res) {
-    console.log('detail')
-    res.end()
-})
+router.get('/script/:file_path/detail',script_ctl.file_detail)
 
-router.get('/script/:file_name/:fn_name/commandline', function (req, res) {
-    console.log('commandline')
-    res.end()
-})
+router.get('/script/:file_path/:fn_name/detail', script_ctl.fn_detail)
 
-router.post('/script/:file_name/:fn_name/execute', function (req, res) {
-    console.log('execute')
-    res.end()
-})
+router.get('/script/:file_path/:fn_name/commandline', script_ctl.commandline)
+
+router.post('/script/:file_path/:fn_name/execute', script_ctl.execute)
 
 router.param(param_mw.param)
 
