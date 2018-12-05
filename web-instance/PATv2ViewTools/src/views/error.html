@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends './layout.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Error</title>
-</head>
-
-<body>
-    <p>
-        <h2>error info: {{ err_msg }}</h2>
-        <h3>origin url: {{ url }</h3>
-    </p>
-</body>
-
-</html>
+{%block reference%}{%endblock%}
+{%block title%} Error {%endblock%}
+{%block section%}
+    <h2>error info: {{ err_msg }}</h2>
+    <h3>origin url: {{ url }</h3>
+{%endblock%}

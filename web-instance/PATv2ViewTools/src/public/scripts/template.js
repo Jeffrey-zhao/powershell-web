@@ -152,6 +152,7 @@
         return "gantt_line_shadow";
     }
     gantt.message({
+        type:'tips-box',
         text: "<p>Group/Status Colors:</p>" +
             "<table class='tips'>" +
             "<thead>" +

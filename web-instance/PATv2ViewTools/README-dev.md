@@ -8,8 +8,9 @@ gulp-imagemin
 gulp-less
 gulp-load-plugins
 gulp-uglify
+gulp-sequence
 open
-# npm i --save-dev gulp gulp-clean gulp-concat gulp-connect gulp-cssmin gulp-imagemin gulp-less gulp-load-plugins gulp-uglify gulp-if open minimist
+# npm i --save-dev gulp gulp-clean gulp-concat gulp-connect gulp-cssmin gulp-imagemin gulp-less gulp-load-plugins gulp-uglify gulp-if open minimist gulp-sequence
 
 #gulpfile.js
 lib
@@ -19,7 +20,7 @@ less
 js
 image
 clean
-serve
+server
 default
 build
 

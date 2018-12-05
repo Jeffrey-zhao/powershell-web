@@ -4,8 +4,8 @@ body {
     margin: 0px;
     height: 100%;
 }
-.navbar.navbar-inverse{
-    margin-bottom: 0px;
+.gantt-tips-box{
+    margin-top:90px;
 }
 .white {
     color: #fff;

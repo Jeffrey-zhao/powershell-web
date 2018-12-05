@@ -1,6 +1,8 @@
 var express = require('express'),
     path = require('path'),
     run_env = require('./util').run_env(),
+    port = 3000,
+    open = require('open'),
     env
 
 if (run_env === 'production') {
@@ -16,7 +18,7 @@ var swig = require('./' + env + '/public/vendor/swig/lib/swig'),
     routeGantt = require('./' + env + '/routes/gantt'),
     routeScript = require('./' + env + '/routes/script')
 
-var base_mw=require('./'+env+'/middlewares/base_middleware')
+var base_mw = require('./' + env + '/middlewares/base_middleware')
 
 //engine
 app.engine('html', swig.renderFile)
@@ -24,7 +26,7 @@ app.set('view engine', 'html')
 app.set('views', path.join(__dirname, env, 'views'))
 
 //custom variable
-app.set('script_dir',path.join(__dirname,'Cmdlets/scripts'))
+app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
 
 //route
 app.use(routeBase)
@@ -40,7 +42,9 @@ app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)
 app.use(base_mw.error_handler)
 
-var server=app.listen(3000, function () {
-    console.log('env: '+ env)
-    console.log('Server is Ready...')
+app.listen(port, function () {
+    console.log("Server is running on port " + port + " of enviroment " + env + "...")
+    console.log('please navigate http://127.0.0.1:' + port + " to view...")
 })
+
+open('http://127.0.0.1:' + port)

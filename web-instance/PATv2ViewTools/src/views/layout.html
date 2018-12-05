@@ -2,59 +2,99 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" cosntent="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="/vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    {% block reference %}{% endblock %}
-    <title>{% block title %}{% endblock%}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/styles/style.css">
+    {%block reference %} {%endblock%}
 </head>
 
-<body class="bg-primary font-weight-light mb-0">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-views"
-                    aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">PATv2 Tools</a>
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Navbar Area -->
+        <div class="videomag-main-menu" id="sticker">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container-fluid">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="videomagNav">
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li class="active"><a href="/">Home</a></li>
+                                    <li><a href="#">Scripts</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/script">Index</a></li>
+                                            <li><a href="/script/list">Files' List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Gantts</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/gantt/job">Job</a></li>
+                                            <li><a href="/gantt/template">Template</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Useful Links</a>
+                                        <ul class="dropdown">
+                                            <li><a href="https://tools.cp.microsoft-int.com/patv2/" target="_blank">Portal-Int</a></li>
+                                            <li><a href="https://tools.cp.microsoft.com/patv2/" target="_blank">Portal-Prod</a></li>
+                                            <li><a href="/docs">Docs</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
             </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-views">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                            Home <span class="sr-only">(Home)</span></a></li>
-                    <li ><a href="/script"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-                        Script <span class="sr-only">(Script)</span></a></li>
-                    <li class="dropdown">
-                        <a href="/gantt" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
-                            Gantt <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/gantt/job" target="_blank">Jobs's Dependencies</a></li>
-                            <li><a href="/gantt/template" target="_blank">Templates' Dependencies</a></li>
-                        </ul>
-                    </li>
-                    <!-- <li><a href="#"> <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> About</a></li> -->
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <!-- ##### Post Details Area Start ##### -->
+    {% block section %}{% endblock %}
+    <!-- ##### Post Details Area End ##### -->
 
-    <!-- Header -->
-
-    <container class="masthead bg-primary text-white text-center">
-        {% block section %}{% endblock %}
-    </container>
-
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery js -->
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/popper.js/dist/umd/popper.min.js"></script>
     <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/scripts/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/scripts/active.js"></script>
 </body>
 
 </html>

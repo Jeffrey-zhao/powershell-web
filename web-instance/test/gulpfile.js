@@ -1,18 +1,21 @@
-var arg = (argList => {
-    var arg = {},
-        a, opt, thisOpt, curOpt;
-    for (a = 0; a < argList.length; a++) {
-        thisOpt = argList[a].trim();
-        opt = thisOpt.replace(/^\-+/, '');
-        if (opt === thisOpt) {
-            // argument value
-            if (curOpt) arg[curOpt] = opt;
-            curOpt = null;
-        } else {
-            // argument name
-            curOpt = opt;
-            arg[curOpt] = true;
-        }
-    }
-    return arg;
-})(process.argv);
+var gulp = require("gulp"), //http://gulpjs.com/
+    util = require("gulp-util"), //https://github.com/gulpjs/gulp-util
+    scss = require("gulp-scss"), //https://www.npmjs.org/package/gulp-sass
+    autoprefixer = require('gulp-autoprefixer'), //https://www.npmjs.org/package/gulp-autoprefixer
+    minifycss = require('gulp-minify-css'), //https://www.npmjs.org/package/gulp-minify-css
+    rename = require('gulp-rename'); //https://www.npmjs.org/package/gulp-rename
+
+var scssFiles = "./scss/**/*"
+gulp.task("scss", function () {
+    gulp.src(scssFiles)
+        .pipe(scss({
+            'bundleExec': true
+        }))
+        .pipe(autoprefixer("last 3 version", "safari 5", "ie 8", "ie 9"))
+        .pipe(gulp.dest("target/css"))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(minifycss())
+        .pipe(gulp.dest('target/css'));
+});
