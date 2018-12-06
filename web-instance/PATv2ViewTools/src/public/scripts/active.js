@@ -12,7 +12,7 @@
 
     // :: 2.0 Nav Active Code
     if ($.fn.classyNav) {
-        $('#videomagNav').classyNav();
+        $('#layoutNav').classyNav();
     }
 
     // :: 3.0 Sticky Active Code

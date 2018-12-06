@@ -4,11 +4,13 @@ body {
     margin: 0px;
     height: 100%;
 }
-.gantt-tips-box{
-    margin-top:90px;
-}
+
 .white {
     color: #fff;
+}
+
+div.gantt_message_area.dhtmlx_message_area{
+    top:90px !important;
 }
 
 .tips tr {
@@ -115,7 +117,7 @@ body {
     border-color: #A5A5A5 !important;
     color: #fff;
     background-color: #A5A5A5 !important;
-    border-radius:2px !important; 
+    border-radius: 2px !important;
 }
 
 .gantt-group-int.tag,
@@ -123,7 +125,7 @@ body {
     border-color: #6FAD48;
     color: #fff;
     background-color: #6FAD48 !important;
-    border-radius:2px !important; 
+    border-radius: 2px !important;
 }
 
 .gantt-group-prod.tag,
@@ -131,7 +133,7 @@ body {
     border-color: #CD853F;
     color: #fff;
     background-color: #CD853F !important;
-    border-radius:2px !important;
+    border-radius: 2px !important;
 }
 
 .gantt-group-alwaysprod.tag,
@@ -139,7 +141,7 @@ body {
     border-color: #FFDAB9;
     color: #fff;
     background-color: #FFDAB9 !important;
-    border-radius:2px !important;
+    border-radius: 2px !important;
 }
 
 .gantt-group-dr.tag,
@@ -147,32 +149,30 @@ body {
     border-color: #f36e6e;
     color: #fff;
     background-color: #f36e6e !important;
-    border-radius:2px !important; 
+    border-radius: 2px !important;
 }
 
-.gantt-not-in-group .gantt_task_progress::before{
-    content:'NIG';
-    color:#000;
-}
-.gantt-group-int .gantt_task_progress::before{
-    content:'Int';
-    color:#000;
+.gantt-not-in-group .gantt_task_progress::before {
+    content: 'NIG';
+    color: #000;
 }
 
-.gantt-group-prod .gantt_task_progress::before{
-    content:'Prod';
-    color:#000;
+.gantt-group-int .gantt_task_progress::before {
+    content: 'Int';
+    color: #000;
 }
 
-.gantt-group-alwaysprod .gantt_task_progress::before{
-    content:'AP';
-    color:#000;
+.gantt-group-prod .gantt_task_progress::before {
+    content: 'Prod';
+    color: #000;
 }
 
-.gantt-group-dr .gantt_task_progress::before{
-    content:'Dr';
-    color:#000;
+.gantt-group-alwaysprod .gantt_task_progress::before {
+    content: 'AP';
+    color: #000;
 }
 
-
-
+.gantt-group-dr .gantt_task_progress::before {
+    content: 'Dr';
+    color: #000;
+}

@@ -8,14 +8,12 @@
 {% block title %}Jobs' Dependencies{% endblock %}
 
 {% block section %}
-<div>
-    <div id="gantt_here" style='width:100%; height:100%;'></div>
-    <script src="/scripts/dhtmlxgantt.js"></script>
-    <script src="/scripts/dhtmlxgantt_tooltip.js"></script>
-    <script src="/scripts/job.js"></script>
-    <script>
-        gantt.init("gantt_here");
-        gantt.load("/data/job.json");
-    </script>
-</div>
+<div id="gantt_here" style='width:100%; height:100%;'></div>
+<script src="/scripts/dhtmlxgantt.js"></script>
+<script src="/scripts/dhtmlxgantt_tooltip.js"></script>
+<script src="/scripts/job.js"></script>
+<script>
+    gantt.init("gantt_here");
+    gantt.load("/data/job.json");
+</script>
 {% endblock %}

@@ -13,7 +13,11 @@ var controller = {
             command: "help get-help -detailed"
         }
         psExecutor.send(cmdObject).then(data => {
-            res.send(data)
+            console.log(req.path, req, originUrl, req.route, req.query)
+            var path = req.path.split('\\')
+            res.render('script/' + path[-1], {
+                ret: data
+            })
         }, (err) => {
             res.send(err)
         }).catch(function (err) {
@@ -22,7 +26,7 @@ var controller = {
     },
     // route: index 
     index: function (req, res) {
-        res.render('script/index')
+        res.render('script/' + req.params.path)
     },
     // route: list
     list: function (req, res) {
@@ -36,7 +40,7 @@ var controller = {
                         file_path: file
                     })
                 })
-                res.render('script/list',{                   
+                res.render('script/list', {
                     list: ret_files
                 })
             }, () => {
@@ -47,7 +51,7 @@ var controller = {
         }
     },
     // route: commandLine
-    commandline: function (req, res) {
+    command: function (req, res) {
         controller.invoker(req, res)
     },
     // route: file detail
@@ -61,6 +65,9 @@ var controller = {
     // route: execute
     execute: function (req, res) {
         controller.invoker(req, res)
+    },
+    param: function (req, res) {
+        res.render('script/' + req.params.param)
     }
 }
 module.exports = controller

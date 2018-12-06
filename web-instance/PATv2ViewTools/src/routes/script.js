@@ -3,6 +3,9 @@ var express = require('express'),
     param_mw = require('../middlewares/param_middleware')
     script_ctl=require('../controllers/script_controller')
 
+
+//for test
+router.get('/script/:param', script_ctl.param)
 //for script list
 router.use('/script/list',param_mw.req_script_dir)
 
@@ -13,7 +16,7 @@ router.get('/script/:file_path/detail',script_ctl.file_detail)
 
 router.get('/script/:file_path/:fn_name/detail', script_ctl.fn_detail)
 
-router.get('/script/:file_path/:fn_name/commandline', script_ctl.commandline)
+router.get('/script/:file_path/:fn_name/command', script_ctl.command)
 
 router.post('/script/:file_path/:fn_name/execute', script_ctl.execute)
 

@@ -16,7 +16,7 @@ var middleware = {
             req.script = {}
         }
         req.script['cmd'] = platform_cmd()
-        console.log('%s', req.script['cmd'])
+        //console.log('%s', req.script['cmd'])
         next()
     },
     log_error: function (err, req, res, next) {
