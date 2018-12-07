@@ -5,28 +5,27 @@ var psExecutor = require('../public/utils/psExecutor'),
 var controller = {
     // common method: invoke script
     invoker: function (req, res) {
+        var path = req.body.path
         //var cmdObject = req.params.command
         var cmdObject = {
             cmd: 'powershell.exe',
             type: 'cmd',
             file: 'build/public/utils/test.ps1',
-            command: "help get-help -detailed"
+            command: "help get-help"
         }
         psExecutor.send(cmdObject).then(data => {
-            console.log(req.path, req, originUrl, req.route, req.query)
-            var path = req.path.split('\\')
-            res.render('script/' + path[-1], {
+            res.render(path, {
                 ret: data
             })
         }, (err) => {
-            res.send(err)
-        }).catch(function (err) {
-            res.send(err)
+            res.sender('error', {
+                err_msg: err.toString()
+            })
         })
     },
     // route: index 
     index: function (req, res) {
-        res.render('script/' + req.params.path)
+        res.render('script/index')
     },
     // route: list
     list: function (req, res) {
@@ -50,24 +49,34 @@ var controller = {
             })
         }
     },
-    // route: commandLine
+    // route: command
     command: function (req, res) {
+        res.body = {
+            path: 'script/index'
+        }
         controller.invoker(req, res)
     },
-    // route: file detail
-    file_detail: function (req, res) {
+    //route: fn detail
+    detail: function (req, res) {
+        res.body = {
+            path: 'script/index'
+        }
         controller.invoker(req, res)
     },
-    // route: function detail
-    fn_detail: function (req, res) {
+    //route: function
+    function: function (req, res) {
+        res.body = {
+            path: 'script/index'
+        }
         controller.invoker(req, res)
     },
-    // route: execute
+    //route: execute
     execute: function (req, res) {
+        res.body = {
+            path: 'script/index'
+        }
         controller.invoker(req, res)
-    },
-    param: function (req, res) {
-        res.render('script/' + req.params.param)
     }
 }
+
 module.exports = controller

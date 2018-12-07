@@ -1,0 +1,25 @@
+{% extends '../layout.html' %}
+
+{% block reference %}
+
+{% endblock %}
+{%block title%} Function {% endblock %}
+{% block section %}
+<section class="command-area section-padding-50-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12 mb-30">
+                    {% include './templates/path.html' with {path_items:['List','Function']} only %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                {% include './templates/table.html' with {detail:'Function'} only %}
+            </div>
+            <div class="col-12 col-lg-4">
+                {% include './templates/detail.html' with {detail:'Detail'} %}
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

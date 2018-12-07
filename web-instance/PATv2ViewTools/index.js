@@ -35,8 +35,7 @@ app.use(routeGantt)
 app.use(routeScript)
 
 //staic file
-app.use(express.static(path.join(__dirname, env, 'public/')));
-console.log(path.join(__dirname, env, 'public/'))
+app.use(express.static(path.join(__dirname, env, 'public')));
 //error handler
 app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)

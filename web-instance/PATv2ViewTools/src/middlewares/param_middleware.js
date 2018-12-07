@@ -13,7 +13,7 @@ var middleware = {
         }
     },
     validator: function (data) {
-        console.log('called with data: ', data);
+        //console.log('called with data: ', data);
         return true
     },
     req_script_dir:function(req,res,next){

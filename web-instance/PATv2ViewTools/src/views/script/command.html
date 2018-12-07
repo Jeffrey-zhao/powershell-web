@@ -4,95 +4,26 @@
 
 {% endblock %}
 {%block title%} Command {% endblock %}
-{% block section%}
+{% block section %}
 <section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-12 mb-30">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#"><a href="#">List</a></a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <a href="#"><a href="#">Function</a></a>
-                    </li>
-                    <li class="breadcrumb-item active">Command</li>
-                </ol>
+                {% include './templates/path.html' with {path_items:['List','Function','Command']} only %}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
-                <div class="command-content mb-50">
-                    <!-- command Content Area -->
-                    <div class="command-content-area">
-                        <h3 class="mb-10">Command Paramters</h3>
-                        <h6 class="command-function mb-30">command-function : Update-Job</h6>
-                        <nav class="nav nav-tabs command-bar mb-50">
-                            <a class="nav-link active" href="#">Command1</a>
-                            <a class="nav-link" href="#">Command2</a>
-                            <a class="nav-link" href="#">Command3</a>
-                            <a class="nav-link disabled" href="#">Command4</a>
-                        </nav>
-                        <!-- Contact Form Area -->
-                        <div class="command-form-area">
-                            <form action="#" method="post">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for='parameter 1' class="col-6 col-lg-6">Parameter 1:</label>
-                                            <input type="text" class="form-control" id="parameter1" placeholder="Parameter 1">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for='parameter 2' class="col-6 col-lg-6">Parameter 2:</label>
-                                            <input type="text" class="form-control" id="parameter2" placeholder="Parameter 2">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for='parameter 3' class="col-6 col-lg-6">Parameter 3:</label>
-                                            <input type="text" class="form-control" id="parameter1" placeholder="Parameter 3">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for='parameter 4' class="col-6 col-lg-6">Parameter 4:</label>
-                                            <input type="text" class="form-control" id="parameter4" placeholder="Parameter 4">
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn videomag-btn mt-30" type="submit">Send</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                {% include './templates/parameter.html' with {function_name:'Update-Job',detail:'Command'} only %}
             </div>
             <div class="col-12 col-lg-4">
-                <div class="command-content">
-                    <!-- command Content Area -->
-                    <div class="command-content-area mb-50">
-                        <h3 class="mb-50">Command Detail</h3>
-                        <div class="mb-50">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sapien nunc, aliquam et
-                                sollicitudin a, mollis sit amet odio. Cras in varius libero, ac molestie enim. Aenean
-                                semper leo et tellus luctus, ultricies condimentum odio placerat.</p>
-                            <p>Aliquam et semper neque. Donec vitae ultrices justo. Curabitur a semper leo, quis
-                                maximus tellus. Fusce euismod nisi eu sapien dignissim pulvinar.</p>
-                        </div>
-                    </div>
-                </div>
+                {% include './templates/detail.html' with {detail:'Detail'} only %}
             </div>
         </div>
         <div class='command-output section-padding-50-0'>
             <div class="row">
                 <div class="col-12">
-                    <h3 class="mb-50">Command Output</h3>
-                    <div class="form-group">
-                        <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
-                    </div>
+                    {% include './templates/output.html' with {detail:'Execute Output'} only %}
                 </div>
             </div>
         </div>

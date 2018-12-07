@@ -12,7 +12,7 @@
     "html",
     "express",
     "block",
-    "jinja"
+    "swig.js"
   ],
   "author": "jeffrey zhao",
   "license": "ISC",

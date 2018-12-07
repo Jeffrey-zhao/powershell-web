@@ -1,7 +1,17 @@
 {% extends '../layout.html' %}
 
-{% block section %}
-<section class="script-main">
-    
-</section>
+{% block reference %}
+
 {% endblock %}
+{% block title %} Index {% endblock %}
+{% block section %}
+<section class="command-area section-padding-50-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12 mb-30">
+                {% include './templates/detail.html' with {detail:'Index'} only %}
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

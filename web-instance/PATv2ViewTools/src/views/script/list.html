@@ -1,26 +1,23 @@
 {% extends '../layout.html' %}
 
-{% block title %}script-list Page{% endblock %}
+{% block reference %}
 
-{% block section %}
-<div class="container">
-    <ol class="breadcrumb">
-        <li class="active">Home</li>
-    </ol>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#">Home</a>
-        </li>
-        <li class="active">Library</li>
-    </ol>
-    <ol class="breadcrumb" style="margin-bottom: 5px;">
-        <li>
-            <a href="#">Home</a>
-        </li>
-        <li>
-            <a href="#">Library</a>
-        </li>
-        <li class="active">Data</li>
-    </ol>
-</div>
 {% endblock %}
+{%block title%} List {% endblock %}
+{%block table-banner%} List Detail {% endblock %}
+{% block section %}
+<section class="command-area section-padding-50-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12 mb-30">
+                    {% include './templates/path.html' with {path_items:['List']} only %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                {% include './templates/table.html' with {detail:'List'} only %}
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

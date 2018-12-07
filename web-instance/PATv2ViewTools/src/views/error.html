@@ -3,6 +3,14 @@
 {%block reference%}{%endblock%}
 {%block title%} Error {%endblock%}
 {%block section%}
-    <h2>error info: {{ err_msg }}</h2>
-    <h3>origin url: {{ url }</h3>
+<section class="main-content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>error info: {{ err_msg }}</h2>
+                <h3>origin url: {{ url }</h3>
+            </div>
+        </div>
+    </div>
+</section>
 {%endblock%}

@@ -16,11 +16,10 @@ var middleware = {
             req.script = {}
         }
         req.script['cmd'] = platform_cmd()
-        //console.log('%s', req.script['cmd'])
         next()
     },
     log_error: function (err, req, res, next) {
-        console.error(err.stack)
+        //console.error(err.stack)
         next(err)
     },
     client_error_handler: function (err, req, res, next) {
@@ -34,12 +33,12 @@ var middleware = {
     },
     error_handler(err, req, res, next) {
         res.status(500)
-        res.render('error', {
-            err_msg: err,
-            url: req.originUrl
-        })
+            .render('error', {
+                err_msg: err,
+                url: req.originUrl
+            })
     },
-    timeout:function(req,res,next){
+    timeout: function (req, res, next) {
         req.setTimeout(5000)
         res.setTimeout(10000)
         next()

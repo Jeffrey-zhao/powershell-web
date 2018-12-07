@@ -1,0 +1,7 @@
+<ol class="breadcrumb">
+    {% for x in path_items %}
+    <li class='breadcrumb-item {% if loop.last %}active{% endif %}'>
+        {% if loop.last %}{{x}}{% else %}<a href="/script/{{x}}">{{x}}</a>{% endif %}
+    </li>
+    {% endfor%}
+</ol>
