@@ -3,21 +3,21 @@ var express = require('express'),
     param_mw = require('../middlewares/param_middleware')
     script_ctl=require('../controllers/script_controller')
 
-//for script list
-router.use('/script/list',param_mw.req_script_dir)
+//for script 
+router.use('/script/*',param_mw.req_script_dir)
 //script/
 router.get('/script', script_ctl.index)
 router.get('/script/index', script_ctl.index)
 
-router.get('/script/list/:file_path?', script_ctl.list)
+router.get('/script/list', script_ctl.list)
 
-router.get('/script/function/:file_path/:fn_name', script_ctl.function)
+router.get('/script/function', script_ctl.function)
 
-router.get('/script/detail/:file_path/:fn_name', script_ctl.detail)
+router.get('/script/detail', script_ctl.detail)
 
-router.get('/script/command/:file_path/:fn_name', script_ctl.command)
+router.get('/script/command', script_ctl.command)
 
-router.post('/script/execute/:file_path/:fn_name', script_ctl.execute)
+router.post('/script/execute', script_ctl.execute)
 
 router.param(param_mw.param)
 

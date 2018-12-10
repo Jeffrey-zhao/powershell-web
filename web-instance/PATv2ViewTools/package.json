@@ -4,7 +4,7 @@
   "description": "a simple ,powerful,and extendable templating engine for browers to display info",
   "main": "index.js",
   "scripts": {
-    "gulp-build":"gulp default",
+    "gulp-build": "gulp default",
     "start": "node index.js"
   },
   "keywords": [

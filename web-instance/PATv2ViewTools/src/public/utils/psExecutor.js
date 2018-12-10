@@ -1,6 +1,6 @@
 var util = require('./util')
 var psExecutor = {
-	send: function (cmdObject, render_path, results = []) {
+	send: function (cmdObject, results = []) {
 		return new Promise((resolve, reject) => {
 			var child_process = require('child_process')
 			var spawn = child_process.spawn,
@@ -9,6 +9,7 @@ var psExecutor = {
 			if (!command) {
 				reject('request param cmdObject enconters errors...')
 			}
+			console.log(command)
 			child = spawn(command.platform_cmd, command.args)
 			child.stdout.on('data', function (data) {
 				results += data.toString() + "\n"

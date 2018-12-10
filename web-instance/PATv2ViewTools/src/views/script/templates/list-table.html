@@ -1,4 +1,4 @@
-<h3 class="mb-50">{{detail}} <small>--path: {% if dirname =='' %}{% set dirname='root' %}{% endif %}{{dirname}}</small></h3>
+<h3 class="mb-50">{{detail}} <small>--path: {% if dirname =='' %}root{% else %}{{dirname}}{% endif %}</small></h3>
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
@@ -19,8 +19,8 @@
                 <td>{% if item.type == 'Directory' %}
                     <a href='/script/list?dirname={{ item.dirname }}' data-toggle="tooltip" data-placement="top" title="Search Directory">{{item.name}}</a>
                     {% else %}
-                    <a href='/script/function?filepath={{ item.path }}' data-toggle="tooltip" data-placement="top"
-                        title="File Details">{{item.name}}</a>
+                    {% set filepath=dirname+item.relativePath %}
+                    <a href='/script/function?filepath={{ filepath }}' data-toggle="tooltip" data-placement="top" title="File Details">{{item.name}}</a>
                     {% endif %}
                 </td>
                 <td class='d-none'>{{item.path}}</td>

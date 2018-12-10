@@ -1,8 +1,10 @@
 var express = require('express'),
     path = require('path'),
-    run_env = require('./util').run_env(),
+    util = require('./util'),
     port = 3000,
     open = require('open'),
+    run_env=util.run_env(),
+    platform_cmd=util.platform_cmd(),
     env
 
 if (run_env === 'production') {
@@ -27,12 +29,17 @@ app.set('views', path.join(__dirname, env, 'views'))
 
 //custom variable
 app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
+app.set('env',env)
+app.set('cmd',platform_cmd)
 
 //route
 app.use(routeBase)
 app.use(routeIndex)
 app.use(routeGantt)
 app.use(routeScript)
+
+//base middleware
+app.use(base_mw.log)
 
 //staic file
 app.use(express.static(path.join(__dirname, env, 'public')));

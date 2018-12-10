@@ -1,4 +1,3 @@
-var platform_cmd = require('../../util').platform_cmd
 
 var middleware = {
     log: function (req, res, next) {
@@ -11,13 +10,6 @@ var middleware = {
         });
         next()
     },
-    cmd: function (req, res, next) {
-        if (!req.script) {
-            req.script = {}
-        }
-        req.script['cmd'] = platform_cmd()
-        next()
-    },
     log_error: function (err, req, res, next) {
         console.error(err.stack)
         next(err)
@@ -26,7 +18,7 @@ var middleware = {
         if (req.xhr) {
             res.status(400).sender('error',{
                 err_msg: 'something failed!',
-                url: req.originUrl
+                url: req.originalUrl
             })
         } else {
             next(err)

@@ -12,7 +12,7 @@ var Util = {
                         ret = {
                             "platform_cmd": cmdObjct.cmd,
                             "args": ["-Command",
-                                "&{import-module ./" + cmdObjct.file + " -force; " + cmdObjct.command + " }",
+                                "&{import-module " + cmdObjct.file + " -force; " + cmdObjct.command + " }",
                                 "-ExecutionPolicy",
                                 "Unrestricted"
                             ]
