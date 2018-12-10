@@ -19,13 +19,14 @@ var middleware = {
         next()
     },
     log_error: function (err, req, res, next) {
-        //console.error(err.stack)
+        console.error(err.stack)
         next(err)
     },
     client_error_handler: function (err, req, res, next) {
         if (req.xhr) {
-            res.status(500).send({
-                error: 'something failed!'
+            res.status(400).sender('error',{
+                err_msg: 'something failed!',
+                url: req.originUrl
             })
         } else {
             next(err)

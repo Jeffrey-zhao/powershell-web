@@ -34,13 +34,14 @@ var Util = {
             return ret
         }
     },
-    rreaddir: async function (dir, allFiles = [], directories = []) {
+    rreaddir: async function (dir, isRecurise = false, allFiles = []) {
         var files = (await fs_promise.readdir(dir)).map(f => path.join(dir, f))
         allFiles.push(...files)
-        console.log(allFiles)
-        await Promise.all(files.map(async f => (
-            (await fs_promise.stat(f)).isDirectory() && this.rreaddir(f, allFiles, directories = [])
-        )))
+        if (isRecurise) {
+            await Promise.all(files.map(async f => (
+                (await fs_promise.stat(f)).isDirectory() && this.rreaddir(f, isRecurise, allFiles)
+            )))
+        }
         return allFiles
     }
 }

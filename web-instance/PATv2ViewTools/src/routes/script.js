@@ -9,7 +9,7 @@ router.use('/script/list',param_mw.req_script_dir)
 router.get('/script', script_ctl.index)
 router.get('/script/index', script_ctl.index)
 
-router.get('/script/list', script_ctl.list)
+router.get('/script/list/:file_path?', script_ctl.list)
 
 router.get('/script/function/:file_path/:fn_name', script_ctl.function)
 

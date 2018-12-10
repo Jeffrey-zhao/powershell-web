@@ -1183,5 +1183,8 @@ input:focus {
   height: 190px;
 }
 
+.hide {
+  display: none;
+}
 
 /* ====== The End ====== */

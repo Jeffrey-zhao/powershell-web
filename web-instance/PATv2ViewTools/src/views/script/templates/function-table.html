@@ -1,0 +1,25 @@
+<h3 class="mb-50">{{detail}}</h3>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Path</th>
+                <th scope="col">Created DateTime</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <th scope="row">{{loop.index+1}}</th>
+                <td>{{loop.name}}</td>
+                <td>{{loop.path}}</td>
+                <td>{{loop.type}}</td>
+                <td>{{loop.createddatetime}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

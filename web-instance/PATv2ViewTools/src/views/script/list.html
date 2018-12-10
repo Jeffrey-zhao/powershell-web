@@ -5,17 +5,18 @@
 {% endblock %}
 {%block title%} List {% endblock %}
 {%block table-banner%} List Detail {% endblock %}
+
 {% block section %}
 <section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-12 mb-30">
-                    {% include './templates/path.html' with {path_items:['List']} only %}
+                {% include './templates/path.html' with {path_items:['List']} only %}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-12">
-                {% include './templates/table.html' with {detail:'List'} only %}
+                {% include './templates/list-table.html' with {detail:'List',list:list,dirname:dirname} only %}
             </div>
         </div>
     </div>
