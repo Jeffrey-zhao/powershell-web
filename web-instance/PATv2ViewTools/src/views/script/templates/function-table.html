@@ -1,23 +1,21 @@
-<h3 class="mb-50">{{detail}}</h3>
+<h3 class="mb-50">{{detail}} <small>-- File: {{file}}</small></h3>
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Function Name</th>
-                <th scope="col">Is Major Function</th>
-                <th scope="col" class='b-none'>Path</th>
+                <th scope="col" class='d-none'>Path</th>
                 <th scope="col">Last Modified Time</th>
             </tr>
         </thead>
         <tbody>
             {% for item in list %}
             <tr>
-                <th scope="row">{{loop.index+1}}</th>
-                <td>{{loop.name}}</td>
-                <td>{% if loop.first %} True {%else %} False{%endif%}</td>
-                <td class='b-none'>{{loop.path}}</td>
-                <td>{{loop.lastWriteTime}}</td>
+                <th scope="row">{{loop.index}}</th>
+                <td><a href="/script/command?filepath={{file}}&fn={{item.Name}}">{{item.Name}}</a></td>
+                <td class='d-none'>{{item.Path}}</td>
+                <td>{{item.LastWriteTime}}</td>
             </tr>
             {% endfor %}
         </tbody>

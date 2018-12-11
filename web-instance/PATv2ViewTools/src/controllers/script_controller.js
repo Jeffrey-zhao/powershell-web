@@ -20,7 +20,6 @@ var controller = {
         var folder = req.query.dirname || ""
         var root_dirname = req.app.get('script_dir')
         var script_dir = path.join(root_dirname, folder)
-        //console.log(script_dir)
         if (script_dir) {
             util.rreaddir(script_dir, false)
                 .then(pFiles => {
@@ -35,7 +34,7 @@ var controller = {
                                 'path': file,
                                 'dirname': file.replace(root_dirname, ''),
                                 'relativePath': relativePath,
-                                'lastModifiedTime': stats.ctime.toUTCString('yyyy-MM-dd HH-mm-ss')
+                                'lastModifiedTime': stats.ctime.toUTCString('MM/dd/yyyy HH:mm:ss')
                             })
                         } else {
                             ret_files.push({
@@ -44,13 +43,9 @@ var controller = {
                                 'path': file,
                                 'dirname': path.dirname(file).replace(root_dirname, ''),
                                 'relativePath': relativePath,
-                                'lastModifiedTime': stats.ctime.toUTCString('yyyy-MM-dd HH-mm-ss')
+                                'lastModifiedTime': stats.ctime.toUTCString('MM/dd/yyyy HH:mm:ss')
                             })
                         }
-                    })
-                    console.log({
-                        list: ret_files,
-                        dirname: folder
                     })
                     res.render('script/list', {
                         list: ret_files,
@@ -64,7 +59,40 @@ var controller = {
     },
     // route: command
     command: function (req, res) {
-        res.send('command')
+        var filepath = req.query.filepath
+        var fn = req.query.fn
+        console.log(filepath, fn)
+        if (filepath && fn) {
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            console.log(invoker_path)
+            var cmdObject = {
+                cmd: req.app.get('cmd'),
+                type: 'file',
+                file: [function_path, invoker_path, file_path],
+                command: " Invoke-Function -ScriptPath " + file_path + " -FunctionName " + fn
+            }
+
+            psExecutor.send(cmdObject).then(data => {
+                console.log(data)
+                var commands = JSON.parse(data)
+                console.log(commands)
+                res.render('script/command', {
+                    commands: commands,
+                    function_name: fn
+                })
+            }, err => {
+                res.render('error', {
+                    err_msg: err,
+                    url: req.originalUrl
+                })
+            })
+        } else {
+            res.render('error', {
+                err_msg: 'please choose valid file or function ...'
+            })
+        }
     },
     //route: fn detail
     detail: function (req, res) {
@@ -87,23 +115,24 @@ var controller = {
     },
     //route: function
     function: function (req, res) {
-        var file_path = req.query.filepath
-        if (file_path) {
-            file_path = path.join(req.body.script_dir, file_path)
-            console.log(file_path)
-            console.log(req.app.get('cmd'))
-            invoker_path = path.join(__dirname, req.app.get('cmd'), 'public/utils/psInvoker.ps1')
+        var filepath = req.query.filepath
+        if (filepath) {
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
             console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
-                file: invoker_path,
-                command: "Invoke-Script -ScriptPath " + file_path
+                file: [function_path, invoker_path, file_path],
+                command: " Invoke-Script -ScriptPath " + file_path
             }
             psExecutor.send(cmdObject).then(data => {
-                console.log(data)
+                var list = JSON.parse(data)
+
                 res.render('script/function', {
-                    list: data
+                    list: list,
+                    file: filepath
                 })
             }, err => {
                 res.render('error', {
@@ -112,7 +141,9 @@ var controller = {
                 })
             })
         } else {
-            res.render('error', { err_msg: 'please choose valid file path...' })
+            res.render('error', {
+                err_msg: 'please choose valid file path...'
+            })
         }
     },
     //route: execute

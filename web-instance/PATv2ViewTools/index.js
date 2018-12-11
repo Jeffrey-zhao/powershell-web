@@ -29,6 +29,7 @@ app.set('views', path.join(__dirname, env, 'views'))
 
 //custom variable
 app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
+app.set('root', path.join(__dirname))
 app.set('env',env)
 app.set('cmd',platform_cmd)
 

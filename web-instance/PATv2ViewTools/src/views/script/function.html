@@ -9,12 +9,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-12 mb-30">
-                    {% include './templates/path.html' with {path_items:['List','Function']} only %}
+                {% include './templates/path.html' with {path_items:['List','Function']} only %}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
-                {% include './templates/function-table.html' with {detail:'Function',list:list} only %}
+                {% include './templates/function-table.html' with {detail:'Function',list:list,file:file} only %}
             </div>
             <div class="col-12 col-lg-4">
                 {% include './templates/detail.html' with {detail:'Detail'} %}

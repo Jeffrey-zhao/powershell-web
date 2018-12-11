@@ -1,6 +1,6 @@
 filter Find-Function {
     $path = $_.FullName
-    $lastwrite = $_.LastWriteTime
+    $lastwrite = $_.LastWriteTime.ToString('MM/dd/yyyy HH:mm:ss')
     $text = Get-Content -Path $path
     
     if ($text.Length -gt 0) {
@@ -21,13 +21,18 @@ filter Find-Function {
 function Get-CommandParameter {
     param(
         [parameter(Mandatory = $true)]
-        [string] $ScriptPath
+        [string] $ScriptPath,
+        [string] $FunctionName
     )
 
     $scripts = get-childItem $ScriptPath -Recurse -Filter *.ps1 
     $scripts | ForEach-Object { Import-Module $_.FullName -Force }
-    $functions = $scripts | Find-Function
+    $functions = $scripts | Find-Function 
     
+    if(![string]::IsNullOrEmpty($FunctionName)){
+        $functions =$functions |Where-Object {$_.Name -ieq $FunctionName}
+    }
+
     $functionsInfo = $functions |ForEach-Object { Get-Command -Name $_.Name} |
          Select-Object -Property Name, ScriptBlock, Parameters, ParameterSets
     $commonParameter=@('Verbose','Debug','ErrorAction','WarningAction','InformationAction',
@@ -38,14 +43,13 @@ function Get-CommandParameter {
         $parameter=$_.ScriptBlock.Ast.Parameters
         @{Name = $_.Name
             BlockParameters = $paramBlock|Select-Object -Property Name, StaticType, DefaultValue
+            
             Parameters=$parameter| ForEach-Object {@{Name=$_.ParameterSetName
                     StaticType=$_.StaticType
                     DefaultValue=$_.DefaultValue
-                    ParameterSetNames=$_.ParameterSets}}
-            ParameterSetName=$temp.ParameterSets |Select-Object Name,Parameters
+                    ParameterSetNames=$_.ParameterSets}}       
+            ParameterSetName=$temp.ParameterSets |Select-Object @{l='Name';e={$_.Name}},@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
             }
         }
-    return $paramters
+    return $paramters 
 }
-
-

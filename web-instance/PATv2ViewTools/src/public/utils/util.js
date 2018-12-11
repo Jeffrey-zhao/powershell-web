@@ -7,24 +7,35 @@ var Util = {
         var ret = null
         try {
             if (cmdObjct) {
+                console.log(cmdObjct)
                 switch (cmdObjct.type) {
                     case 'file':
-                        ret = {
-                            "platform_cmd": cmdObjct.cmd,
-                            "args": ["-Command",
-                                "&{import-module " + cmdObjct.file + " -force; " + cmdObjct.command + " }",
-                                "-ExecutionPolicy",
-                                "Unrestricted"
-                            ]
+                        {
+                            var importFiles = ''
+                            cmdObjct.file.map(file => {
+                                importFiles += " import-module " + file + " -force;"
+                            })
+                            ret = {
+                                "platform_cmd": cmdObjct.cmd,
+                                "args": ["-Command",
+                                    "&{" + importFiles + cmdObjct.command + " }",
+                                    "-ExecutionPolicy",
+                                    "Unrestricted"
+                                ]
+                            }
+                            break;
                         }
                     case 'cmd':
-                        ret = {
-                            "platform_cmd": cmdObjct.cmd,
-                            "args": ["-Command",
-                                "&{" + cmdObjct.command + " }",
-                                "-ExecutionPolicy",
-                                "Unrestricted"
-                            ]
+                        {
+                            ret = {
+                                "platform_cmd": cmdObjct.cmd,
+                                "args": ["-Command",
+                                    "&{" + cmdObjct.command + " }",
+                                    "-ExecutionPolicy",
+                                    "Unrestricted"
+                                ]
+                            }
+                            break;
                         }
                 }
             }

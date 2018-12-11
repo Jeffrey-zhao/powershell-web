@@ -4,10 +4,9 @@
     <!-- command Content Area -->
     <div class="command-content-area">
         <nav class="nav nav-tabs command-bar mb-50">
-            <a class="nav-link active" href="#">Command1</a>
-            <a class="nav-link" href="#">Command2</a>
-            <a class="nav-link" href="#">Command3</a>
-            <a class="nav-link disabled" href="#">Command4</a>
+                {% for item in commands.Parameters.ParameterSetName %}
+            <a class="nav-link {% if loop.first %}active{% endif%} " href="#">{{item.Name}}</a>
+            {% endfor %}
         </nav>
         <!-- Contact Form Area -->
         <div class="command-form-area">

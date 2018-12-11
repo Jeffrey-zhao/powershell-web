@@ -1,9 +1,12 @@
 function Get-User{
     param(
-        [string] $Name,
-        [int] $Age
+        [parameter(ParameterSetName='String_Parameter')]
+        [string] $Name='jeff',
+        [int] $Age=25,
+        [parameter(ParameterSetName='File_Parameter')]
+        [object] $User
     )
-        Write-Output $Name,$Age.ToString()
+        Write-Output $Name,$Age.ToString(),$User
     
 }
 

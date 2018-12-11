@@ -4,6 +4,4 @@ var express = require('express'),
 
     router.use(base_mw.log)
     
-    router.use('/script',base_mw.cmd)
-    
 module.exports=router

@@ -9,10 +9,9 @@ var psExecutor = {
 			if (!command) {
 				reject('request param cmdObject enconters errors...')
 			}
-			console.log(command)
 			child = spawn(command.platform_cmd, command.args)
 			child.stdout.on('data', function (data) {
-				results += data.toString() + "\n"
+				results += data
 			})
 
 			child.stderr.on('data', function (data) {

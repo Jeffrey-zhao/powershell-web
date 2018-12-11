@@ -1,10 +1,8 @@
 var express = require('express'),
     router = express.Router(),
-    param_mw = require('../middlewares/param_middleware')
-    script_ctl=require('../controllers/script_controller')
+    param_mw = require('../middlewares/param_middleware'),
+    script_ctl = require('../controllers/script_controller')
 
-//for script 
-router.use('/script/*',param_mw.req_script_dir)
 //script/
 router.get('/script', script_ctl.index)
 router.get('/script/index', script_ctl.index)

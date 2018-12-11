@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
-                {% include './templates/parameter.html' with {function_name:'Update-Job',detail:'Command'} only %}
+                {% include './templates/parameter.html' with {function_name:function_name,detail:'Command',commands:commands} only %}
             </div>
             <div class="col-12 col-lg-4">
                 {% include './templates/detail.html' with {detail:'Detail'} only %}
