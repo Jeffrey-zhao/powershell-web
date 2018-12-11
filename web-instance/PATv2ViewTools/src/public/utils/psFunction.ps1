@@ -48,7 +48,7 @@ function Get-CommandParameter {
                     StaticType=$_.StaticType
                     DefaultValue=$_.DefaultValue
                     ParameterSetNames=$_.ParameterSets}}       
-            ParameterSetName=$temp.ParameterSets |Select-Object @{l='Name';e={$_.Name}},@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
+            ParameterSetName=$temp.ParameterSets |Select-Object Name,@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
             }
         }
     return $paramters 

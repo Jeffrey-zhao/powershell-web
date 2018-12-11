@@ -1,7 +1,7 @@
 {% extends '../layout.html' %}
 
-{% block reference %}
-
+{% block script-reference %}
+<script src="/scripts/navbar.js"></script>
 {% endblock %}
 {%block title%} Command {% endblock %}
 {% block section %}
@@ -14,7 +14,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
-                {% include './templates/parameter.html' with {function_name:function_name,detail:'Command',commands:commands} only %}
+                {% include './templates/parameter.html' with
+                {function_name:function_name,detail:'Command',commands:commands} only %}
             </div>
             <div class="col-12 col-lg-4">
                 {% include './templates/detail.html' with {detail:'Detail'} only %}

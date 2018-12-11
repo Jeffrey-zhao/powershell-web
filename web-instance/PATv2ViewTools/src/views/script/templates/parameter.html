@@ -3,44 +3,67 @@
     <h6 class="command-function mb-30">Function : {{function_name}}</h6>
     <!-- command Content Area -->
     <div class="command-content-area">
-        <nav class="nav nav-tabs command-bar mb-50">
-                {% for item in commands.Parameters.ParameterSetName %}
-            <a class="nav-link {% if loop.first %}active{% endif%} " href="#">{{item.Name}}</a>
+        <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
+            {% for item in commands.Parameters.ParameterSetName %}
+            <a class="nav-link {% if loop.last %} active {% endif %}" data-toggle='tab' href="#{{item.Name}}">
+                {{item.Name}} </a>
             {% endfor %}
         </nav>
         <!-- Contact Form Area -->
-        <div class="command-form-area">
-            <form action="#" method="post">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for='parameter 1' class="col-6 col-lg-6">Parameter 1:</label>
-                            <input type="text" class="form-control" id="parameter1" placeholder="Parameter 1">
+        <div class="command-form-area tab-content">
+            {% for commandset in commands.Parameters.ParameterSetName %}
+            {% set parameterset=commandset.ParameterNames.split(' ')%}
+            <div class="tab-pane fade in active" id='String_Parameter'>
+                <form action="#" method="post">
+                    <div class="row">
+                        {% for item in commands.Parameters.BlockParameters %}
+                        {% set parameterName=item.Name.trim('$') %}
+                        {% if parameterset.indexOf(parameterName)!=-1 %}
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for='parameter 1' class="col-6 col-lg-6">{{parameterName}} <small>--type:
+                                        {{item.StaticTye}}</small> </label>
+                                <input type="text" class="form-control" id="parameter1" placeholder="{{parameterName}}"
+                                    value="{{item.DefaultValue}}">
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="col-12">
+                            <button class="btn layout-btn mt-30" type="submit">Send</button>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for='parameter 2' class="col-6 col-lg-6">Parameter 2:</label>
-                            <input type="text" class="form-control" id="parameter2" placeholder="Parameter 2">
+                </form>
+            </div>
+            {% endfor %}
+            <div class="tab-pane fade" id='File_Parameter'>
+                <form action="#" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for='parameter 1' class="col-6 col-lg-6">Parameter 1:</label>
+                                <input type="text" class="form-control" id="parameter1" placeholder="Parameter 1">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for='parameter 2' class="col-6 col-lg-6">Parameter 2:</label>
+                                <input type="text" class="form-control" id="parameter2" placeholder="Parameter 2">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for='parameter 3' class="col-6 col-lg-6">Parameter 3:</label>
+                                <input type="text" class="form-control" id="parameter1" placeholder="Parameter 3">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn layout-btn mt-30" type="submit">Send</button>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for='parameter 3' class="col-6 col-lg-6">Parameter 3:</label>
-                            <input type="text" class="form-control" id="parameter1" placeholder="Parameter 3">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for='parameter 4' class="col-6 col-lg-6">Parameter 4:</label>
-                            <input type="text" class="form-control" id="parameter4" placeholder="Parameter 4">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn videomag-btn mt-30" type="submit">Send</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
