@@ -1,8 +1,8 @@
 <ol class="breadcrumb">
-    {% for x in path_items %}
+    {% for item in path_items %}
     <li class='breadcrumb-item {% if loop.last %}active{% endif %}'>
         <!-- {% if loop.last %}{{x}}{% else %}<a href="/script/{{x}}">{{x}}</a>{% endif %} -->
-        <a href="/script/{{x}}">{{x}}</a>
+        <a href="/script/{{item.url}}">{{item.name}}</a>
     </li>
     {% endfor%}
 </ol>

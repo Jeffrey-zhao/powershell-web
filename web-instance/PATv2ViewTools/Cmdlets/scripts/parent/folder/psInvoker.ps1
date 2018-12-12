@@ -1,3 +1,4 @@
+#get folder's list
 function Invoke-Script {
     param(
         [string] $ScriptPath
@@ -6,7 +7,7 @@ function Invoke-Script {
 
     return $results |ConvertTo-Json
 }
-
+#get script's functions
 function Invoke-Function {
     param(
         [string] $ScriptPath,
@@ -19,11 +20,11 @@ function Invoke-Function {
     return ConvertTo-Json $ret -Depth 3
 }
 
-function Execute-Function {
+function Invoke-FunctionString {
     param(
         [string] $FunctionName,
-        [object[]] $Arguments
+        $ArgumentList
     )
-    Invoke-Expression "$FunctionName $Arguments" 
+    Invoke-Expression "$FunctionName $ArgumentList" 
 }
 

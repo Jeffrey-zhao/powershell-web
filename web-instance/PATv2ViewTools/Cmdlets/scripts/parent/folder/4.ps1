@@ -1,17 +1,17 @@
 function Get-User {
     param(
-        [parameter(mandatory = $true, ParameterSetName = 'File')]
-        [string] $Name,
-        [int] $Age
+        [parameter(ParameterSetName = 'File')]
+        [string] $Args='jeff'
     )
-    Write-Output $Name, $Age.ToString()
+    Write-Output $Args
     
 }
 
 function Get-Test {
     param(
-        [string] $Args
+        [parameter(ParameterSetName = 'File')]
+        [string] $Args='pp'
     )
-    Write-Output Args
+    Write-Output $Args
     
 }

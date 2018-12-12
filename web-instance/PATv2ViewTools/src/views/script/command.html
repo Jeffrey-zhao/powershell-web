@@ -5,26 +5,32 @@
 {% endblock %}
 {%block title%} Command {% endblock %}
 {% block section %}
+{% set paths=[{name:'List',url:'list'},
+{name:'Function',url:'function?filepath='+file_path},
+{name:'Command',url:'command?filepath='+file_path+'&fn='+function_name}]
+%}
 <section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-12 mb-30">
-                {% include './templates/path.html' with {path_items:['List','Function','Command']} only %}
+                {% include './templates/path.html' with {path_items:paths} only %}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
                 {% include './templates/parameter.html' with
-                {function_name:function_name,file_path:file_path,detail:'Command',commands:commands} only %}
+                {function_name:function_name,file_path:file_path,title:'Command',parameters:commands.parameters} only
+                %}
             </div>
             <div class="col-12 col-lg-4">
-                {% include './templates/detail.html' with {detail:'Detail'} only %}
+                {% include './templates/detail.html' with {title:'Detail',content:JSON.stringify(commands.detail)} only
+                %}
             </div>
         </div>
         <div class='command-output section-padding-50-0'>
             <div class="row">
                 <div class="col-12">
-                    {% include './templates/output.html' with {detail:'Execute Output'} only %}
+                    {% include './templates/output.html' with {title:'Execute Output'} only %}
                 </div>
             </div>
         </div>

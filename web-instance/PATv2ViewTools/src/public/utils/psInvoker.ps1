@@ -15,15 +15,15 @@ function Invoke-Function {
     )
     $parameters = Get-CommandParameter -ScriptPath $ScriptPath -FunctionName $FunctionName
     $detail = Get-Help $FunctionName -detailed
-    $ret = [PSCustomObject]@{Parameters = $parameters; Detail = $detail}
+    $ret = [PSCustomObject]@{parameters = $parameters; detail = $detail}
     
-    return ConvertTo-Json $ret -Depth 3
+    return ConvertTo-Json $ret -Depth 5
 }
 
 function Execute-Function {
     param(
         [string] $FunctionName,
-        [object[]] $ArgumentList
+        $ArgumentList
     )
     Invoke-Expression "$FunctionName $ArgumentList" 
 }

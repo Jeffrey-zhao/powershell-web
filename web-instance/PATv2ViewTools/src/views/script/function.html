@@ -2,19 +2,22 @@
 
 {%block title%} Function {% endblock %}
 {% block section %}
+{% set paths=[{name:'List',url:'list'},
+{name:'Function',url:'function?filepath='+file_path}]
+%}
 <section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-12 mb-30">
-                {% include './templates/path.html' with {path_items:['List','Function']} only %}
+                {% include './templates/path.html' with {path_items:paths} only %}
             </div>
         </div>
         <div class="row">
             <div class="col-12 col-lg-8">
-                {% include './templates/function-table.html' with {detail:'Function',list:list,file:file} only %}
+                {% include './templates/function-table.html' with {title:'Function',list:list,file_path:file_path} only %}
             </div>
             <div class="col-12 col-lg-4">
-                {% include './templates/detail.html' with {detail:'Detail'} %}
+                {% include './templates/detail.html' with {title:'Detail',content:'testing function'} %}
             </div>
         </div>
     </div>

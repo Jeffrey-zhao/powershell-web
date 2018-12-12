@@ -1183,4 +1183,9 @@ input:focus {
   height: 190px;
 }
 
+#detail_message,#output_message{
+  overflow:scroll;
+  overflow-x:hidden;
+  resize:none;
+}
 /* ====== The End ====== */

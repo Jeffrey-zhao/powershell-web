@@ -41,19 +41,21 @@ function Get-CommandParameter {
     $paramters = $functionsInfo |ForEach-Object {$temp = $_
         $paramBlock = $_.ScriptBlock.Ast.Body.ParamBlock.Parameters
         $parameter=$_.ScriptBlock.Ast.Parameters
+        $parameterSetNames=@()
+        $parameters=@()
+        $parameterSetNames+=$temp.ParameterSets |Select-Object @{l='Name';e={$_.Name}},@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
+        $parameters+=$parameter| ForEach-Object {@{Name=$_.ParameterSetName
+            StaticType=$_.StaticType
+            DefaultValue=$_.DefaultValue
+            ParameterSetNames=$_.ParameterSets}} 
         @{Name = $_.Name
-            BlockParameters = $paramBlock|Select-Object -Property @{l='Name';e={$_.Name.VariablePath}}, 
-            @{l='StaticType';e={$_.FullName}}, 
-            @{l='DefaultValue';e={$_.DefaultValue}}
-            
-            Parameters=$parameter| ForEach-Object {@{Name=$_.ParameterSetName
-                    StaticType=$_.StaticType
-                    DefaultValue=$_.DefaultValue
-                    ParameterSetNames=$_.ParameterSets}}       
-            ParameterSetName=$temp.ParameterSets |Select-Object @{l='Name';e={$_.Name}},@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
+            BlockParameters = $paramBlock|Select-Object @{l='Name';e={$_.Name}},
+            @{l='StaticType';e={$_.StaticType.FullName}}, 
+            @{l='DefaultValue';e={$_.DefaultValue.ToString()}}  
+            Parameters=$parameters      
+            ParameterSetName=$parameterSetNames
             }
         }
     return $paramters 
 }
-
 

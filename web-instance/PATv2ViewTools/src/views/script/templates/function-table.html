@@ -1,4 +1,4 @@
-<h3 class="mb-50">{{detail}} <small>-- File: {{file}}</small></h3>
+<h3 class="mb-50">{{title}} <small>-- File: {{file_path}}</small></h3>
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">
@@ -13,7 +13,7 @@
             {% for item in list %}
             <tr>
                 <th scope="row">{{loop.index}}</th>
-                <td><a href="/script/command?filepath={{file}}&fn={{item.Name}}">{{item.Name}}</a></td>
+                <td><a href="/script/command?filepath={{file_path}}&fn={{item.Name}}">{{item.Name}}</a></td>
                 <td class='d-none'>{{item.Path}}</td>
                 <td>{{item.LastWriteTime}}</td>
             </tr>

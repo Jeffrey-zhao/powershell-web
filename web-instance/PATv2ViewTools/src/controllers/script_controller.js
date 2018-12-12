@@ -133,7 +133,7 @@ var controller = {
 
                 res.render('script/function', {
                     list: list,
-                    file: filepath
+                    file_path: filepath
                 })
             }, err => {
                 res.render('error', {
@@ -163,8 +163,8 @@ var controller = {
             }
             psExecutor.send(cmdObject).then(data => {
                 res.render('script/execute', {
-                    list: list,
-                    file: filepath,
+                    list: data,
+                    file_path: filepath,
                     content: data
                 })
             }, err => {

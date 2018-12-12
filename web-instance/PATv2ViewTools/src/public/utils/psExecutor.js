@@ -15,8 +15,8 @@ var psExecutor = {
 			})
 
 			child.stderr.on('data', function (data) {
-				results += data.toString() + "\n"
-				reject(data.toString())
+				results += data
+				reject(data)
 			})
 
 			child.on('exit', function () {

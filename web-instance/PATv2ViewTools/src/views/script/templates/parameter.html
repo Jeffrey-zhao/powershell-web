@@ -1,31 +1,39 @@
 <div class="command-content mb-50">
-    <h3 class="mb-10">{{detail}}</h3>
+    <h3 class="mb-10">{{title}}</h3>
     <h6 class="command-function mb-30">Function : {{function_name}}</h6>
     <!-- command Content Area -->
     <div class="command-content-area">
-        {% set setNames=commands.Parameters.ParameterSetName %}
+        {% set setNames=parameters.ParameterSetName %}
         <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
-            {% for item in commands.Parameters.ParameterSetName %}
-            <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
-                {{item.Name}} </a>
+            {% for item in setNames%}
+            {% if item.Name == "__AllParameterSets" %}
+            <a class="nav-link" data-toggle='tab' href="#default"> Default <small>(no parameter set )</small></a>
+            {%else%}
+            <a class="nav-link" data-toggle='tab' href="#{{item.Name}}"> {{item.Name}}</small></a>
+            {% endif %}
+
             {% endfor %}
-            <a class="nav-link d-none active" data-toggle='tab' href="#empty">empty</a>
+            <a class="nav-link active" data-toggle='tab' href="#empty">empty</a>
         </nav>
         <!-- Contact Form Area -->
         <div class="command-form-area tab-content">
-            {% for commandset in commands.Parameters.ParameterSetName %}
-            {% set parameterset=commandset.ParameterNames.value%}
-            <div class="tab-pane fade {% if loop.first %} in active {% endif %}" id='{{commandset.Name}}'>
-                {% for item in commands.Parameters.BlockParameters %}
-                {% set parameterName=item.Name.slice(1) %}
-                {% if parameterset.indexOf(parameterName)!=-1 %}
+            {% for commandset in setNames %}
+            {% set parameterset=commandset.ParameterNames%}
+            <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{% if commandset.Name == "__AllParameterSets" %}default{%else%}{{commandset.Name}}{%endif%}'>
+                {% for arg in parameterset.ParameterNames %}
+                {% set item = parameters.BlockParameters.filter(x=>x.Name==arg.Arg) %}
+                {% if item.length>=1 %}
+
+                {% set parameterName=item.Name %}
                 {% set type=item.StaticType %}
                 {% set defaultValue=item.DefaultValue %}
+                {% set Mandatory= arg.IsMandatory %}
+
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for='{{commandset.Name}}-{{parameterName}}' class="col-6 col-lg-6">{{parameterName}}
-                            <small>-- type:
-                                {{type}}</small> </label>
+                            <small>Type:
+                                {{type}} Mandatory: {{Mandatory}}</small> </label>
                         <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
                             value='{{defaultValue}}'>
                     </div>
@@ -39,6 +47,9 @@
                 </div>
             </div>
             {% endfor %}
+            <div class='tab-pane fade' id='empty'>
+                empty string
+            </div>
         </div>
     </div>
 </div>

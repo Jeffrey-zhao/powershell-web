@@ -1,0 +1,55 @@
+
+NAME
+    Get-Help
+    
+SYNOPSIS
+    Displays information about PowerShell commands and concepts.
+    
+    
+SYNTAX
+    Get-Help [[-Name] <String>] [-Category {Alias | Cmdlet | Provider | General | FAQ | Glossary | HelpFile | ScriptCommand | Function | Filter | ExternalScript | All | DefaultHelp | Workflow | DscResource | Class | Configuration}] [-Component <String[]>] -Detailed [-Functionality <String[]>] [-Path <String>] [-Role <String[]>] [<CommonParameters>]
+    
+    Get-Help [[-Name] <String>] [-Category {Alias | Cmdlet | Provider | General | FAQ | Glossary | HelpFile | ScriptCommand | Function | Filter | ExternalScript | All | DefaultHelp | Workflow | DscResource | Class | Configuration}] [-Component <String[]>] -Examples [-Functionality <String[]>] [-Path <String>] [-Role <String[]>] [<CommonParameters>]
+    
+    Get-Help [[-Name] <String>] [-Category {Alias | Cmdlet | Provider | General | FAQ | Glossary | HelpFile | ScriptCommand | Function | Filter | ExternalScript | All | DefaultHelp | Workflow | DscResource | Class | Configuration}] [-Component <String[]>] [-Full] [-Functionality <String[]>] [-Path <String>] [-Role <String[]>] [<CommonParameters>]
+    
+    Get-Help [[-Name] <String>] [-Category {Alias | Cmdlet | Provider | General | FAQ | Glossary | HelpFile | ScriptCommand | Function | Filter | ExternalScript | All | DefaultHelp | Workflow | DscResource | Class | Configuration}] [-Component <String[]>] [-Functionality <String[]>] -Online [-Path <String>] [-Role <String[]>] [<CommonParameters>]
+    
+    Get-Help [[-Name] <String>] [-Category {Alias | Cmdlet | Provider | General | FAQ | Glossary | HelpFile | ScriptCommand | Function | Filter | ExternalScript | All | DefaultHelp | Workflow | DscResource | Class | Configuration}] [-Component <String[]>] [-Functionality <String[]>] -Parameter <String> [-Path <String>] [-Role <String[]>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    The `Get-Help` cmdlet displays information about PowerShell concepts and commands, including cmdlets, functions, CIM commands, workflows, providers, aliases and scripts.
+    
+    To get help for a PowerShell command, type `Get-Help` followed by the command name, such as: `Get-Help Get-Process`.
+    
+    Conceptual help topics in PowerShell begin with "about_", such as "about_Comparison_Operators". To see all "about_" topics, type `Get-Help about_*`. To see a particular topic, type `Get-Help about_<topic-name>`, such as `Get-Help about_Comparison_Operators`.
+    
+    To get help for a PowerShell provider, type `Get-Help` followed by the provider name. For example, to get help for the Certificate provider, type `Get-Help Certificate`.
+    
+    In addition to `Get-Help`, you can also type `help` or `man`, which displays one screen of text at a time, or `<cmdlet-name> -?`, which is identical to `Get-Help` but works only for commands.
+    
+    `Get-Help` gets the help content that it displays from help files on your computer. Without the help files, `Get-Help` displays only basic information about commands. Some PowerShell modules come with help files. However, starting in Windows PowerShell 3.0, the modules that come with the Windows operating system do not include help files. To download or update the help files for a module in Windows PowerShell 3.0, use the `Update-Help` cmdlet.
+    
+    You can also view the help topics for PowerShell online in the Microsoft Docs. To get the online version of a help topic, use the Online parameter, such as: `Get-Help Get-Process -Online`. To read all of the help topics, see PowerShell Documentation (https://go.microsoft.com/fwlink/?LinkID=107116)in the Microsoft Docs.
+    
+    If you type `Get-Help` followed by the exact name of a help topic, or by a word unique to a help topic, `Get-Help` displays the topic contents. If you enter a word or word pattern that appears in several help topic titles, `Get-Help` displays a list of the matching titles. If you enter a word that does not appear in any help topic titles, `Get-Help` displays a list of topics that include that word in their contents.
+    
+    `Get-Help` can get help topics for all supported languages and locales. `Get-Help` first looks for help files in the locale set for Windows, then in the parent locale, such as "pt" for "pt-BR", and then in a fallback locale. Beginning in Windows PowerShell 3.0, if `Get-Help` does not find help in the fallback locale, it looks for help topics in English, "en-US", before it returns an error message or displaying auto-generated help.
+    
+    For information about the symbols that `Get-Help` displays in the command syntax diagram, see about_Command_Syntax (About/about_Command_Syntax.md). For information about parameter attributes, such as Required and Position , see about_Parameters (About/about_Parameters.md). TROUBLESHOOTING NOTE : In Windows PowerShell 3.0 and Windows PowerShell 4.0, Get-Help cannot find About topics in modules unless the module is imported into the current session. This is a known issue. To get About topics in a module, import the module, either by using the Import-Module cmdlet or by running a cmdlet in the module.
+    
+
+RELATED LINKS
+    Online Version: http://go.microsoft.com/fwlink/?LinkId=821483
+    Updatable Help Status Table (http://go.microsoft.com/fwlink/?LinkID=270007) http://go.microsoft.com/fwlink/?LinkID=270007
+    about_Command_Syntax 
+    Get-Command 
+
+REMARKS
+    To see the examples, type: "get-help Get-Help -examples".
+    For more information, type: "get-help Get-Help -detailed".
+    For technical information, type: "get-help Get-Help -full".
+    For online help, type: "get-help Get-Help -online"
+
+
