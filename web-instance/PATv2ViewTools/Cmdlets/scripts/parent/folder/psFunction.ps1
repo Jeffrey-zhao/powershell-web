@@ -54,4 +54,21 @@ function Get-CommandParameter {
     return $paramters 
 }
 
+function ConvertTo-TypeString
+{
+    [output([string])]
+    param(
+        [object] $Type
+    )
+    $retType='string'
+    if($Type-ne $null)
+    {
+        $retType=$Type.ToString()
+        if($retType -eq 'System.Object')
+        {
+            $retType='object'
+        }
+    }
+    return $retType
+}
 

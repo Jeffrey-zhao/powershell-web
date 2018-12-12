@@ -41,15 +41,18 @@ function Get-CommandParameter {
     $paramters = $functionsInfo |ForEach-Object {$temp = $_
         $paramBlock = $_.ScriptBlock.Ast.Body.ParamBlock.Parameters
         $parameter=$_.ScriptBlock.Ast.Parameters
+        $parameterSetNames=@()
+        $parameterSetNames+=$temp.ParameterSets |Select-Object @{l='Name';e={$_.Name}},@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
         @{Name = $_.Name
-            BlockParameters = $paramBlock|Select-Object -Property Name, StaticType, DefaultValue
+            BlockParameters = $paramBlock|Select-Object -Property Name,StaticType, DefaultValue
             
             Parameters=$parameter| ForEach-Object {@{Name=$_.ParameterSetName
                     StaticType=$_.StaticType
                     DefaultValue=$_.DefaultValue
                     ParameterSetNames=$_.ParameterSets}}       
-            ParameterSetName=$temp.ParameterSets |Select-Object Name,@{l='ParameterNames';e={$_.Parameters.Name |Where-Object {$_ -notin $commonParameter}}}
+            ParameterSetName=$parameterSetNames
             }
         }
     return $paramters 
 }
+

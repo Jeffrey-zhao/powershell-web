@@ -19,3 +19,11 @@ function Invoke-Function {
     return ConvertTo-Json $ret -Depth 3
 }
 
+function Execute-Function {
+    param(
+        [string] $FunctionName,
+        [object[]] $Arguments
+    )
+    Invoke-Expression "$FunctionName $Arguments" 
+}
+

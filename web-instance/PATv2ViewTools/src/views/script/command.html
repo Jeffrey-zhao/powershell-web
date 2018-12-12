@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-12 col-lg-8">
                 {% include './templates/parameter.html' with
-                {function_name:function_name,detail:'Command',commands:commands} only %}
+                {function_name:function_name,file_path:file_path,detail:'Command',commands:commands} only %}
             </div>
             <div class="col-12 col-lg-4">
                 {% include './templates/detail.html' with {detail:'Detail'} only %}

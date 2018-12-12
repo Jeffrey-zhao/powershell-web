@@ -80,6 +80,7 @@ var controller = {
                 console.log(commands)
                 res.render('script/command', {
                     commands: commands,
+                    file_path: filepath,
                     function_name: fn
                 })
             }, err => {
@@ -148,22 +149,35 @@ var controller = {
     },
     //route: execute
     execute: function (req, res) {
-        //var cmdObject = req.params.command
-        var cmdObject = {
-            cmd: 'powershell.exe',
-            type: 'cmd',
-            file: 'build/public/utils/test.ps1',
-            command: "help get-help"
+        var fn = req.query.fn
+        var body_form = req.body
+        if (filepath) {
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            var cmdObject = {
+                cmd: req.app.get('cmd'),
+                type: 'file',
+                file: [function_path, invoker_path, file_path],
+                command: " Execute-Function -FunctionName " + fn + "-ArgumentList" + body_form
+            }
+            psExecutor.send(cmdObject).then(data => {
+                res.render('script/execute', {
+                    list: list,
+                    file: filepath,
+                    content: data
+                })
+            }, err => {
+                res.render('error', {
+                    err_msg: err,
+                    url: req.originalUrl
+                })
+            })
+        } else {
+            res.render('error', {
+                err_msg: 'please choose valid file path...'
+            })
         }
-        psExecutor.send(cmdObject).then(data => {
-            res.render('script/command', {
-                ret: data
-            })
-        }, (err) => {
-            res.sender('error', {
-                err_msg: err
-            })
-        })
     }
 }
 
