@@ -4,6 +4,7 @@
     <!-- command Content Area -->
     <div class="command-content-area">
         {% set setNames=commands.Parameters.ParameterSetName %}
+        {% if  setNames.length >=1 || setNames!='__AllParameterSets' %}
         <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
             {% for item in commands.Parameters.ParameterSetName %}
             <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
@@ -40,5 +41,34 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
+            <a class="nav-link active show" data-toggle="tab" href="#default">
+                Default<small>(no Set Name)</small></a>
+        </nav>
+        <!-- Contact Form Area -->
+        <div class="command-form-area tab-content">
+            <div class="tab-pane" id='{{commandset.Name}}'>
+                {% for item in commands.Parameters.BlockParameters %}
+                {% set parameterName=item.Name.slice(1) %}
+                {% set type=item.StaticType %}
+                {% set defaultValue=item.DefaultValue %}
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for='{{commandset.Name}}-{{parameterName}}' class="col-6 col-lg-6">{{parameterName}}
+                            <small>-- type: {{type}}</small> </label>
+                        <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
+                            value='{{defaultValue}}'>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-12">
+                        <button class="btn layout-btn mt-30" type="submit">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
