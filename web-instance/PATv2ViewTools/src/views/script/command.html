@@ -3,12 +3,18 @@
 {% block script-reference %}
 <script src="/scripts/navbar.js"></script>
 {% endblock %}
+
 {%block title%} Command {% endblock %}
 {% block section %}
 {% set paths=[{name:'List',url:'list'},
 {name:'Function',url:'function?filepath='+file_path},
 {name:'Command',url:'command?filepath='+file_path+'&fn='+function_name}]
 %}
+<span class="d-none" id='cmd-parameter'>
+    <span name='function_name'>{{function_name}}</span>
+    <span name='file_path'>{{file_path}}</span>
+</span>
+
 <section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">

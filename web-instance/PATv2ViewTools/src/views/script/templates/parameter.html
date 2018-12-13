@@ -4,36 +4,39 @@
     <!-- command Content Area -->
     <div class="command-content-area">
         {% set setNames=parameters.ParameterSetName %}
+        {% set parameterArgs=parameters.BlockParameter %}
         <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
             {% for item in setNames%}
-            {% if item.Name == "__AllParameterSets" %}
-            <a class="nav-link" data-toggle='tab' href="#default"> Default <small>(no parameter set )</small></a>
-            {%else%}
-            <a class="nav-link" data-toggle='tab' href="#{{item.Name}}"> {{item.Name}}</small></a>
-            {% endif %}
-
+            <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
+                {% if item.Name == "__AllParameterSets" %} Default <small>(no parameter set )</small>
+                {%else%}
+                {{item.Name}}
+                {% endif %}
+            </a>
             {% endfor %}
-            <a class="nav-link active" data-toggle='tab' href="#empty">empty</a>
+            <a class="nav-link active d-none" data-toggle='tab' href="#empty">empty</a>
         </nav>
         <!-- Contact Form Area -->
         <div class="command-form-area tab-content">
             {% for commandset in setNames %}
-            {% set parameterset=commandset.ParameterNames%}
-            <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{% if commandset.Name == "__AllParameterSets" %}default{%else%}{{commandset.Name}}{%endif%}'>
-                {% for arg in parameterset.ParameterNames %}
-                {% set item = parameters.BlockParameters.filter(x=>x.Name==arg.Arg) %}
-                {% if item.length>=1 %}
-
-                {% set parameterName=item.Name %}
-                {% set type=item.StaticType %}
+            {% set parameterset=commandset.ParameterNames %}
+            <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{{commandset.Name}}'>
+                {% for arg in parameterset %}
+                {% set items =parameterArgs|paramFilter("$"+arg.Arg) %}
+                {% if items.length>=1 %}
+                {% set item =items[0] %}
+                {% set parameterName=item.Name.slice(1) %}
+                {% set type=item.StaticType.split('.')[1] %}
                 {% set defaultValue=item.DefaultValue %}
-                {% set Mandatory= arg.IsMandatory %}
-
+                {% if arg.IsMandatory%}
+                {% set IsMandatory="Mandatory" %}
+                {% else %}
+                {% set IsMandatory= "Option" %}
+                {% endif %}
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for='{{commandset.Name}}-{{parameterName}}' class="col-6 col-lg-6">{{parameterName}}
-                            <small>Type:
-                                {{type}} Mandatory: {{Mandatory}}</small> </label>
+                        <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
+                            <small>({{type}})-({{IsMandatory}})</small> </label>
                         <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
                             value='{{defaultValue}}'>
                     </div>
@@ -42,12 +45,12 @@
                 {% endfor %}
                 <div class="row">
                     <div class="col-12">
-                        <button class="btn layout-btn mt-30" type="submit">Send</button>
+                        <button class="btn layout-btn mt-30" type="submit" id="{{commandset.Name}}-$__submit">Send</button>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            <div class='tab-pane fade' id='empty'>
+            <div class='tab-pane fade d-none' id='empty'>
                 empty string
             </div>
         </div>

@@ -22,6 +22,8 @@ function Get-CommandParameter {
     param(
         [parameter(Mandatory = $true)]
         [string] $ScriptPath,
+
+        [parameter(Mandatory = $false)]
         [string] $FunctionName
     )
 
@@ -29,46 +31,65 @@ function Get-CommandParameter {
     $scripts | ForEach-Object { Import-Module $_.FullName -Force }
     $functions = $scripts | Find-Function 
     
-    if(![string]::IsNullOrEmpty($FunctionName)){
-        $functions =$functions |Where-Object {$_.Name -ieq $FunctionName}
+    if (![string]::IsNullOrEmpty($FunctionName)) {
+        $functions = $functions |Where-Object {$_.Name -ieq $FunctionName}
     }
 
-    $functionsInfo = $functions |ForEach-Object { Get-Command -Name $_.Name} |
-         Select-Object -Property Name, ScriptBlock, Parameters, ParameterSets
-    $commonParameter=@('Verbose','Debug','ErrorAction','WarningAction','InformationAction',
-                        'ErrorVariable','WarningVariable','InformationVariable','OutVariable',
-                        'OutBuffer','PipelineVariable')
-    $paramters = $functionsInfo |ForEach-Object {$temp = $_
-        $paramBlock = $_.ScriptBlock.Ast.Body.ParamBlock.Parameters
-        $parameter=$_.ScriptBlock.Ast.Parameters
-        $parameterSetNames=@()
-        $parameters=@()
-        $blockParameters=@()
-        foreach($item in $temp.ParameterSets)
-        {
-            $name=$item.Name
-            $paramsInSetName=$item.Parameters |Where-Object {$_.Name -notin $commonParameter}
-            $argCollection=@()
-            foreach($item_arg in $paramsInSetName)
-            {
-                $argCollection+=@{Arg=$item_arg.Name;IsMandatory=$item_arg.IsMandatory}
-            }
-            $parameterSetNames+=@{Name=$name;ParameterNames=$argCollection}
-        }
-     
-        $parameters+=$parameter| ForEach-Object {@{Name=$_.ParameterSetName
-            StaticType=$_.StaticType
-            DefaultValue=$_.DefaultValue
-            ParameterSetNames=$_.ParameterSets}} 
+    $functionsInfo = $functions |ForEach-Object { Get-Item -Path function:"$($_.Name)"} |
+        Select-Object -Property Name, ScriptBlock, Parameters, ParameterSets
 
-         $blockParameters+=$paramBlock|Select-Object @{l='Name';e={$_.Name.VariablePath.ToString()}},
-            @{l='StaticType';e={$_.StaticType.FullName}}, 
-            @{l='DefaultValue';e={$_.DefaultValue.ToString()}} 
-        @{Name = $_.Name
-            BlockParameters = $blockParameters
-            Parameters=$parameters      
-            ParameterSetName=$parameterSetNames
+    $commonParameter = @('Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',
+        'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable',
+        'OutBuffer', 'PipelineVariable')
+
+    $paramtersInfo = $functionsInfo |ForEach-Object {
+        $temp = $_
+        $paramBlock = $_.ScriptBlock.Ast.Body.ParamBlock.Parameters
+        $parameter = $_.ScriptBlock.Ast.Parameters
+
+        $blockParameters = @()
+        $parameterSetNames = @()
+        $parameters = @()
+
+        foreach ($item in $temp.ParameterSets) {
+            $name = $item.Name
+            $paramsInSetName = $item.Parameters |Where-Object {$_.Name -notin $commonParameter}
+            $argCollection = @()
+            foreach ($item_arg in $paramsInSetName) {
+                $argCollection += @{Arg = $item_arg.Name; IsMandatory = $item_arg.IsMandatory}
+            }
+            $parameterSetNames += @{Name = $name; ParameterNames = $argCollection}
+        }
+
+        foreach ($item in $parameter) {
+            $parameters += @{
+                Name              = $item.ParameterSetName
+                StaticType        = $item.StaticType
+                DefaultValue      = $item.DefaultValue
+                ParameterSetNames = $item.ParameterSets
             }
         }
-    return $paramters 
+        
+        foreach ($item in $paramBlock) {
+            if ($null -ne $item.DefaultValue) {
+                $defaultValue = $item.DefaultValue.ToString()
+            }
+            else {
+                $defaultValue = $null
+            }
+
+            $blockParameters += @{
+                Name         = $item.Name.ToString()
+                StaticType   = $item.StaticType.FullName.ToString()
+                DefaultValue = $defaultValue
+            }
+        }
+        
+        @{Name               = $_.Name
+            BlockParameter   = $blockParameters
+            Parameter        = $parameters      
+            ParameterSetName = $parameterSetNames
+        }
+    }
+    return $paramtersInfo 
 }

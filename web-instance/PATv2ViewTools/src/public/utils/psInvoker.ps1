@@ -1,6 +1,7 @@
 #get folder's list
 function Invoke-Script {
     param(
+        [parameter(Mandatory=$true)]
         [string] $ScriptPath
     )
     $results=Get-ChildItem -Path $ScriptPath |Find-Function
@@ -10,7 +11,10 @@ function Invoke-Script {
 #get script's functions
 function Invoke-Function {
     param(
+        [parameter(Mandatory=$true)]
         [string] $ScriptPath,
+
+        [parameter(Mandatory=$true)]
         [string] $FunctionName
     )
     $parameters = Get-CommandParameter -ScriptPath $ScriptPath -FunctionName $FunctionName
@@ -22,9 +26,13 @@ function Invoke-Function {
 
 function Execute-Function {
     param(
+        [parameter(Mandatory=$true)]
         [string] $FunctionName,
-        $ArgumentList
+
+        [parameter(Mandatory=$true)]
+        [string[]] $ArgumentList
     )
+    
     Invoke-Expression "$FunctionName $ArgumentList" 
 }
 

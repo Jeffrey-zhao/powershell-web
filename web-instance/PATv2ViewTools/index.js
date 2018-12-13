@@ -3,8 +3,8 @@ var express = require('express'),
     util = require('./util'),
     port = 3000,
     open = require('open'),
-    run_env=util.run_env(),
-    platform_cmd=util.platform_cmd(),
+    run_env = util.run_env(),
+    platform_cmd = util.platform_cmd(),
     env
 
 if (run_env === 'production') {
@@ -27,11 +27,19 @@ app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
 app.set('views', path.join(__dirname, env, 'views'))
 
+//custom swig filter
+swig.setFilter('paramFilter', function (input, arg) {
+    console.log(input)
+    var filterItems = input.filter(x => x.Name == arg)
+    console.log(filterItems)
+    return filterItems
+})
+
 //custom variable
 app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
 app.set('root', path.join(__dirname))
-app.set('env',env)
-app.set('cmd',platform_cmd)
+app.set('env', env)
+app.set('cmd', platform_cmd)
 
 //route
 app.use(routeBase)

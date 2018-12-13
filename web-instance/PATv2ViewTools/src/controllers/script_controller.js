@@ -97,22 +97,7 @@ var controller = {
     },
     //route: fn detail
     detail: function (req, res) {
-        //var cmdObject = req.params.command
-        var cmdObject = {
-            cmd: 'powershell.exe',
-            type: 'cmd',
-            file: 'build/public/utils/test.ps1',
-            command: "help get-help"
-        }
-        psExecutor.send(cmdObject).then(data => {
-            res.render('script/function', {
-                ret: data
-            })
-        }, (err) => {
-            res.sender('error', {
-                err_msg: err
-            })
-        })
+        res.send('testing data')
     },
     //route: function
     function: function (req, res) {
@@ -149,22 +134,20 @@ var controller = {
     },
     //route: execute
     execute: function (req, res) {
-        var fn = req.query.fn
         var body_form = req.body
-        if (filepath) {
-            var file_path = path.join(req.app.get('script_dir'), filepath)
+        console.log(body_form)
+        if (body_form) {
+            var file_path = path.join(req.app.get('script_dir'), body_form.base.file_path)
             var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
             var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
                 file: [function_path, invoker_path, file_path],
-                command: " Execute-Function -FunctionName " + fn + "-ArgumentList" + body_form
+                command: " Execute-Function -FunctionName " + fn + "-ArgumentList" + body_form.data
             }
             psExecutor.send(cmdObject).then(data => {
-                res.render('script/execute', {
-                    list: data,
-                    file_path: filepath,
+                res.send({
                     content: data
                 })
             }, err => {

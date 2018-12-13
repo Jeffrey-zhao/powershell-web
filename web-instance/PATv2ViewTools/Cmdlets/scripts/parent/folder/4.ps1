@@ -1,16 +1,20 @@
 function Get-User {
     param(
-        [parameter(ParameterSetName = 'File')]
-        [string] $Args='jeff'
+        [parameter()]
+        [string] $User='jeff',
+
+        [parameter(ParameterSetName = 'Test')]
+        [string] $PP
     )
-    Write-Output $Args
-    
+    Write-Output "$User,$PP"
 }
 
 function Get-Test {
     param(
-        [parameter(ParameterSetName = 'File')]
-        [string] $Args='pp'
+        [parameter(Mandatory=$true)]
+        [string] $Args='pp',
+        [parameter()]
+        [string] $Test
     )
     Write-Output $Args
     
