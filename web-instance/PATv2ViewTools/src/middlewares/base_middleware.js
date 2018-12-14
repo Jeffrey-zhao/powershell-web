@@ -28,7 +28,7 @@ var middleware = {
         res.status(500)
             .render('error', {
                 err_msg: err,
-                url: req.originUrl
+                url: req.originalUrl
             })
     },
     timeout: function (req, res, next) {

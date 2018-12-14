@@ -134,33 +134,38 @@ var controller = {
     },
     //route: execute
     execute: function (req, res) {
-        var body_form = req.body
-        console.log(body_form)
-        if (body_form) {
-            var file_path = path.join(req.app.get('script_dir'), body_form.base.file_path)
+        var base = req.body.base
+        if (base && base.length == 2) {
+            var file_path = path.join(req.app.get('script_dir'), base[1].file_path)
             var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
             var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            console.log(" -ArgumentList " + JSON.stringify(req.body.data))
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
                 file: [function_path, invoker_path, file_path],
-                command: " Execute-Function -FunctionName " + fn + "-ArgumentList" + body_form.data
+                command: "Execute-Function -FunctionName " + base[0].function_name + " -ArgumentList " + escape(JSON.stringify(req.body.data))
             }
             psExecutor.send(cmdObject).then(data => {
                 res.send({
-                    content: data
+                    content: data.toString()
                 })
             }, err => {
-                res.render('error', {
-                    err_msg: err,
-                    url: req.originalUrl
+                res.send({
+                    content: 'when handling cmdlets errors happend...\n ' + err.toString(),
                 })
             })
         } else {
-            res.render('error', {
-                err_msg: 'please choose valid file path...'
+            res.send({
+                content: 'please supply valid data...'
             })
         }
+    },
+    test: function (req, res) {
+        console.log('testing')
+        console.log(req.body)
+        console.log(req.body.file)
+        res.send(req.body.param)
     }
 }
 

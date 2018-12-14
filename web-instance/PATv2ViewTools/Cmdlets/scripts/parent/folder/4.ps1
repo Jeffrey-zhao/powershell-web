@@ -1,7 +1,7 @@
 function Get-User {
     param(
         [parameter()]
-        [string] $User='jeff',
+        [string] $User = 'jeff',
 
         [parameter(ParameterSetName = 'Test')]
         [string] $PP
@@ -11,11 +11,10 @@ function Get-User {
 
 function Get-Test {
     param(
-        [parameter(Mandatory=$true)]
-        [string] $Args='pp',
+        [parameter(Mandatory = $true)]
+        [string] $Args,
         [parameter()]
-        [string] $Test
+        [string] $Test = 'test'
     )
-    Write-Output $Args
-    
+    Write-Output $Args  
 }

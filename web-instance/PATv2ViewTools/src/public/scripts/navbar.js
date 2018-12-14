@@ -15,43 +15,43 @@ $(function () {
             data: [],
             base: []
         }
-        for (i = 0; i < inputs.length; i++) {
+        for (var i = 0; i < inputs.length; i++) {
             form_data.data.push({
                 name: inputs[i].name,
-                value: inputs[i].value
+                value: inputs[i].value,
+                type: inputs[i].previousElementSibling.firstElementChild.innerText.replace(/[\(\)]/g, '')
             })
         }
-        for (i = 0; i < cmdParameters.length; i++) {
+        for (var i = 0; i < cmdParameters.length; i++) {
             form_data.base.push({
-                name: cmdParameters[i].getAttribute('name'),
-                value: cmdParameters[i].innerText
+                [cmdParameters[i].getAttribute('name')]: cmdParameters[i].innerText
             })
         }
 
         $.ajax({
-            url: '/script/detail',
-            type: 'GET',
-            datatType: 'json',
-            //data: JSON.parse(form_data),
+            url: '/script/execute/',
+            type: 'POST',
+            data: form_data,
             success: (data) => {
-                $("#output_message").val(data)
-            },
-            error: (error) => {
-                $("#output_message").val(err)
+                $("#output_message").val(data.content)
             }
         })
 
-        $.ajax({
-            url: '/script/execute',
-            type: 'POST',
-            datatType: 'json',
-            data: JSON.parse(form_data),
-            success: (data) => {
-                $("#output_message").val(data)
-            },
-            error: (error) => {
-                $("#output_message").val(err)
-            }
-        })
+        /*
+         $.ajax({
+             url: '/script/execute/',
+             type: 'POST',
+             data: form_data,
+             success: (data) => {
+                 console.log(data)
+                 $("#output_message").val(data)
+             }
+         })
+         */
     })
+
+    $(document).ajaxError((event, xhr, options) => {
+        $('#output_message').val('Error: unknown client request errror!');
+        $('#output_message').val(xhr.responseText);
+    });
 })

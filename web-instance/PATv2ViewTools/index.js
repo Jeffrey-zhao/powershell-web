@@ -1,4 +1,5 @@
 var express = require('express'),
+    bodyParser = require('body-parser'),
     path = require('path'),
     util = require('./util'),
     port = 3000,
@@ -41,6 +42,12 @@ app.set('root', path.join(__dirname))
 app.set('env', env)
 app.set('cmd', platform_cmd)
 
+// hook up with your app
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 //route
 app.use(routeBase)
 app.use(routeIndex)
@@ -52,6 +59,7 @@ app.use(base_mw.log)
 
 //staic file
 app.use(express.static(path.join(__dirname, env, 'public')));
+
 //error handler
 app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)

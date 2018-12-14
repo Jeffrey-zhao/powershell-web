@@ -36,9 +36,10 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
-                            <small>({{type}})-({{IsMandatory}})</small> </label>
+                            <span class='d-none'>{{item.StaticType}}</span>
+                            <small >({{type}})-({{IsMandatory}})</small> </label>
                         <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
-                            value='{{defaultValue}}'>
+                            value='{{defaultValue}}' >
                     </div>
                 </div>
                 {% endif %}

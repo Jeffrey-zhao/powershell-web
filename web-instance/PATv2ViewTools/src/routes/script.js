@@ -16,6 +16,8 @@ router.get('/script/detail', script_ctl.detail)
 router.get('/script/command', script_ctl.command)
 
 router.post('/script/execute', script_ctl.execute)
+//test
+router.post('/script/test', script_ctl.test)
 
 router.param(param_mw.param)
 
