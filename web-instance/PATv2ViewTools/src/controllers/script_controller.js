@@ -61,8 +61,8 @@ var controller = {
         console.log(filepath, fn)
         if (filepath && fn) {
             var file_path = path.join(req.app.get('script_dir'), filepath)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
             console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
@@ -101,8 +101,8 @@ var controller = {
         var filepath = req.query.filepath
         if (filepath) {
             var file_path = path.join(req.app.get('script_dir'), filepath)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
             console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
@@ -134,8 +134,8 @@ var controller = {
         var base = req.body.base
         if (base && base.length == 2) {
             var file_path = path.join(req.app.get('script_dir'), base[1].file_path)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
             var preEnvCmdString = util.GetEnvCommand(req, res)
             console.log(" -ArgumentList " + JSON.stringify(req.body.data))
             var cmdObject = {

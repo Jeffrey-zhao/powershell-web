@@ -4,29 +4,29 @@ var express = require('express'),
     util = require('./util'),
     port = 3000,
     open = require('open'),
-    run_env = util.run_env(),
+    config_args = util.config_args(),
     platform_cmd = util.platform_cmd(),
-    env
+    build_env
 
-if (run_env === 'production') {
-    env = 'dist'
+if (config_args.build_env === 'production') {
+    build_env = 'dist'
 } else {
-    env = 'build'
+    build_env = 'build'
 }
 
-var swig = require('./' + env + '/public/vendor/swig/lib/swig'),
+var swig = require('./' + build_env + '/public/vendor/swig/lib/swig'),
     app = express(),
-    routeBase = require('./' + env + '/routes/base'),
-    routeIndex = require('./' + env + '/routes/index'),
-    routeGantt = require('./' + env + '/routes/gantt'),
-    routeScript = require('./' + env + '/routes/script')
+    routeBase = require('./' + build_env + '/routes/base'),
+    routeIndex = require('./' + build_env + '/routes/index'),
+    routeGantt = require('./' + build_env + '/routes/gantt'),
+    routeScript = require('./' + build_env + '/routes/script')
 
-var base_mw = require('./' + env + '/middlewares/base_middleware')
+var base_mw = require('./' + build_env + '/middlewares/base_middleware')
 
 //engine
 app.engine('html', swig.renderFile)
 app.set('view engine', 'html')
-app.set('views', path.join(__dirname, env, 'views'))
+app.set('views', path.join(__dirname, build_env, 'views'))
 
 //custom swig filter
 swig.setFilter('paramFilter', function (input, arg) {
@@ -39,8 +39,10 @@ swig.setFilter('paramFilter', function (input, arg) {
 //custom variable
 app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
 app.set('root', path.join(__dirname))
-app.set('env', env)
+app.set('build_env', build_env)
+app.set('deploy_env', config_args.env)
 app.set('cmd', platform_cmd)
+
 
 // hook up with your app
 app.use(bodyParser.urlencoded({
@@ -58,16 +60,16 @@ app.use(routeScript)
 app.use(base_mw.log)
 
 //staic file
-app.use(express.static(path.join(__dirname, env, 'public')));
+app.use(express.static(path.join(__dirname, build_env, 'public')));
 
 //error handler
 app.use(base_mw.log_error)
 app.use(base_mw.client_error_handler)
 app.use(base_mw.error_handler)
 
-app.listen(port, function () {
-    console.log("Server is running on port " + port + " of enviroment " + env + "...")
-    console.log('please navigate http://127.0.0.1:' + port + " to view...")
+app.listen(config_args.port, function () {
+    console.log("Server is running on port " + config_args.port + " of enviroment " + build_env + "...")
+    console.log('please navigate http://127.0.0.1:' + config_args.port + " to view...")
 })
 
-open('http://127.0.0.1:' + port)
+open('http://127.0.0.1:' + config_args.port)

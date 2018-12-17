@@ -1,6 +1,5 @@
 var express = require('express'),
     router = express.Router(),
-    param_mw = require('../middlewares/param_middleware'),
     script_ctl = require('../controllers/script_controller')
 
 //script/

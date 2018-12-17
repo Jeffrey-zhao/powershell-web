@@ -5,7 +5,7 @@ function Invoke-Script {
         [string] $ScriptPath
     )
     $results = @(Get-ChildItem -Path $ScriptPath |Find-Function)
-    
+
     return $results |ConvertTo-Json
 }
 

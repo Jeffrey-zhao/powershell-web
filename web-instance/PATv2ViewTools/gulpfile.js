@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')(),
-    run_env = require('./util').run_env()
+    args = require('./util').config_args()
 
 var app = {
-    rootPath:'/',
+    rootPath: '/',
     srcPath: 'src/',
     devPath: "build/",
     prdPath: "dist/"
@@ -30,11 +30,11 @@ function lib(paths) {
 }
 
 var content_path = [app.srcPath + 'controllers*/**/*',
-    app.srcPath + 'routes*/**/*',
-    app.srcPath + 'models*/**/*',
-    app.srcPath + 'middlewares*/**/*',
-    app.srcPath + 'public*/utils*/**/*',
-    app.srcPath + 'tests*/**/*'
+app.srcPath + 'routes*/**/*',
+app.srcPath + 'models*/**/*',
+app.srcPath + 'middlewares*/**/*',
+app.srcPath + 'public*/utils*/**/*',
+app.srcPath + 'tests*/**/*'
 ];
 gulp.task("content", function () {
     return mv(content_path)
@@ -94,10 +94,10 @@ gulp.task('clean', function () {
 
 gulp.task('build', ['image', 'js', 'less', 'lib', 'view', 'json', 'content']);
 
-gulp.task('default', $.sequence('clean','server'))
+gulp.task('default', $.sequence('clean', 'server'))
 
 gulp.task('server', ['build'], function () {
-    var env = $.if(run_env === 'production', 'dist', 'build')
+    var env = $.if(args.build_env === 'production', 'dist', 'build')
     $.connect.server({
         root: [env],
         livereload: true,

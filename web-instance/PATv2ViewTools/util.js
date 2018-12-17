@@ -1,26 +1,38 @@
 var minimist = require('minimist');
 
 var util = {
-    run_env: function () {
+    config_args: function () {
+        var deploy_env = {
+            int: {
+                env: 'int',
+                port: 3333
+            },
+            prod: {
+                env: 'prod',
+                port: 3000
+            }
+        }
         var knownOptions = {
-            string: 'env',
+            string: ['build_env', 'port', 'env', 'host'],
             default: {
-                env: process.env.NODE_ENV || 'production'
+                build_env: process.env.NODE_ENV || 'production',
+                env: deploy_env.int.env,
+                port: deploy_env.int.port
             }
         };
         return minimist(process.argv.slice(2), knownOptions);
     },
     platform_cmd: function () {
         var osvar = process.platform;
-        var cmd='powershell.exe'
+        var cmd = 'powershell.exe'
         if (osvar == 'darwin') {
-            cmd='pwsh'
+            cmd = 'pwsh'
             console.log("you are on a mac os");
         } else if (osvar == 'win32') {
-            cmd='powershell.exe'
+            cmd = 'powershell.exe'
             console.log("you are on a windows os")
         } else {
-            cmd='unknown cmd'
+            cmd = 'unknown cmd'
             console.log("unknown os")
         }
         return cmd

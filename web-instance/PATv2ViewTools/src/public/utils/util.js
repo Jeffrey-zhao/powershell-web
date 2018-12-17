@@ -57,9 +57,9 @@ var Util = {
     },
     GetEnvCommand: function (req, res) {
         var retcmdString = ''
-        var root_dir = path.join(req.app.get('root'),'Cmdlets/')
+        var root_dir = path.join(req.app.get('root'), 'Cmdlets')
         retcmdString += path.join(root_dir, 'Cmdlets/SetupEnvironment.ps1')
-        retcmdString += ' -Environment int -WorkingDir ' + root_dir + ";"
+        retcmdString += ' -Environment ' + req.app.get('deploy_env') + ' -WorkingDir ' + root_dir + ";"
         return retcmdString
         /*
         var hostname = req.hostname || ''
