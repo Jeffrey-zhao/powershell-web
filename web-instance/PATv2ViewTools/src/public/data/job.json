@@ -1,0 +1,144 @@
+{
+  "links": [
+    {
+      "source": "30047",
+      "id": 1,
+      "type": 0,
+      "target": "30048"
+    },
+    {
+      "source": "30051",
+      "id": 2,
+      "type": 0,
+      "target": "30054"
+    },
+    {
+      "source": "30049",
+      "id": 3,
+      "type": 0,
+      "target": "30051"
+    },
+    {
+      "source": "30050",
+      "id": 4,
+      "type": 0,
+      "target": "30051"
+    },
+    {
+      "source": "30053",
+      "id": 5,
+      "type": 0,
+      "target": "30054"
+    },
+    {
+      "source": "30052",
+      "id": 6,
+      "type": 0,
+      "target": "30053"
+    },
+    {
+      "source": "30051",
+      "id": 7,
+      "type": 0,
+      "target": "30055"
+    },
+    {
+      "source": "30053",
+      "id": 8,
+      "type": 0,
+      "target": "30055"
+    }
+  ],
+  "data": [
+    {
+      "id": "30048",
+      "start_date": "2018-10-12 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "",
+      "text": "New Template1_New Server List"
+    },
+    {
+      "id": "30047",
+      "start_date": "2018-10-10 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30048",
+      "text": "G_New Server List"
+    },
+    {
+      "id": "30054",
+      "start_date": "2018-10-12 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "",
+      "text": "A_1"
+    },
+    {
+      "id": "30051",
+      "start_date": "2018-10-12 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30054,30055",
+      "text": "B_New Server List"
+    },
+    {
+      "id": "30049",
+      "start_date": "2018-10-10 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30051",
+      "text": "D_New Server List"
+    },
+    {
+      "id": "30050",
+      "start_date": "2018-10-10 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30051",
+      "text": "E_New Server List"
+    },
+    {
+      "id": "30053",
+      "start_date": "2018-10-12 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30054,30055",
+      "text": "C_New Server List"
+    },
+    {
+      "id": "30052",
+      "start_date": "2018-10-10 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "30053",
+      "text": "F_New Server List"
+    },
+    {
+      "id": "30055",
+      "start_date": "2018-10-14 13:00:00",
+      "open": true,
+      "type": "task",
+      "status": "Pending",
+      "duration": 1,
+      "custom": "",
+      "text": "A_2"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+<h3 class="mb-50">{{title}} <small>-- path: {% if dirname =='' %}root{% else %}{{dirname}}{% endif %}</small></h3>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type</th>
+                <th scope="col">Name</th>
+                <th scope="col" class="d-none">Path</th>
+                <th scope="col">Relative Path</th>
+                <th scope="col">Created DateTime</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in list %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{item.type}}</td>
+                <td>{% if item.type == 'Directory' %}
+                    <a href='/script/list?dirname={{ item.dirname }}' data-toggle="tooltip" data-placement="top" title="Search Directory">{{item.name}}</a>
+                    {% else %}
+                    {% set filepath=dirname+item.relativePath %}
+                    <a href='/script/function?filepath={{ filepath }}' data-toggle="tooltip" data-placement="top" title="File Details">{{item.name}}</a>
+                    {% endif %}
+                </td>
+                <td class='d-none'>{{item.path}}</td>
+                <td>{{item.relativePath}}</td>
+                <td>{{item.lastModifiedTime}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

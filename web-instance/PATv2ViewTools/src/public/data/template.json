@@ -1,0 +1,1347 @@
+{
+  "links": [
+    {
+      "target": 4713,
+      "source": 4710,
+      "id": 1,
+      "type": 0
+    },
+    {
+      "target": 4710,
+      "source": 4688,
+      "id": 2,
+      "type": 0
+    },
+    {
+      "target": 4688,
+      "source": 4711,
+      "id": 3,
+      "type": 0
+    },
+    {
+      "target": 4711,
+      "source": 4687,
+      "id": 4,
+      "type": 0
+    },
+    {
+      "target": 4687,
+      "source": 4684,
+      "id": 5,
+      "type": 0
+    },
+    {
+      "target": 4684,
+      "source": 4683,
+      "id": 6,
+      "type": 0
+    },
+    {
+      "target": 4683,
+      "source": 4680,
+      "id": 7,
+      "type": 0
+    },
+    {
+      "target": 4680,
+      "source": 4681,
+      "id": 8,
+      "type": 0
+    },
+    {
+      "target": 4683,
+      "source": 4720,
+      "id": 9,
+      "type": 0
+    },
+    {
+      "target": 4688,
+      "source": 2168,
+      "id": 10,
+      "type": 0
+    },
+    {
+      "target": 2168,
+      "source": 4687,
+      "id": 11,
+      "type": 0
+    },
+    {
+      "target": 4682,
+      "source": 4680,
+      "id": 12,
+      "type": 0
+    },
+    {
+      "target": 4682,
+      "source": 4720,
+      "id": 13,
+      "type": 0
+    },
+    {
+      "target": 4682,
+      "source": 4738,
+      "id": 14,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4728,
+      "id": 15,
+      "type": 0
+    },
+    {
+      "target": 4728,
+      "source": 4726,
+      "id": 16,
+      "type": 0
+    },
+    {
+      "target": 4726,
+      "source": 4727,
+      "id": 17,
+      "type": 0
+    },
+    {
+      "target": 4727,
+      "source": 4730,
+      "id": 18,
+      "type": 0
+    },
+    {
+      "target": 4730,
+      "source": 4721,
+      "id": 19,
+      "type": 0
+    },
+    {
+      "target": 4730,
+      "source": 4722,
+      "id": 20,
+      "type": 0
+    },
+    {
+      "target": 4730,
+      "source": 4736,
+      "id": 21,
+      "type": 0
+    },
+    {
+      "target": 4727,
+      "source": 4721,
+      "id": 22,
+      "type": 0
+    },
+    {
+      "target": 4727,
+      "source": 4722,
+      "id": 23,
+      "type": 0
+    },
+    {
+      "target": 4727,
+      "source": 4736,
+      "id": 24,
+      "type": 0
+    },
+    {
+      "target": 4726,
+      "source": 4730,
+      "id": 25,
+      "type": 0
+    },
+    {
+      "target": 4726,
+      "source": 4734,
+      "id": 26,
+      "type": 0
+    },
+    {
+      "target": 4734,
+      "source": 4721,
+      "id": 27,
+      "type": 0
+    },
+    {
+      "target": 4734,
+      "source": 4722,
+      "id": 28,
+      "type": 0
+    },
+    {
+      "target": 4734,
+      "source": 4736,
+      "id": 29,
+      "type": 0
+    },
+    {
+      "target": 4728,
+      "source": 4729,
+      "id": 30,
+      "type": 0
+    },
+    {
+      "target": 4729,
+      "source": 4726,
+      "id": 31,
+      "type": 0
+    },
+    {
+      "target": 4729,
+      "source": 4727,
+      "id": 32,
+      "type": 0
+    },
+    {
+      "target": 4729,
+      "source": 4730,
+      "id": 33,
+      "type": 0
+    },
+    {
+      "target": 4729,
+      "source": 4734,
+      "id": 34,
+      "type": 0
+    },
+    {
+      "target": 4728,
+      "source": 4733,
+      "id": 35,
+      "type": 0
+    },
+    {
+      "target": 4733,
+      "source": 4729,
+      "id": 36,
+      "type": 0
+    },
+    {
+      "target": 4733,
+      "source": 4727,
+      "id": 37,
+      "type": 0
+    },
+    {
+      "target": 4733,
+      "source": 4730,
+      "id": 38,
+      "type": 0
+    },
+    {
+      "target": 4733,
+      "source": 4734,
+      "id": 39,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4725,
+      "id": 40,
+      "type": 0
+    },
+    {
+      "target": 4725,
+      "source": 4726,
+      "id": 41,
+      "type": 0
+    },
+    {
+      "target": 4725,
+      "source": 4729,
+      "id": 42,
+      "type": 0
+    },
+    {
+      "target": 4725,
+      "source": 4733,
+      "id": 43,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4732,
+      "id": 44,
+      "type": 0
+    },
+    {
+      "target": 4732,
+      "source": 4726,
+      "id": 45,
+      "type": 0
+    },
+    {
+      "target": 4732,
+      "source": 4729,
+      "id": 46,
+      "type": 0
+    },
+    {
+      "target": 4732,
+      "source": 4733,
+      "id": 47,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4726,
+      "id": 48,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4729,
+      "id": 49,
+      "type": 0
+    },
+    {
+      "target": 4723,
+      "source": 4733,
+      "id": 50,
+      "type": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 4713,
+      "start_date": "2018/11/20 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/21 06:25:00",
+            "id": 30257,
+            "text": "testa_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/21 06:45:00",
+            "id": 30265,
+            "text": "sss_New Server List"
+          }
+        ],
+        "jobids": "30257,30265",
+        "group": "Dr",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "I-dr"
+    },
+    {
+      "id": 4710,
+      "start_date": "2018/11/15 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4713",
+        "jobs": [],
+        "jobids": "",
+        "group": "Dr",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "H-dr"
+    },
+    {
+      "id": 4688,
+      "start_date": "2018/11/10 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4710",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/14 09:05:00",
+            "id": 30281,
+            "text": "ttt_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/21 09:05:00",
+            "id": 30282,
+            "text": "ttt_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/28 09:05:00",
+            "id": 30283,
+            "text": "ttt_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/05 09:05:00",
+            "id": 30284,
+            "text": "ttt_New Server List"
+          }
+        ],
+        "jobids": "30281,30282,30283,30284",
+        "group": "Dr",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "G-dr"
+    },
+    {
+      "id": 4711,
+      "start_date": "2018/11/05 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4688",
+        "jobs": [],
+        "jobids": "",
+        "group": "AlwaysProd",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "J-alwaysprod"
+    },
+    {
+      "id": 4687,
+      "start_date": "2018/10/31 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4711,2168",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30124,
+            "text": "F_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30196,
+            "text": "F_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30217,
+            "text": "F_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30231,
+            "text": "F_New Server List"
+          }
+        ],
+        "jobids": "30124,30196,30217,30231",
+        "group": "Prod",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "F-prod"
+    },
+    {
+      "id": 4684,
+      "start_date": "2018/10/26 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4687",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30119,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30161,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30167,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30191,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30212,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30222,
+            "text": "E_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30226,
+            "text": "E_New Server List"
+          }
+        ],
+        "jobids": "30119,30161,30167,30191,30212,30222,30226",
+        "group": "Prod",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "E-prod"
+    },
+    {
+      "id": 4683,
+      "start_date": "2018/10/21 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4684",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29743,
+            "text": "dd_D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29767,
+            "text": "mytest5_D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30118,
+            "text": "D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30160,
+            "text": "D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30166,
+            "text": "D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30211,
+            "text": "D_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30221,
+            "text": "D_New Server List"
+          }
+        ],
+        "jobids": "29743,29767,30118,30160,30166,30211,30221",
+        "group": "Prod",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "D-prod"
+    },
+    {
+      "id": 4680,
+      "start_date": "2018/10/16 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4683,4682",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30097,
+            "text": "B_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30108,
+            "text": "tt-10--_B_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/03 09:40:00",
+            "id": 25240,
+            "text": "KB4345418_New Server List"
+          }
+        ],
+        "jobids": "30097,30108,25240",
+        "group": "Int",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "B-int"
+    },
+    {
+      "id": 4681,
+      "start_date": "2018/10/11 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4680",
+        "jobs": [
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29455,
+            "text": "test_2mins_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29784,
+            "text": "jobchainCrossServices1_2mins_A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29785,
+            "text": "jobchainCrossServices1_2mins_A_2"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29793,
+            "text": "jobchainCrossServices3_2mins_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29796,
+            "text": "jobchainCrossServices4_2mins_A_1"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29812,
+            "text": "jobchain2_5mins_A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 29813,
+            "text": "jobchain2_5mins_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30038,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30039,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30045,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30046,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30054,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30055,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30098,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30099,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30105,
+            "text": "tt-10--_A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30106,
+            "text": "tt-10--_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30110,
+            "text": "tt-10--_A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30111,
+            "text": "tt-10--_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30115,
+            "text": "tt-16_A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30116,
+            "text": "tt-16_A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30125,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30126,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30156,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30157,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30163,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30164,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30169,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30170,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30197,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30198,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30218,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30219,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30232,
+            "text": "A_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30233,
+            "text": "A_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Pending",
+            "start_date": "2018/11/20 05:25:00",
+            "id": 30574,
+            "text": "A-int_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Pending",
+            "start_date": "2018/11/20 05:25:00",
+            "id": 30576,
+            "text": "A-int_2"
+          },
+          {
+            "selectedServerList": "1",
+            "status": "Pending",
+            "start_date": "2018/11/27 05:25:00",
+            "id": 30575,
+            "text": "A-int_1"
+          },
+          {
+            "selectedServerList": "2",
+            "status": "Pending",
+            "start_date": "2018/11/27 05:25:00",
+            "id": 30577,
+            "text": "A-int_2"
+          }
+        ],
+        "jobids": "29455,29784,29785,29793,29796,29812,29813,30038,30039,30045,30046,30054,30055,30098,30099,30105,30106,30110,30111,30115,30116,30125,30126,30156,30157,30163,30164,30169,30170,30197,30198,30218,30219,30232,30233,30574,30576,30575,30577",
+        "group": "Int",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "A-int"
+    },
+    {
+      "id": 4720,
+      "start_date": "2018/10/16 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4683,4682",
+        "jobs": [],
+        "jobids": "",
+        "group": "Int",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "K-test"
+    },
+    {
+      "id": 2168,
+      "start_date": "2018/11/05 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4688",
+        "jobs": [],
+        "jobids": "",
+        "group": "AlwaysProd",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Direct Patch"
+    },
+    {
+      "id": 4682,
+      "start_date": "2018/11/20 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30095,
+            "text": "C_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30123,
+            "text": "C_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30195,
+            "text": "C_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Paused",
+            "start_date": "",
+            "id": 30216,
+            "text": "C_New Server List"
+          }
+        ],
+        "jobids": "30095,30123,30195,30216",
+        "group": "Int",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "C-int"
+    },
+    {
+      "id": 4738,
+      "start_date": "2018/11/15 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4682",
+        "jobs": [
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/23 16:00:00",
+            "id": 30495,
+            "text": "csv reminder fri_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/30 16:00:00",
+            "id": 30496,
+            "text": "csv reminder fri_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/07 16:00:00",
+            "id": 30497,
+            "text": "csv reminder fri_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/26 16:00:00",
+            "id": 30520,
+            "text": "csv reminder mon_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/03 16:00:00",
+            "id": 30521,
+            "text": "csv reminder mon_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/10 16:00:00",
+            "id": 30522,
+            "text": "csv reminder mon_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/20 16:00:00",
+            "id": 30529,
+            "text": "csv reminder tue_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/27 16:00:00",
+            "id": 30530,
+            "text": "csv reminder tue_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/04 16:00:00",
+            "id": 30531,
+            "text": "csv reminder tue_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/11 16:00:00",
+            "id": 30532,
+            "text": "csv reminder tue_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/21 16:00:00",
+            "id": 30539,
+            "text": "csv reminder wed_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/28 16:00:00",
+            "id": 30540,
+            "text": "csv reminder wed_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/05 16:00:00",
+            "id": 30541,
+            "text": "csv reminder wed_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/22 16:00:00",
+            "id": 30549,
+            "text": "csv reminder thu_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/11/29 16:00:00",
+            "id": 30550,
+            "text": "csv reminder thu_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Pending",
+            "start_date": "2018/12/06 16:00:00",
+            "id": 30551,
+            "text": "csv reminder thu_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Completed",
+            "start_date": "2018/11/19 16:00:00",
+            "id": 30519,
+            "text": "csv reminder mon_New Server List"
+          },
+          {
+            "selectedServerList": "New Server List",
+            "status": "Cancelled",
+            "start_date": "2018/11/22 16:00:00",
+            "id": 30514,
+            "text": "csv reminder thu_New Server List"
+          }
+        ],
+        "jobids": "30495,30496,30497,30520,30521,30522,30529,30530,30531,30532,30539,30540,30541,30549,30550,30551,30519,30514",
+        "group": "",
+        "status": "HasJobs"
+      },
+      "progress": 0.2,
+      "text": "Direct Exe"
+    },
+    {
+      "id": 4723,
+      "start_date": "2018/11/20 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-3"
+    },
+    {
+      "id": 4728,
+      "start_date": "2018/11/15 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test4-1"
+    },
+    {
+      "id": 4726,
+      "start_date": "2018/11/10 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4728,4729,4725,4732,4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-6"
+    },
+    {
+      "id": 4727,
+      "start_date": "2018/11/05 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4726,4729,4733",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-7"
+    },
+    {
+      "id": 4730,
+      "start_date": "2018/10/31 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4727,4726,4729,4733",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test4-3"
+    },
+    {
+      "id": 4721,
+      "start_date": "2018/10/26 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4730,4727,4734",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-1"
+    },
+    {
+      "id": 4722,
+      "start_date": "2018/10/26 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4730,4727,4734",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-2"
+    },
+    {
+      "id": 4736,
+      "start_date": "2018/10/26 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4730,4727,4734",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "CPPAT5"
+    },
+    {
+      "id": 4734,
+      "start_date": "2018/11/05 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4726,4729,4733",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "CPPAT4"
+    },
+    {
+      "id": 4729,
+      "start_date": "2018/11/10 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4728,4733,4725,4732,4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test4-2"
+    },
+    {
+      "id": 4733,
+      "start_date": "2018/11/10 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4728,4725,4732,4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "CPPAT3"
+    },
+    {
+      "id": 4725,
+      "start_date": "2018/11/15 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "Test2-5"
+    },
+    {
+      "id": 4732,
+      "start_date": "2018/11/15 08:41:28",
+      "open": true,
+      "type": "task",
+      "duration": 3,
+      "custom": {
+        "templateids": "4723",
+        "jobs": [],
+        "jobids": "",
+        "group": "",
+        "status": "NoJobs"
+      },
+      "progress": 0.2,
+      "text": "CPPAT2"
+    }
+  ]
+}

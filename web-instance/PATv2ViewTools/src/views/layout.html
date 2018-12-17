@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    {%block style-reference %} {%endblock%}
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Navbar Area -->
+        <div class="layout-main-menu" id="sticker">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container-fluid">
+                    <!-- Menu -->
+                    <nav class="classy-navbar justify-content-between" id="layoutNav">
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul>
+                                    <li class="active"><a href="/">Home</a></li>
+                                    <li><a href="#">Scripts</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/script/index">Index</a></li>
+                                            <li><a href="/script/list">List</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Gantts</a>
+                                        <ul class="dropdown">
+                                            <li><a href="/gantt/job">Job</a></li>
+                                            <li><a href="/gantt/template">Template</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Useful Links</a>
+                                        <ul class="dropdown">
+                                            <li><a href="https://tools.cp.microsoft-int.com/patv2/" target="_blank">Portal-Int</a></li>
+                                            <li><a href="https://tools.cp.microsoft.com/patv2/" target="_blank">Portal-Prod</a></li>
+                                            <li><a href="/docs">Docs</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                            <!-- Nav End -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Post Details Area Start ##### -->
+    {% block section %}{% endblock %}
+    <!-- ##### Post Details Area End ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery js -->
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="/scripts/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="/scripts/active.js"></script>
+    {%block script-reference %} {%endblock%}
+</body>
+
+</html>

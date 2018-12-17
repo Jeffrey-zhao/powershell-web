@@ -1,0 +1,24 @@
+<h3 class="mb-50">{{title}} <small>-- File: {{file_path}}</small></h3>
+<div class="table-responsive">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Function Name</th>
+                <th scope="col" class='d-none'>Path</th>
+                <th scope="col">Last Modified Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{list.length}}
+            {% for item in list %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td><a href="/script/command?filepath={{file_path}}&fn={{item.Name}}">{{item.Name}}</a></td>
+                <td class='d-none'>{{item.Path}}</td>
+                <td>{{item.LastWriteTime}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
