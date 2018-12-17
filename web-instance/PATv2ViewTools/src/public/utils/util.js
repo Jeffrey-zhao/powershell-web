@@ -54,6 +54,32 @@ var Util = {
             )))
         }
         return allFiles
+    },
+    GetEnvCommand: function (req, res) {
+        var retcmdString = ''
+        var root_dir = path.join(req.app.get('root'),'Cmdlets/')
+        retcmdString += path.join(root_dir, 'Cmdlets/SetupEnvironment.ps1')
+        retcmdString += ' -Environment int -WorkingDir ' + root_dir + ";"
+        return retcmdString
+        /*
+        var hostname = req.hostname || ''
+        var retcmdString = ''
+        switch (hostname) {
+            case 'patv2.tools-int.com':
+                {
+                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
+                    retcmdString += ' -Environment int;'
+                    break;
+                }
+            case 'patv2.tools-prod.com':
+                {
+                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
+                    retcmdString += ' -Environment prod;'
+                    break;
+                }
+        }
+        return retcmdString
+        */
     }
 }
 module.exports = Util

@@ -2,13 +2,13 @@ filter Find-Function {
     $path = $_.FullName
     $lastwrite = $_.LastWriteTime.ToString('MM/dd/yyyy HH:mm:ss')
     $text = Get-Content -Path $path
-    
+    $files=@()
     if ($text.Length -gt 0) {
-       
+
         $token = $null
         $errors = $null
         $ast = [System.Management.Automation.Language.Parser]::ParseInput($text, [ref] $token, [ref] $errors)
-        $ast.FindAll( { $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $true) |
+        $files+=$ast.FindAll( { $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $true) |
             Select-Object -Property Name, Path, LastWriteTime |
             ForEach-Object {
             $_.Path = $path
@@ -16,6 +16,7 @@ filter Find-Function {
             $_
         }
     }
+    return $files
 }
 
 function Get-CommandParameter {
@@ -71,16 +72,27 @@ function Get-CommandParameter {
         }
         
         foreach ($item in $paramBlock) {
+            $staticType = $item.StaticType.ToString()
+
             if ($null -ne $item.DefaultValue) {
                 $defaultValue = $item.DefaultValue.ToString()
             }
             else {
                 $defaultValue = $null
             }
+            if ($staticType -like '*Switch*') {
+                $staticType = 'System.Switch'
+                if ($null -eq $defaultValue) {
+                    $defaultValue = $false
+                }
+                else {
+                    $defaultValue = $true
+                }
+            }
 
             $blockParameters += @{
                 Name         = $item.Name.ToString()
-                StaticType   = $item.StaticType.FullName.ToString()
+                StaticType   = $staticType
                 DefaultValue = $defaultValue
             }
         }

@@ -5,11 +5,8 @@ var psExecutor = require('../public/utils/psExecutor'),
 
 var controller = {
     // common method: invoke script
-    invoker: function (req, res) {
-        /*
-        
-                */
-        res.send('tst')
+    set_env: function (req, res, next, value) {
+
     },
     // route: index 
     index: function (req, res) {
@@ -115,7 +112,7 @@ var controller = {
             }
             psExecutor.send(cmdObject).then(data => {
                 var list = JSON.parse(data)
-
+                console.log("list:", list)
                 res.render('script/function', {
                     list: list,
                     file_path: filepath
@@ -139,12 +136,13 @@ var controller = {
             var file_path = path.join(req.app.get('script_dir'), base[1].file_path)
             var invoker_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psInvoker.ps1')
             var function_path = path.join(req.app.get('root'), req.app.get('env'), 'public/utils/psFunction.ps1')
+            var preEnvCmdString = util.GetEnvCommand(req, res)
             console.log(" -ArgumentList " + JSON.stringify(req.body.data))
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
                 file: [function_path, invoker_path, file_path],
-                command: "Execute-Function -FunctionName " + base[0].function_name + " -ArgumentList " + escape(JSON.stringify(req.body.data))
+                command: preEnvCmdString + " Execute-Function -FunctionName " + base[0].function_name + " -ArgumentList " + escape(JSON.stringify(req.body.data))
             }
             psExecutor.send(cmdObject).then(data => {
                 res.send({
@@ -160,12 +158,6 @@ var controller = {
                 content: 'please supply valid data...'
             })
         }
-    },
-    test: function (req, res) {
-        console.log('testing')
-        console.log(req.body)
-        console.log(req.body.file)
-        res.send(req.body.param)
     }
 }
 

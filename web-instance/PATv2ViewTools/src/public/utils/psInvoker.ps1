@@ -8,6 +8,7 @@ function Invoke-Script {
 
     return $results |ConvertTo-Json
 }
+
 #get script's functions
 function Invoke-Function {
     param(
@@ -32,16 +33,17 @@ function Execute-Function {
         [parameter(Mandatory = $true)]
         [string] $ArgumentList
     )
-    $ArgumentList
+
     $ArgumentString = [system.uri]::UnescapeDataString($ArgumentList)
     add-type -assembly system.web.extensions
 
     $ps_js = new-object system.web.script.serialization.javascriptSerializer
     $ArgumentObj = $ps_js.DeserializeObject($ArgumentString)
-    $express = ''
+    Write-Output $ArgumentObj,$ArgumentString
+    $express = ""
 
     foreach ($item in $ArgumentObj) {
-        $express += Format-Parameter -Key $ArgumentObj.name -Value $ArgumentObj.value -Type $ArgumentObj.type
+        $express += "$(Format-Parameter -Key $item.name -Value $item.value -Type $item.type)"
     }
     if ([string]::IsNullOrEmpty($express)) {
         $express = " Write-Output 'No executing any functions...' "
@@ -49,7 +51,6 @@ function Execute-Function {
     else {
         $express = " $FunctionName " + $express
     }
-    Write-Output $express
     Invoke-Expression -Command $express
 }
 
@@ -60,26 +61,48 @@ function Format-Parameter {
         [string] $type
     )
     $retValue = $null
-    $retParam = ''
+    $retParam = ""
+    $temp=$true
+    $seq=" "
     if ([string]::IsNullOrEmpty($key) -or [string]::IsNullOrEmpty($value)) {
-        return ''
+        return $retParam
     }
     else {
         switch ($type) {
-            'System.Int32' { [Double]::TryParse($value, [ref] $retValue); break}
-            'System.Float' {[Double]::TryParse($value, [ref] $retValue); break}
-            'System.Double' {[Double]::TryParse($value, [ref] $retValue); break}
-            'System.Boolean' {[Double]::TryParse($value, [ref] $retValue); break}
-            'System.DateTime' {[Double]::TryParse($value, [ref] $retValue); break}
-            'System.Object' {[Double]::TryParse($value, [ref] $retValue); break}
-            'System.String[]' {[Double]::TryParse($value, [ref] $retValue); break}
-            default { $retValue = $value; break}
+            "System.Int32" {$temp=[Int32]::TryParse($value, [ref] $retValue);
+                break
+            }
+            "System.Single" {$temp=[Single]::TryParse($value, [ref] $retValue);
+                break
+            }
+            "System.Double" {$temp=[Double]::TryParse($value, [ref] $retValue);
+                break
+            }
+            "System.Boolean" {$temp=[Boolean]::TryParse($value, [ref] $retValue); 
+                $retValue="$"+$retValue; 
+                 break
+                }
+            "System.Switch" {$temp=[Boolean]::TryParse($value, [ref] $retValue); 
+                $seq=":";
+                $retValue="$"+$retValue;
+                break
+            }
+            "System.DateTime" {$temp=[DateTime]::TryParse($value, [ref] $retValue);
+                break
+            }
+            "System.Object" {$temp=[Double]::TryParse($value, [ref] $retValue);
+                break
+            }
+            default { $retValue = $value; 
+                $temp=$true;
+                break
+            }
         }
-        if ([string]::IsNullOrEmpty($retValue)) {
-            $retParam = ""
-        }
-        else {
-            $retParam = "-$($key) $retValue "
+
+        if($temp){
+            $retParam = "-$key$seq$retValue "
+        }else{
+            Write-Host "something wrong when parse parameter ($key) you given "
         }
     }
     return $retParam

@@ -12,12 +12,10 @@ var psExecutor = {
 			child = spawn(command.platform_cmd, command.args)
 			child.stdout.on('data', function (data) {
 				results += data
-				console.log('data-out:', results.toString())
 			})
 
 			child.stderr.on('data', function (data) {
 				results += data
-				console.log('data-err:', results.toString())
 				reject(data)
 			})
 

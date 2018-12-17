@@ -16,13 +16,6 @@ router.get('/script/detail', script_ctl.detail)
 router.get('/script/command', script_ctl.command)
 
 router.post('/script/execute', script_ctl.execute)
-//test
-router.post('/script/test', script_ctl.test)
 
-router.param(param_mw.param)
-
-router.param('file_path', param_mw.validator);
-
-router.param('fn_name', param_mw.validator);
 
 module.exports = router
