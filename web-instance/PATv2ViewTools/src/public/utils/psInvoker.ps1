@@ -4,9 +4,10 @@ function Invoke-Script {
         [parameter(Mandatory = $true)]
         [string] $ScriptPath
     )
-    $results = @(Get-ChildItem -Path $ScriptPath |Find-Function)
-    
-    return $results |ConvertTo-Json
+
+    $results = Get-ChildItem -Path $ScriptPath |Find-Function
+
+    return ConvertTo-Json -InputObject @($results)  
 }
 
 #get script's functions

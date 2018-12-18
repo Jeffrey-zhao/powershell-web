@@ -2,7 +2,6 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     util = require('./util'),
-    port = 3000,
     open = require('open'),
     config_args = util.config_args(),
     platform_cmd = util.platform_cmd(),
@@ -13,7 +12,7 @@ if (config_args.build_env === 'production') {
 } else {
     build_env = 'build'
 }
-
+console.log(build_env, config_args)
 var swig = require('./' + build_env + '/public/vendor/swig/lib/swig'),
     app = express(),
     routeBase = require('./' + build_env + '/routes/base'),
@@ -37,7 +36,7 @@ swig.setFilter('paramFilter', function (input, arg) {
 })
 
 //custom variable
-app.set('script_dir', path.join(__dirname, 'Cmdlets/scripts'))
+app.set('script_dir', path.join(__dirname, 'Cmdlets/Scripts'))
 app.set('root', path.join(__dirname))
 app.set('build_env', build_env)
 app.set('deploy_env', config_args.env)

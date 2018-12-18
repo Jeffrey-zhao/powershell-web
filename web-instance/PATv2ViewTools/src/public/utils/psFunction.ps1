@@ -26,7 +26,7 @@ function Get-CommandParameter {
         [string] $FunctionName
     )
 
-    $scripts = get-childItem $ScriptPath -Recurse -Filter *.ps1 
+    $scripts = get-childItem $ScriptPath -Filter *.ps1 
     $scripts | ForEach-Object { Import-Module $_.FullName -Force }
     $functions = $scripts | Find-Function 
     
@@ -34,7 +34,7 @@ function Get-CommandParameter {
         $functions = $functions |Where-Object {$_.Name -ieq $FunctionName}
     }
 
-    $functionsInfo = $functions |ForEach-Object { Get-Item -Path function:"$($_.Name)"} |
+    $functionsInfo = $functions |ForEach-Object { Get-Command -Name $_.Name} |
         Select-Object -Property Name, ScriptBlock, Parameters, ParameterSets
 
     $commonParameter = @('Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction',

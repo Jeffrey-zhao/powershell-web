@@ -14,3 +14,7 @@ HOW TO USE THIS TOOLS
    > refactor
    > optimize html(list if can read file's content),path (files' path)
    > execute etc. add JSON.parse() not valid if not json format...
+   > resolve path if there are special characters
+
+5. Note 
+   > only owns only one same name file because it is recurse

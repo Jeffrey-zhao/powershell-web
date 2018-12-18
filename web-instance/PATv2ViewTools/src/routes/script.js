@@ -16,5 +16,4 @@ router.get('/script/command', script_ctl.command)
 
 router.post('/script/execute', script_ctl.execute)
 
-
 module.exports = router

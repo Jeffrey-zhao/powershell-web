@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "gulp-build": "gulp default",
-    "start": " node index.js ",
+    "start": " node index.js --build_env development",
     "start-int":"npm run start",
-    "start-prod":"node index.js --port 3000 --env prod --host:patv2.tools-prod.com"
+    "start-prod":"node index.js --port 3000 --env prod"
   },
   "keywords": [
     "template",

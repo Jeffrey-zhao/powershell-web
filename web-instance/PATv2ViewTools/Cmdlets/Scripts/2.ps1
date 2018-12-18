@@ -1,9 +1,10 @@
 function Get-Test2 {
     param(
         [parameter(Mandatory = $true)]
-        [string] $Args,
+        [string] $from,
         [parameter()]
         [string] $Test = 'test'
     )
-    Write-Output $Args  
+    $context
+    Write-Output $from,$test 
 }

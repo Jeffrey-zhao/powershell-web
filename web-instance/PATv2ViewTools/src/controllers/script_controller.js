@@ -4,10 +4,6 @@ var psExecutor = require('../public/utils/psExecutor'),
     fs = require('fs')
 
 var controller = {
-    // common method: invoke script
-    set_env: function (req, res, next, value) {
-
-    },
     // route: index 
     index: function (req, res) {
         res.render('script/index')
@@ -17,6 +13,21 @@ var controller = {
         var folder = req.query.dirname || ""
         var root_dirname = req.app.get('script_dir')
         var script_dir = path.join(root_dirname, folder)
+        var folder_items = folder.split('\\')
+        var tempUrl = '\\'
+        var paths = [{
+            text: 'root',
+            url: '\\'
+        }]
+        for (i = 0; i < folder_items.length; i++) {
+            if (folder_items[i] == '') continue
+            tempUrl = path.join(tempUrl, folder_items[i])
+            paths.push({
+                text: folder_items[i],
+                url: tempUrl
+            })
+        }
+
         if (script_dir) {
             util.rreaddir(script_dir, false)
                 .then(pFiles => {
@@ -46,10 +57,14 @@ var controller = {
                     })
                     res.render('script/list', {
                         list: ret_files,
-                        dirname: folder
+                        dirname: folder,
+                        list_paths: paths
                     })
                 }).catch(err => {
-                    console.error(err)
+                    res.render('error', {
+                        msg_err: 'something errors happened when search files...' + err.toString(),
+                        url: req.url
+                    })
                     return []
                 })
         }
@@ -60,9 +75,9 @@ var controller = {
         var fn = req.query.fn
         console.log(filepath, fn)
         if (filepath && fn) {
-            var file_path = path.join(req.app.get('script_dir'), filepath)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
+            var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
@@ -80,7 +95,7 @@ var controller = {
                     file_path: filepath,
                     function_name: fn
                 })
-            }, err => {
+            }).catch(err => {
                 res.render('error', {
                     err_msg: err,
                     url: req.originalUrl
@@ -100,9 +115,10 @@ var controller = {
     function: function (req, res) {
         var filepath = req.query.filepath
         if (filepath) {
-            var file_path = path.join(req.app.get('script_dir'), filepath)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
+            console.log(req.app.get('build_env'))
+            var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
@@ -117,7 +133,7 @@ var controller = {
                     list: list,
                     file_path: filepath
                 })
-            }, err => {
+            }).catch(err => {
                 res.render('error', {
                     err_msg: err,
                     url: req.originalUrl
@@ -133,9 +149,9 @@ var controller = {
     execute: function (req, res) {
         var base = req.body.base
         if (base && base.length == 2) {
-            var file_path = path.join(req.app.get('script_dir'), base[1].file_path)
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
+            var file_path = path.join(req.app.get('script_dir'), base[1].file_path).replace(/\s+/g, '` ')
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             var preEnvCmdString = util.GetEnvCommand(req, res)
             console.log(" -ArgumentList " + JSON.stringify(req.body.data))
             var cmdObject = {
@@ -148,7 +164,7 @@ var controller = {
                 res.send({
                     content: data.toString()
                 })
-            }, err => {
+            }).catch(err => {
                 res.send({
                     content: 'when handling cmdlets errors happend...\n ' + err.toString(),
                 })
