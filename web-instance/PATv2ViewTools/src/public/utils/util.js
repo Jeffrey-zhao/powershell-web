@@ -20,7 +20,7 @@ var Util = {
                                 "args": ["-Command",
                                     "&{" + importFiles + cmdObjct.command + " }",
                                     "-ExecutionPolicy",
-                                    "Unrestricted"
+                                    "ByPass"
                                 ]
                             }
                             break;
@@ -32,7 +32,7 @@ var Util = {
                                 "args": ["-Command",
                                     "&{" + cmdObjct.command + " }",
                                     "-ExecutionPolicy",
-                                    "Unrestricted"
+                                    "ByPass"
                                 ]
                             }
                             break;
@@ -58,7 +58,7 @@ var Util = {
     GetEnvCommand: function (req, res) {
         var retcmdString = ''
         var root_dir = path.join(req.app.get('root'), 'Cmdlets')
-        retcmdString += path.join(root_dir, 'Cmdlets/SetupEnvironment.ps1')
+        retcmdString += path.join(root_dir, 'SetupEnvironment.ps1')
         retcmdString += ' -Environment ' + req.app.get('deploy_env') + ' -WorkingDir ' + root_dir + ";"
         return retcmdString
         /*

@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified"
+           elementFormDefault="qualified">
+    <xs:simpleType name="guid">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The representation of a GUID, generally the id of an element.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="certificateThumbprint">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This represents a valid certificate thumbprint string
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="^[a-fA-F0-9]{39,}$" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="certificateThumbprintType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the format of the thumbprint
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Sha1" />
+            <xs:enumeration value="Sha256" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="versionString">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This represents a version string in multiple formats: 1, 1.0, 1.0.0, 1.0.0.0 each bit can be up to 9 digits long.  Only the first bit is required
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <!-- 
+                Major[.Minor[.Build[.Revision]]] in regex form 
+                Any given portion can be at most 9 digits and must be at least 1 digit if present
+                Minor, Build and revision are all optional, Major is always required
+            -->
+            <xs:pattern value="^(([0-9]{1,9}(\.(([0-9]{1,9}(\.(([0-9]{1,9}(\.(([0-9]{1,9})))?)))?)))?))$" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="certificateStoreLocation">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents a well known certificate store location
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CurrentUser">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Enumerates certificates from the current users CertificateStore
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LocalMachine">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Enumerates certificates from the current machines CertificateStore
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="certificateStoreName">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Representing a well known certificate store name
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TrustedPublisher" />
+            <xs:enumeration value="ClientAuthIssuer" />
+            <xs:enumeration value="Remote Desktop" />
+            <xs:enumeration value="Root" />
+            <xs:enumeration value="TrustedDevices" />
+            <xs:enumeration value="Shielded VM Local Certificates" />
+            <xs:enumeration value="MSIEHistoryJournal" />
+            <xs:enumeration value="CA" />
+            <xs:enumeration value="Windows Live ID Token Issuer" />
+            <xs:enumeration value="REQUEST" />
+            <xs:enumeration value="AuthRoot" />
+            <xs:enumeration value="AAD Token Issuer" />
+            <xs:enumeration value="FlightRoot" />
+            <xs:enumeration value="TrustedPeople" />
+            <xs:enumeration value="AddressBook" />
+            <xs:enumeration value="Local NonRemovable Certificates" />
+            <xs:enumeration value="My" />
+            <xs:enumeration value="SmartCardRoot" />
+            <xs:enumeration value="Trust" />
+            <xs:enumeration value="Disallowed" />
+            <xs:enumeration value="Homegroup Machine Certificates" />
+            <xs:enumeration value="SMS" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="certificateIdentifier">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the minimal amount of data to uniquely identify a certificate and optionally describe the type of certificate and the template used to issue it.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="thumbprint" type="certificateThumbprint" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The certificate thumbprint which must be matched
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="certificateStoreLocation" type="certificateStoreLocation" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The certificate store location which must be matched
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="certificateStoreName" type="certificateStoreName" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The certificate store name which must be matched
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="template" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    OPTIONAL: The certificate template which must be matched for the cert to be valid
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CA" type="xs:boolean" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    OPTIONAL: True if any certificate chaining up to this definition matches, false of not present if you want to match a leaf certificate
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+      <xs:attribute name="adDerived" type="xs:boolean" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            OPTIONAL: True if wanting ad to be used to derive certificate, false if you want thumbprint to be used to derive certificate
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="serviceCertificateIdentifier">
+        <xs:attribute name="expectedTlsThumbprint" type="certificateThumbprint" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The certificate thumbprint which must be matched to identify this service
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="expectedTlsThumbprintType" type="certificateThumbprintType" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The type of certificate thumbprint (SHA1,SHA256)
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="serviceEndpointIdentifier">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the TLS thumbprint you expect to be valid for the endpoint (cert pinning)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="expectedTlsThumbprint" type="certificateThumbprint" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The certificate thumbprint which must be matched when making service calls to this service
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="expectedTlsThumbprintType" type="certificateThumbprintType" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The type of certificate thumbprint (SHA1,SHA256)
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="url" type="xs:anyURI" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The URI representing the service endpoint
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="proxyUrl" type="xs:anyURI" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The URI representing the proxy endpoint to use while talking to this service endpoint identifier
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="claimDefinition">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents a claim definition
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="claimType" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The claim type that must be matched
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="claimValue" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The claim value that must be matched
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="securityContext">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents security contexts for executing work
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LocalSystemSid">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        DEFAULT!  Executes with the highest possible privledges locally and can use the machine identity on the network
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LocalServiceSid">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Operates with the LocalService execution context having elevate privlidegs locally but cannot use the machine identity on the network
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NetworkServiceSid">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Operates with the NetworkService execution context having low privlidges locally but can use the machine identity on the network
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="localPsCapability">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents a PowerShell cmdlet which is intended to be published by a particular skw Site
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- requiredClaims is optional -->
+            <xs:element name="requiredClaims" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The list of required claims for this powershell capability
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="requiredClaim" type="claimDefinition">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="en">
+                                    One of the required claims which must be present for this powershell capability
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+                <!-- Claim types and values are require to be unique -->
+                <xs:unique name="unique-localPsCapabilityClaims">
+                    <xs:selector xpath=".//requiredClaim" />
+                    <xs:field xpath="@claimType" />
+                    <xs:field xpath="@claimValue" />
+                </xs:unique>
+            </xs:element>
+            <xs:element name="moduleName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The name which matches the PowerShell module this cmdlet is defined in
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="moduleVersion" type="versionString">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The expected version of this PowerShell module this cmdlet definition should apply to
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="entryPointCmdlet" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The cmdlet which you would like to publish into Secure Known Work
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Either specify moduleGuid in the case of an acutal module or snapinAssebmlyName in the case of a snapin
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:element name="moduleGuid" type="guid">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            The guid which matches the PowerShell module this cmdlet is defined in
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="snapinAssemblyName" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            If this is a snapin then specify the snapin assembly name
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:element name="entryPointParameterSet" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        OPTIONAL: The parameter set you'd like to expose through this publication, DEFAULT is chosen if none are defined
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="processorSpecificCapability" type="xs:boolean" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        OPTIONAL: true if this is a processor specific capability, false if it is not
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="executingSecurityContext" type="securityContext" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        OPTIONAL: The security context you wish this cmdlet to run under.  Default is LocalSystem, options are: LocalSystem, LocalService and NetworkService
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="guid" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The unique ID for this local ps capability which must be in sync with other skw processors in the same skw site
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="skwSite">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the complete processor configuration for this processor for a given SkwSite
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!-- requiredClaims is optional -->
+            <xs:element name="requiredClaims" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The list of required claims for all optional built-in capabilities capability
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="requiredClaim" type="claimDefinition">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="en">
+                                    One of the required claims which must be present for this powershell capability
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+                <!-- Claim types and values are require to be unique -->
+                <xs:unique name="unique-requiredClaimsSite">
+                    <xs:selector xpath="./requiredClaim" />
+                    <xs:field xpath="@claimType" />
+                    <xs:field xpath="@claimValue" />
+                </xs:unique>
+            </xs:element>
+            <xs:element name="builtInCapabilities" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The ability to tweak the built in capabilities for processors
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- requiredClaims is optional -->
+                        <xs:element name="requiredClaims" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation xml:lang="en">
+                                    The list of required claims for all optional built-in capabilities capability
+                                </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                                    <xs:element name="requiredClaim" type="claimDefinition">
+                                        <xs:annotation>
+                                            <xs:documentation xml:lang="en">
+                                                One of the required claims which must be present for this powershell capability
+                                            </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                            <!-- Claim types and values are require to be unique -->
+                            <xs:unique name="unique-builtInCapabilitiesClaims">
+                                <xs:selector xpath=".//requiredClaim" />
+                                <xs:field xpath="@claimType" />
+                                <xs:field xpath="@claimValue" />
+                            </xs:unique>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="enabled" type="xs:boolean" use="required">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                True to enable the optional built-in capabilities for this processor, False to disable them
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="localPsCapabilities" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The list of PowerShell cmdlets this processor should publish into this skw domain/site combination
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="localPsCapability" type="localPsCapability" />
+                    </xs:sequence>
+                </xs:complexType>
+                <!--
+                    capabilityId's must be unique across a processor configuration.
+                -->
+                <xs:unique name="unique-localPsCapabilities">
+                    <xs:selector xpath=".//localPsCapability" />
+                    <xs:field xpath="@id" />
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="guid" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The unique ID for this skw site
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="siteFriendlyName" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The human friendly site name for this site primarily for UI display
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="publicationInterval" type="xs:duration" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The frequency for which publications are advertised to parent processors so that as configurations change the old publications age out
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+      <xs:attribute name="globalSite" type="xs:boolean" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            OPTIONAL: Specify true if this site is a global site and should expose the SKW WebAPI, specify FALSE (DEFAULT) or not specified to indicate this is not a global site and should not expose the SKW Web API
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="skwDomain">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the definition for a SKW domain and outlines the required information to describe the domain and its security
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="clientAuthCertificate" type="certificateIdentifier" minOccurs="0" maxOccurs="1" />
+            <xs:element name="storageManager" type="serviceEndpointIdentifier" minOccurs="0" maxOccurs="1" />
+            <xs:element name="relationshipManager" type="serviceEndpointIdentifier" minOccurs="0" maxOccurs="1" />
+            <!-- requiredClaims is optional -->
+            <xs:element name="requiredClaims" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The claims which are required for a user to poses to allow this SKW domain to be returned.
+                        NOTE This only matters on the Global Processor for the SKW Domain.  Other processors could omit this configuration
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="requiredClaim" type="claimDefinition" />
+                    </xs:sequence>
+                </xs:complexType>
+                <!-- And they had better be unique claims -->
+                <xs:unique name="unique-domainClaims">
+                    <xs:selector xpath="./requiredClaim" />
+                    <xs:field xpath="@claimType" />
+                    <xs:field xpath="@claimValue" />
+                </xs:unique>
+            </xs:element>
+            <xs:element name="site" type="skwSite" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The human friendly name for this SkwDomain mostly for UI rendering purposes
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="id" type="guid" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The unique ID representing this skw domain
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+
+    <xs:complexType name="domains">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Represents the unique list of domains for which this processor is participating
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="1" maxOccurs="50">
+            <xs:element name="domain" type="skwDomain" />
+        </xs:sequence>
+    </xs:complexType>
+  
+    <xs:complexType name="webApiMetadata">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">
+          Represents the ADFS metadata which any global processor will use for this service process
+        </xs:documentation>
+      </xs:annotation>
+      <xs:attribute name="adfsServiceUri" type="xs:anyURI" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            The uri which the ADFS service can be reached at. I.E. https://sts.mydomain.com/
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="adfsRelyingPartyIdentifier" type="xs:anyURI" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            The relying party identifier representing the SKW WebAPI in ADFS.  Get this from the ADFS Admin who
+            has configured the ADFS WebAPI relying party for SKW.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="userAuthorizationGroup" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            The AD group which users should be a member of before they are allowed to call the SKW web API.  Note
+            that ADFS must be configured to return this group as a ROLE claim type.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="tlsCertFqdn" type="xs:string" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            Specify this value if you want anything other than the current machine name used to locate the TLS certificate
+            used to bind HTTP.sys for TLS traffic.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="skwPort" type="xs:positiveInteger" use="optional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">
+            Specify this value to control the port which the SKW Api binds to if you want a port other than the default of
+            9443
+          </xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="skwDomainConfigurations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="clientAuthCertificate" type="certificateIdentifier" minOccurs="1" maxOccurs="1" />
+                <xs:element name="storageManager" type="serviceEndpointIdentifier" minOccurs="1" maxOccurs="1" />
+                <xs:element name="relationshipManager" type="serviceEndpointIdentifier" minOccurs="1" maxOccurs="1" />
+                <xs:element name="webApiMetadata" type="webApiMetadata" minOccurs="0" maxOccurs="1" />
+                <xs:element name="domains" type="domains">
+                    <xs:unique name="unique-skwDomain">
+                        <xs:selector xpath=".//domain" />
+                        <xs:field xpath="@id" />
+                    </xs:unique>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

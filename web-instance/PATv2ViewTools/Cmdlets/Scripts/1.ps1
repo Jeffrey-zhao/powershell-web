@@ -1,9 +1,7 @@
-function Get-Test1 {
-    param(
-        [parameter(Mandatory = $true)]
-        [string] $Args,
-        [parameter()]
-        [string] $Test = 'test'
-    )
-    Write-Output $Args  
-}
+[cmdletbinding()]
+param(
+    [parameter(Mandatory = $true)]
+    [string] $Arg
+)
+write-host $Arg
+$context=@{Name='Test1';pp=$Arg}

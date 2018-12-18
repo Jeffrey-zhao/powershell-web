@@ -1,4 +1,8 @@
-<h3 class="mb-50">{{title}} <small>-- path: {% if dirname =='' %}root{% else %}{{dirname}}{% endif %}</small></h3>
+<h3 class="mb-50">{{title}} <small>-- path:
+        {% for path in list_paths %}
+        <a href="/script/list?dirname={{path.url}}">\{{path.text}}</a>
+        {% endfor %}
+    </small></h3>
 <div class="table-responsive">
     <table class="table">
         <thead class="thead-dark">

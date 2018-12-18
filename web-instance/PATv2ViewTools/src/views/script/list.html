@@ -14,7 +14,8 @@
         </div>
         <div class="row">
             <div class="col-12 col-lg-12">
-                {% include './templates/list-table.html' with {title:'List',list:list,dirname:dirname} only %}
+                {% include './templates/list-table.html' with
+                {title:'List',list:list,dirname:dirname,list_paths:list_paths} only %}
             </div>
         </div>
     </div>

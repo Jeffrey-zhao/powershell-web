@@ -1,0 +1,1 @@
+﻿. .\Scripts\SetupEnvironment.ps1 -Environment onebox

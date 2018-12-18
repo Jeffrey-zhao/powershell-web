@@ -12,6 +12,7 @@ var psExecutor = {
 			child = spawn(command.platform_cmd, command.args)
 			child.stdout.on('data', function (data) {
 				results += data
+				console.log(data.toString())
 			})
 
 			child.stderr.on('data', function (data) {
@@ -19,8 +20,8 @@ var psExecutor = {
 				reject(data)
 			})
 
-			child.on('exit', function () {
-				console.log('exit:', results.toString())
+			child.on('close', function () {
+				console.log('close:', results.toString())
 				resolve(results)
 			})
 		})

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<root>
+    <authenticationContext>
+        <environment name="onebox">
+            <add name="ClientId" value="f2357978-ca54-4abe-a8ec-9e546d685c66"/>
+            <add name="RedirectUri" value="https://f2357978-ca54-4abe-a8ec-9e546d685c66/"/>
+            <add name="StsEndpointUri" value="https://cppatv2adfs.cppatv2.selfhost.microsoft.com/adfs"/>
+            <add name="WebApiRelyingPartyIdentifier" value="https://tools1box.microsoft.com/patskwrelayservice/"/>
+            <add name="WebApiEndpointUri" value="https://tools1box.microsoft.com/patskwrelayservice/"/>
+        </environment>
+        <environment name="int">
+            <add name="ClientId" value="f2357978-ca54-4abe-a8ec-9e546d685c66"/>
+            <add name="RedirectUri" value="https://f2357978-ca54-4abe-a8ec-9e546d685c66/"/>
+            <add name="StsEndpointUri" value="https://cppatv2adfs.cppatv2.selfhost.microsoft.com/adfs"/>
+            <add name="WebApiRelyingPartyIdentifier" value="https://tools.cp.microsoft-int.com/patskwrelayservice/"/>
+            <add name="WebApiEndpointUri" value="https://tools.cp.microsoft-int.com/patskwrelayservice/"/>
+        </environment>
+        <environment name="prod">
+            <add name="ClientId" value="3d5b927b-2890-4d81-a282-7e9bd4daff1b"/>
+            <add name="RedirectUri" value="https://3d5b927b-2890-4d81-a282-7e9bd4daff1b/"/>
+            <add name="StsEndpointUri" value="https://login.microsoftonline.com/microsoft.com"/>
+            <add name="WebApiRelyingPartyIdentifier" value="https://tools.cp.microsoft.com/patskwrelayservice/"/>
+            <add name="WebApiEndpointUri" value="https://tools.cp.microsoft.com/patskwrelayservice/"/>
+        </environment>
+    </authenticationContext>
+</root>
