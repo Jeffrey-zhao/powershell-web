@@ -1,0 +1,17 @@
+{% extends '../layout.html' %}
+
+{%block title%} Function {% endblock %}
+{% block section %}
+{% set paths=[{name:'List',url:'list'},
+{name:'Function',url:'function?filepath='+file_path}]
+%}
+<section class="command-area section-padding-50-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                {% include './templates/detail.html' with {title:'File',list:list,file_path:file_path,content:content} only %}
+            </div>
+        </div>
+    </div>
+</section>
+{%endblock%}

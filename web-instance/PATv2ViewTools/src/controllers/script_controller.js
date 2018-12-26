@@ -55,6 +55,7 @@ var controller = {
                             })
                         }
                     })
+
                     res.render('script/list', {
                         list: ret_files,
                         dirname: folder,
@@ -62,11 +63,13 @@ var controller = {
                     })
                 }).catch(err => {
                     res.render('error', {
-                        msg_err: 'something errors happened when search files...' + err.toString(),
-                        url: req.url
+                        err_msg: 'something errors happened when search files...' + err.toString()
                     })
-                    return []
                 })
+        } else {
+            res.render('error', {
+                err_msg: "cannot find 'Cmdlets/scripts' folder,please check your server..."
+            })
         }
     },
     // route: command
@@ -97,8 +100,7 @@ var controller = {
                 })
             }).catch(err => {
                 res.render('error', {
-                    err_msg: err,
-                    url: req.originalUrl
+                    err_msg: err
                 })
             })
         } else {
@@ -111,15 +113,41 @@ var controller = {
     detail: function (req, res) {
         res.send('testing data')
     },
+    //route: file
+    file: function (req, res) {
+        var filepath = req.query.filepath
+        console.log(filepath)
+        if (filepath) {
+            console.log(req.app.get('build_env'))
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            console.log(file_path)
+            res.sendFile(file_path)
+            /*
+            util.rreadFile(file_path).then(data => {
+                console.log("file:", data)
+                res.render('script/file', {
+                    content: data,
+                    file_path: filepath
+                })
+            }).catch(err => {
+                res.render('error', {
+                    err_msg: err.toString()
+                })
+            })
+            */
+        } else {
+            res.render('error', {
+                err_msg: 'please choose valid file path...'
+            })
+        }
+    },
     //route: function
     function: function (req, res) {
         var filepath = req.query.filepath
         if (filepath) {
-            console.log(req.app.get('build_env'))
             var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
-            console.log(invoker_path)
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
@@ -135,8 +163,7 @@ var controller = {
                 })
             }).catch(err => {
                 res.render('error', {
-                    err_msg: err,
-                    url: req.originalUrl
+                    err_msg: err.toString()
                 })
             })
         } else {

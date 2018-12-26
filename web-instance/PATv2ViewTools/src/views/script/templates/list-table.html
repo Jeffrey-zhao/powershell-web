@@ -1,6 +1,6 @@
 <h3 class="mb-50">{{title}} <small>-- path:
         {% for path in list_paths %}
-        <a href="/script/list?dirname={{path.url}}">\{{path.text}}</a>
+        <a href="/script/list?dirname={{path.url}}" data-toggle="tooltip" title="{{path.text}}">\{{path.text}}</a>
         {% endfor %}
     </small></h3>
 <div class="table-responsive">
@@ -11,6 +11,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Name</th>
                 <th scope="col" class="d-none">Path</th>
+                <th scope="col">Read File</th>
                 <th scope="col">Relative Path</th>
                 <th scope="col">Created DateTime</th>
             </tr>
@@ -24,10 +25,15 @@
                     <a href='/script/list?dirname={{ item.dirname }}' data-toggle="tooltip" data-placement="top" title="Search Directory">{{item.name}}</a>
                     {% else %}
                     {% set filepath=dirname+item.relativePath %}
-                    <a href='/script/function?filepath={{ filepath }}' data-toggle="tooltip" data-placement="top" title="File Details">{{item.name}}</a>
+                    <a class="listfile" href='/script/function?filepath={{ filepath }}' data-toggle="tooltip"
+                        data-placement="top" title="Function Details">{{item.name}}</a>
                     {% endif %}
                 </td>
                 <td class='d-none'>{{item.path}}</td>
+                <td>
+                    <div class="readfile checkbox cb-c "><input type='checkbox' {% if item.type=='Directory'
+                            %}disabled{% endif %}></div>
+                </td>
                 <td>{{item.relativePath}}</td>
                 <td>{{item.lastModifiedTime}}</td>
             </tr>

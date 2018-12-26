@@ -2,15 +2,14 @@
 
 {%block reference%}{%endblock%}
 {%block title%} Error {%endblock%}
-{%block section%}
-<section class="main-content-area">
+{% block section %}
+<section class="command-area section-padding-50-0">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <h2>error info: {{ err_msg }}</h2>
-                <h3>origin url: {{ url }</h3>
+            <div class="col-12 col-lg-12 mb-30">
+                {% include './script/templates/detail.html' with {title:'Error',addClass:'error-detail',content:err_msg} only %}
             </div>
         </div>
     </div>
 </section>
-{%endblock%}
+{% endblock%}

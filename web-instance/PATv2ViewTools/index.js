@@ -36,12 +36,11 @@ swig.setFilter('paramFilter', function (input, arg) {
 })
 
 //custom variable
-app.set('script_dir', path.join(__dirname, 'Cmdlets/Scripts'))
+app.set('script_dir',path.join(__dirname, 'CmdLets/Scripts'))
 app.set('root', path.join(__dirname))
 app.set('build_env', build_env)
 app.set('deploy_env', config_args.env)
 app.set('cmd', platform_cmd)
-
 
 // hook up with your app
 app.use(bodyParser.urlencoded({

@@ -21,3 +21,20 @@
     </div>
 </section>
 {%endblock%}
+{%block script-reference %}
+<script>
+    $(function () {
+        $('.readfile').click(function (e) {
+            var listfile = $(this).parent().parent().find('.listfile')[0]
+            var checkbox = $(this).find(':checkbox')[0]
+            if (checkbox.checked) {
+                listfile.href = listfile.href.replace(/function/, 'file')
+                listfile.title = 'file detail'
+            } else {
+                listfile.href = listfile.href.replace(/file/, 'function')
+                listfile.title = 'function detail'
+            }
+        })
+    })
+</script>
+{%endblock%}

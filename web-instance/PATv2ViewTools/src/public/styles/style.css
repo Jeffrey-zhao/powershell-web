@@ -1183,9 +1183,13 @@ input:focus {
   height: 190px;
 }
 
-#detail_message,#output_message{
-  overflow:scroll;
-  overflow-x:hidden;
-  resize:none;
+.error-detail {
+  border: none;
 }
+
+.cb-c {
+  text-align: center;
+  vertical-align: middle;
+}
+
 /* ====== The End ====== */

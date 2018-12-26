@@ -1,13 +1,13 @@
 {
   "name": "patv2viewtools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a simple ,powerful,and extendable templating engine for browers to display info",
   "main": "index.js",
   "scripts": {
     "gulp-build": "gulp default",
     "start": " node index.js --build_env development",
-    "start-int":"npm run start",
-    "start-prod":"node index.js --port 3000 --env prod"
+    "start-int": "npm run start",
+    "start-prod": "node index.js --port 3000 --env prod"
   },
   "keywords": [
     "template",

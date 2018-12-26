@@ -55,31 +55,17 @@ var Util = {
         }
         return allFiles
     },
+    rreadFile: async function (filePath) {
+        return await fs_promise.readFile(filePath, {
+            encoding: 'utf-8'
+        })
+    },
     GetEnvCommand: function (req, res) {
         var retcmdString = ''
-        var root_dir = path.join(req.app.get('root'), 'Cmdlets')
+        var root_dir = path.join(req.app.get('root'), 'CmdLets')
         retcmdString += path.join(root_dir, 'SetupEnvironment.ps1')
         retcmdString += ' -Environment ' + req.app.get('deploy_env') + ' -WorkingDir ' + root_dir + ";"
         return retcmdString
-        /*
-        var hostname = req.hostname || ''
-        var retcmdString = ''
-        switch (hostname) {
-            case 'patv2.tools-int.com':
-                {
-                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
-                    retcmdString += ' -Environment int;'
-                    break;
-                }
-            case 'patv2.tools-prod.com':
-                {
-                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
-                    retcmdString += ' -Environment prod;'
-                    break;
-                }
-        }
-        return retcmdString
-        */
     }
 }
 module.exports = Util
