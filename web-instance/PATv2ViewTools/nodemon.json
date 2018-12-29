@@ -1,0 +1,18 @@
+{
+    "restartable": "rs",
+    "verbose": false,
+    "watch": [
+        "src/*",
+        "app.js",
+        "util.js",
+        "logger.js",
+        "gulpfile.js"
+    ],
+    "ext": "js html",
+    "ignore": [
+        ".git",
+        "node_modules",
+        "CmdLets"
+    ],
+    "delay": "1"
+}

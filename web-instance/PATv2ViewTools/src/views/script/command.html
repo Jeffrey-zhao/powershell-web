@@ -23,21 +23,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-6">
                 {% include './templates/parameter.html' with
                 {function_name:function_name,file_path:file_path,title:'Command',parameters:commands.parameters} only
                 %}
             </div>
-            <div class="col-12 col-lg-4">
-                {% include './templates/detail.html' with {title:'Detail',content:JSON.stringify(commands.detail)} only
+            <div class="col-12 col-lg-6">
+                {% include './templates/detail.html' with
+                {title:'Detail',content:{path:'',content:content},addClass:'command-detail'} only
                 %}
-            </div>
-        </div>
-        <div class='command-output section-padding-50-0'>
-            <div class="row">
-                <div class="col-12">
-                    {% include './templates/output.html' with {title:'Execute Output'} only %}
-                </div>
             </div>
         </div>
     </div>

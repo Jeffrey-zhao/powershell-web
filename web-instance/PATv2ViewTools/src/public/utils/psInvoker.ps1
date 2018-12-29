@@ -2,12 +2,15 @@
 function Invoke-Script {
     param(
         [parameter(Mandatory = $true)]
-        [string] $ScriptPath
+        [string] $ScriptPath,
+
+        [parameter(Mandatory = $true)]
+        [string] $HelpFilePath
     )
 
-    $results = Get-ChildItem -Path $ScriptPath |Find-Function
-
-    return ConvertTo-Json -InputObject @($results)  
+    $functions = Get-ChildItem -Path $ScriptPath |Find-Function
+    Get-Detail -ScriptPath $ScriptPath -FunctionNames $functions.Name -HelpFilePath $HelpFilePath
+    return ConvertTo-Json -InputObject @($functions)
 }
 
 #get script's functions
@@ -20,11 +23,37 @@ function Invoke-Function {
         [string] $FunctionName
     )
     $parameters = Get-CommandParameter -ScriptPath $ScriptPath -FunctionName $FunctionName
-    $detail = Get-Help $FunctionName -detailed
-    $ret = [PSCustomObject]@{parameters = $parameters; detail = $detail}
+    $ret = [PSCustomObject]@{parameters = $parameters}
     
     return ConvertTo-Json $ret -Depth 5
-}
+}                                                               
+
+#get script's help or function help
+function Get-Detail {
+    param(
+        [parameter(Mandatory = $true)]
+        [string] $ScriptPath,
+
+        [parameter(Mandatory = $false)]
+        [string[]] $FunctionNames,
+
+        [parameter(Mandatory = $true)]
+        [string] $HelpFilePath
+    )
+    $folder = (Get-Item -Path $ScriptPath).BaseName
+    if (-not (Test-Path -Path "$HelpFilePath\$folder")) {
+        $fileFolder=New-Item -Path "$HelpFilePath\$folder" -ItemType Directory
+    }else{
+        $fileFolder=Get-item -path "$HelpFilePath\$folder"
+    }
+    # script file
+    Get-help -path $ScriptPath -Detailed |Out-File "$($fileFolder.FullName)\script.txt" -Encoding UTF8 -Force
+
+    # function file
+    foreach($item in $FunctionNames){
+        Get-Help $item -detailed |Out-File "$($fileFolder.FullName)\$($item).txt" -Encoding UTF8 -Force
+    }
+}  
 
 function Execute-Function {
     param(

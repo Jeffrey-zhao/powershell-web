@@ -17,11 +17,11 @@ var psExecutor = {
 
             child.stderr.on('data', function (data) {
                 results += data
+                console.log(data.toString())
                 reject(data)
             })
 
-            child.on('close', function () {
-                console.log('close:', results.toString())
+            child.on('exit', function () {
                 resolve(results)
             })
         })

@@ -1183,13 +1183,43 @@ input:focus {
   height: 190px;
 }
 
+.command-output {
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.function-detail{
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .error-detail {
   border: none;
+  height: auto;
+}
+
+.command-detail {
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.introduction-detail {
+  height: auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .cb-c {
   text-align: center;
   vertical-align: middle;
+}
+
+.article h2,
+.article h1,
+.article p {
+  color: white;
 }
 
 /* ====== The End ====== */

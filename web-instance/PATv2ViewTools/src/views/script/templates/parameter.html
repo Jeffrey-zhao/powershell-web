@@ -37,9 +37,9 @@
                     <div class="form-group">
                         <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
                             <span class='d-none'>{{item.StaticType}}</span>
-                            <small >({{type}})-({{IsMandatory}})</small> </label>
+                            <small>({{type}})-({{IsMandatory}})</small> </label>
                         <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
-                            value='{{defaultValue}}' >
+                            value='{{defaultValue}}'>
                     </div>
                 </div>
                 {% endif %}
@@ -56,4 +56,7 @@
             </div>
         </div>
     </div>
+</div>
+<div class="mb-50">
+    {% include './output.html' with {title:'Execute Output',content:content,addClass:'command-output'} only %}
 </div>

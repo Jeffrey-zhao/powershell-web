@@ -33,3 +33,11 @@ build
 
 # how to execute in prod env
 #node index
+
+#what to lean about this app
+ > html template swig.js
+ > node(nodemon)
+ > gulp
+ > log(morgan,bunyan)
+ > powershell 
+ > express

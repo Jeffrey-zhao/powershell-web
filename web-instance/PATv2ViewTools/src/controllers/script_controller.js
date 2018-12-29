@@ -6,7 +6,7 @@ var psExecutor = require('../public/utils/psExecutor'),
 var controller = {
     // route: index 
     index: function (req, res) {
-        res.render('script/index')
+        res.render('script/introduction')
     },
     // route: list
     list: function (req, res) {
@@ -76,12 +76,12 @@ var controller = {
     command: function (req, res) {
         var filepath = req.query.filepath
         var fn = req.query.fn
-        console.log(filepath, fn)
         if (filepath && fn) {
             var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
-            console.log(invoker_path)
+            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ')
+            var fn_path = path.join(help_file_path, path.basename(filepath, path.extname(filepath)), fn + '.txt')
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
@@ -90,17 +90,25 @@ var controller = {
             }
 
             psExecutor.send(cmdObject).then(data => {
-                console.log(data)
                 var commands = JSON.parse(data)
-                console.log(commands)
-                res.render('script/command', {
-                    commands: commands,
-                    file_path: filepath,
-                    function_name: fn
+                return commands
+            }).then(data => {
+                fs.readFile(fn_path, 'utf-8', (err, content) => {
+                    if (err) {
+                        return res.render('error', {
+                            err_msg: "when reading function's detail errors happended..." + err.toString()
+                        })
+                    }
+                    return res.render('script/command', {
+                        commands: data,
+                        file_path: filepath,
+                        function_name: fn,
+                        content: content
+                    })
                 })
             }).catch(err => {
                 res.render('error', {
-                    err_msg: err
+                    err_msg: 'mytesting...' + err.toString()
                 })
             })
         } else {
@@ -111,16 +119,33 @@ var controller = {
     },
     //route: fn detail
     detail: function (req, res) {
-        res.send('testing data')
+        var filepath = req.query.filepath
+        var fn = req.query.fn || ''
+        if (filepath) {
+            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ')
+            var file_name = 'script.txt'
+            if (fn) {
+                fn_param = " -FunctionName " + fn
+                file_name = fn + ".txt"
+            }
+            var file_path = path.join(help_file_path, path.basename(filepath, path.extname(filepath)), file_name)
+            fs.readFile(file_path, 'utf-8', (err, content) => {
+                if (err) {
+                    res.render('error', {
+                        err_msg: 'cannot find detail file or when reading file errors happended...'
+                    })
+                }
+                res.send({
+                    content: content
+                })
+            })
+        }
     },
     //route: file
     file: function (req, res) {
         var filepath = req.query.filepath
-        console.log(filepath)
         if (filepath) {
-            console.log(req.app.get('build_env'))
             var file_path = path.join(req.app.get('script_dir'), filepath)
-            console.log(file_path)
             res.sendFile(file_path)
             /*
             util.rreadFile(file_path).then(data => {
@@ -148,15 +173,15 @@ var controller = {
             var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
+            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ');
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
                 file: [function_path, invoker_path, file_path],
-                command: " Invoke-Script -ScriptPath " + file_path
+                command: " Invoke-Script -ScriptPath " + file_path + " -HelpFilePath " + help_file_path
             }
             psExecutor.send(cmdObject).then(data => {
                 var list = JSON.parse(data)
-                console.log("list:", list)
                 res.render('script/function', {
                     list: list,
                     file_path: filepath
@@ -180,7 +205,6 @@ var controller = {
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             var preEnvCmdString = util.GetEnvCommand(req, res)
-            console.log(" -ArgumentList " + JSON.stringify(req.body.data))
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',

@@ -33,21 +33,10 @@ $(function () {
             type: 'POST',
             data: form_data,
             success: (data) => {
-                $("#output_message").val(data.content)
+                console.log(data.content)
+                $("#output_message").text(data.content)
             }
         })
-
-        /*
-         $.ajax({
-             url: '/script/execute/',
-             type: 'POST',
-             data: form_data,
-             success: (data) => {
-                 console.log(data)
-                 $("#output_message").val(data)
-             }
-         })
-         */
     })
 
     $(document).ajaxError((event, xhr, options) => {

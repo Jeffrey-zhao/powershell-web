@@ -3,6 +3,10 @@ var express = require('express'),
     path = require('path'),
     util = require('./util'),
     open = require('open'),
+    addRequestId = require('express-request-id')(),
+    morgan = require('morgan'),
+    fs = require('fs'),
+    app = express(),
     config_args = util.config_args(),
     platform_cmd = util.platform_cmd(),
     build_env
@@ -12,15 +16,42 @@ if (config_args.build_env === 'production') {
 } else {
     build_env = 'build'
 }
-console.log(build_env, config_args)
+
+// logger
+var logDirectory = path.join(__dirname, build_env, 'log')
+
+// ensure log directory exists
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+// create a write stream (in append mode)
+var logPath = path.join(logDirectory, config_args.env + '_access.log')
+
+app.use(addRequestId);
+
+morgan.token('id', function getId(req) {
+    return req.id
+});
+var loggerFormat = ':id [:date[web]] ":method :url" :status :response-time';
+
+app.use(morgan(loggerFormat, {
+    skip: function (req, res) {
+        return res.statusCode < 400
+    },
+    stream: process.stderr
+}));
+
+app.use(morgan(loggerFormat, {
+    skip: function (req, res) {
+        return res.statusCode >= 400
+    },
+    stream: process.stdout
+}));
+
 var swig = require('./' + build_env + '/public/vendor/swig/lib/swig'),
-    app = express(),
-    routeBase = require('./' + build_env + '/routes/base'),
     routeIndex = require('./' + build_env + '/routes/index'),
     routeGantt = require('./' + build_env + '/routes/gantt'),
     routeScript = require('./' + build_env + '/routes/script')
 
-var base_mw = require('./' + build_env + '/middlewares/base_middleware')
+var base_mw = require('./' + build_env + '/middlewares/base')
 
 //engine
 app.engine('html', swig.renderFile)
@@ -36,7 +67,7 @@ swig.setFilter('paramFilter', function (input, arg) {
 })
 
 //custom variable
-app.set('script_dir',path.join(__dirname, 'CmdLets/Scripts'))
+app.set('script_dir', path.join(__dirname, 'CmdLets/Scripts'))
 app.set('root', path.join(__dirname))
 app.set('build_env', build_env)
 app.set('deploy_env', config_args.env)
@@ -49,16 +80,16 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 //route
-app.use(routeBase)
 app.use(routeIndex)
 app.use(routeGantt)
 app.use(routeScript)
 
-//base middleware
-app.use(base_mw.log)
-
 //staic file
 app.use(express.static(path.join(__dirname, build_env, 'public')));
+
+//base middleware
+app.use(base_mw.beforelog(logPath));
+app.use(base_mw.afterlog(logPath));
 
 //error handler
 app.use(base_mw.log_error)

@@ -13,13 +13,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-lg-8">
-                {% include './templates/function-table.html' with {title:'Function',list:list,file_path:file_path} only %}
+            <div class="col-12 col-lg-6">
+                {% include './templates/function-table.html' with
+                {title:'Function',list:list,file_path:file_path} only %}
             </div>
-            <div class="col-12 col-lg-4">
-                {% include './templates/detail.html' with {title:'Detail',content:'testing function'} %}
-            </div>
+            <div class="col-12 col-lg-6">
+                    {% include './templates/detail.html' with
+                    {title:'Detail',content:{path:script_detail_path,content:''},addClass:'function-detail'} %}
+                </div>
         </div>
     </div>
 </section>
+{%endblock%}
+{% block script-reference %}
+<script src='/scripts/base.js'></script>
 {%endblock%}
