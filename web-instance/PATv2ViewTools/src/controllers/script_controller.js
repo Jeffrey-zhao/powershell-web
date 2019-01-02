@@ -108,7 +108,7 @@ var controller = {
                 })
             }).catch(err => {
                 res.render('error', {
-                    err_msg: 'mytesting...' + err.toString()
+                    err_msg: err.toString()
                 })
             })
         } else {

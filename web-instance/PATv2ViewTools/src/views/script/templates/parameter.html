@@ -5,6 +5,7 @@
     <div class="command-content-area">
         {% set setNames=parameters.ParameterSetName %}
         {% set parameterArgs=parameters.BlockParameter %}
+        {% set parameterAttrs=parameters.ParameterAttrs %}
         <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
             {% for item in setNames%}
             <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
@@ -20,8 +21,11 @@
         <div class="command-form-area tab-content">
             {% for commandset in setNames %}
             {% set parameterset=commandset.ParameterNames %}
+
             <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{{commandset.Name}}'>
                 {% for arg in parameterset %}
+                <!-- get input type :if validateset then select-option ;if alias and filepath then file -->
+                {% set typeItems=parameterAttrs|paramTypeFilter("$"+arg.Arg)%}
                 {% set items =parameterArgs|paramFilter("$"+arg.Arg) %}
                 {% if items.length>=1 %}
                 {% set item =items[0] %}
@@ -38,8 +42,25 @@
                         <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
                             <span class='d-none'>{{item.StaticType}}</span>
                             <small>({{type}})-({{IsMandatory}})</small> </label>
+                        {% if typeItems.length >= 1 %}
+                                                <!--default to get first item-->
+                            {% if (typeItems[0].Attributes[0].TypeName)|lower == 'validateset' %}
+                                <select class="form-control selectpicker" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'>
+                                {% for optionItem in (typeItems[0].Attributes[0].PositionalArguments) %}
+                                <option>{{optionItem}}</option>
+                                {% endfor %}
+                                </select>
+                            {% elseif ((typeItems[0].Attributes[0].TypeName)|lower =='alias') || ((typeItems[0].Attributes[0].PositionalArguments).includues("'filePath'")) %}
+                                <input type="file" class="form-control custom-file" id="{{commandset.Name}}-{{parameterName}}"
+                                name='{{parameterName}}' value='{{defaultValue}}'>
+                            {% else %}
+                            <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
+                            value='{{defaultValue}}'>
+                            {% endif %}
+                        {% else %}
                         <input type="text" class="form-control" id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
                             value='{{defaultValue}}'>
+                        {% endif %}
                     </div>
                 </div>
                 {% endif %}

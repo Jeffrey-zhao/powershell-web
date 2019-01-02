@@ -8,7 +8,7 @@
         "logger.js",
         "gulpfile.js"
     ],
-    "ext": "js html",
+    "ext": "js html ps1",
     "ignore": [
         ".git",
         "node_modules",

@@ -28,12 +28,12 @@
 
     )
 
-    Write-Output ‘tesing'
+    Write-Output 'tesing'
     <#
     ipmo .\mytest.ps1 -force
     $fn=(get-item -path function:get-Test)
     $parameters=$fn.ScriptBlock.Ast.Body.ParamBlock.Parameters
-    $paramAttrs=$fn.ScriptBlock.Ast.body.ParamBlock.Parameters |
+    $paramAttrs=$parameters |
         ForEach-Object {
         $name=$_.name;
         if($null -ne $_.DefaultValue)
@@ -47,12 +47,21 @@
             Name=$name;
             DefaultValue=$defaultValue;
             Attributes=@($_.Attributes | foreach-object {
-                @{
-                    'TypeName'=$_.TypeName;
-                    'PositionalArguments'=@($_.PositionalArguments|foreach {$_});
-                    'NamedArguments'=@($_.NamedArguments|select ArgumentName,Argument)
-                 }
-             })
+                    if($_.PositionalArguments)
+                    {
+                        $potionalArguments=@($_.PositionalArguments |ForEach-Object{$_.toString()})
+                    }else
+                    {
+                        $potionalArguments=$null
+                    }
+                    @{
+                        'TypeName'=$_.TypeName.ToString();
+                        'PositionalArguments'=$potionalArguments;
+                        'NamedArguments'=@($_.NamedArguments|foreach-object {$index=0}{@{Index=($index++);ArgumentName=$_.ArgumentName;Argument=$_.Argument}})
+                     }
+                  })
+               }
+            })
           }
       }
 

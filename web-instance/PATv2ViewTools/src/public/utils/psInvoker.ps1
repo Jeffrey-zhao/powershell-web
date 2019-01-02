@@ -25,7 +25,7 @@ function Invoke-Function {
     $parameters = Get-CommandParameter -ScriptPath $ScriptPath -FunctionName $FunctionName
     $ret = [PSCustomObject]@{parameters = $parameters}
     
-    return ConvertTo-Json $ret -Depth 5
+    return ConvertTo-Json $ret -Depth 7
 }                                                               
 
 #get script's help or function help

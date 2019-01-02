@@ -49,6 +49,7 @@ function Get-CommandParameter {
         $blockParameters = @()
         $parameterSetNames = @()
         $parameters = @()
+        $paramAttrs=@()
 
         foreach ($item in $temp.ParameterSets) {
             $name = $item.Name
@@ -95,10 +96,43 @@ function Get-CommandParameter {
             }
         }
         
-        @{Name               = $_.Name
+        $paramAttrs+=[PSCustomObject]($paramBlock |ForEach-Object {
+            $name=$_.name.ToString();
+            if($null -ne $_.DefaultValue)
+            {
+               $defaultValue=[PSCustomObject]@{Static=$_.DefaultValue.Static;Value="'"+((invoke-expression $_.DefaultValue.ToString()) -join "','")+"'"}
+            }else
+            {
+               $defaultValue=$null
+            }
+            @{
+                Name=$name;
+                DefaultValue=$defaultValue;
+                
+                Attributes=@($_.Attributes | foreach-object {
+                    if($_.PositionalArguments)
+                    {
+                        $potionalArguments=@($_.PositionalArguments |ForEach-Object{$_.toString()})
+                    }else
+                    {
+                        $potionalArguments=$null
+                    }
+                    @{
+                        'TypeName'=$_.TypeName.ToString();
+                        'PositionalArguments'=$potionalArguments;
+                        'NamedArguments'=@($_.NamedArguments|foreach-object {$index=0}{@{Index=($index++);ArgumentName=$_.ArgumentName;Argument=$_.Argument}})
+                     }
+                  })
+               }
+            })
+           
+
+        [PSCustomObject]@{
+            Name             = $_.Name
             BlockParameter   = $blockParameters
             Parameter        = $parameters      
             ParameterSetName = $parameterSetNames
+            ParameterAttrs   = $paramAttrs
         }
     }
     return $paramtersInfo 
