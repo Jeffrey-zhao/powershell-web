@@ -74,7 +74,7 @@ function Get-CommandParameter {
             $staticType = $item.StaticType.ToString()
 
             if ($null -ne $item.DefaultValue) {
-                $defaultValue = $item.DefaultValue.ToString()
+                $defaultValue = "'"+((invoke-expression $item.DefaultValue.ToString()) -join "','")+"'"
             }
             else {
                 $defaultValue = $null
@@ -112,7 +112,7 @@ function Get-CommandParameter {
                 Attributes=@($_.Attributes | foreach-object {
                     if($_.PositionalArguments)
                     {
-                        $potionalArguments=@($_.PositionalArguments |ForEach-Object{$_.toString()})
+                        $potionalArguments=@($_.PositionalArguments |ForEach-Object{@($_.toString())})
                     }else
                     {
                         $potionalArguments=$null

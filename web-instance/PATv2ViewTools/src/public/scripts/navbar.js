@@ -1,3 +1,4 @@
+// optimize the tab
 $(function () {
     $('#commandsbar a:first').tab('show');
 })
@@ -6,9 +7,19 @@ $('#commandsbar a').click(function (e) {
     $(this).tab('show');
 })
 
+// submit execution button
 $(function () {
     $(".command-form-area button").click(function (e) {
+
         var form_class = this.id.replace('-$__submit', '')
+        var required_field=$('#'+form_class).find('input[required],select[required]')
+        if(required_field){
+            var flag=false
+            required_field.each(function(index,ele){
+                if(!$(ele).val()) flag=true
+            })
+            if(flag) return false
+        }
         var inputs = $('#' + form_class).find('input')
         var cmdParameters = $('#cmd-parameter').find('span')
         var form_data = {
@@ -27,7 +38,8 @@ $(function () {
                 [cmdParameters[i].getAttribute('name')]: cmdParameters[i].innerText
             })
         }
-
+        // tips in 'execute output'
+        $("#output_message").text('requests has been sent ,please waiting...')
         $.ajax({
             url: '/script/execute/',
             type: 'POST',

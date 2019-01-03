@@ -66,23 +66,36 @@ swig.setFilter('paramFilter', function (input, arg) {
     return filterItems
 })
 //custom swig filter to get input type
-swig.setFilter('paramTypeFilter', function (input, arg) {
-    console.log('type:--', arg, input)
-    var validCol = ['validateset', 'alias']
+swig.setFilter('paramTypeFilter', function (input, arg, types) {
+    var validCol = types
     var filterItems = input.filter(x => x.Name == arg && x.Attributes &&
-        x.Attributes.filter(y => validCol.includes(y.TypeName.toLowerCase())).length >0)
-    console.log('filters:--', filterItems)
-    var typeItems=[]
-    if(filterItems){
+        x.Attributes.filter(y => validCol.includes(y.TypeName.toLowerCase())).length > 0)
+    var typeItems = null
+    if (filterItems) {
         typeItems = filterItems.map(x => {
+            return {
+                Name:x.Name,
+                DefaultValue:x.DefaultValue,
+                Attributes: x.Attributes.filter(y => validCol.includes(y.TypeName.toLowerCase()))
+                    .map(y => {
+                        return {
+                            TypeName: y.TypeName,
+                            Arguments: y.PositionalArguments
+                        }
+                    })
+            }
+        }).map(x => {
             return {
                 Name: x.Name,
                 DefaultValue: x.DefaultValue,
-                Attributes: x.Attributes.filter(y => validCol.includes(y.TypeName.toLowerCase()))
+                TypeName: x.Attributes[0].TypeName,
+                Arguments: x.Attributes[0].Arguments
             }
         })
+        if(typeItems){
+            return typeItems[0]
+        }
     }
-    console.log('return:--', typeItems)
     return typeItems
 })
 //custom variable
@@ -111,9 +124,9 @@ app.use(base_mw.beforelog(logPath));
 app.use(base_mw.afterlog(logPath));
 
 //error handler
-//app.use(base_mw.log_error)
-//app.use(base_mw.client_error_handler)
-//app.use(base_mw.error_handler)
+app.use(base_mw.log_error)
+app.use(base_mw.client_error_handler)
+app.use(base_mw.error_handler)
 
 app.listen(config_args.port, function () {
     console.log("Server is running on port " + config_args.port + " of enviroment " + build_env + "...")
