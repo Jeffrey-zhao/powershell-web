@@ -9,37 +9,8 @@ $('#commandsbar a').click(function (e) {
 
 // submit execution button
 $(function () {
-    $(".command-form-area button").click(function (e) {
 
-        var form_class = this.id.replace('-$__submit', '')
-        var required_field=$('#'+form_class).find('input[required],select[required]')
-        if(required_field){
-            var flag=false
-            required_field.each(function(index,ele){
-                if(!$(ele).val()) flag=true
-            })
-            if(flag) return false
-        }
-        var inputs = $('#' + form_class).find('input')
-        var cmdParameters = $('#cmd-parameter').find('span')
-        var form_data = {
-            data: [],
-            base: []
-        }
-        for (var i = 0; i < inputs.length; i++) {
-            form_data.data.push({
-                name: inputs[i].name,
-                value: inputs[i].value,
-                type: inputs[i].previousElementSibling.firstElementChild.innerText.replace(/[\(\)]/g, '')
-            })
-        }
-        for (var i = 0; i < cmdParameters.length; i++) {
-            form_data.base.push({
-                [cmdParameters[i].getAttribute('name')]: cmdParameters[i].innerText
-            })
-        }
-        // tips in 'execute output'
-        $("#output_message").text('requests has been sent ,please waiting...')
+    var ajax_execute = function (form_data) {
         $.ajax({
             url: '/script/execute/',
             type: 'POST',
@@ -49,6 +20,74 @@ $(function () {
                 $("#output_message").text(data.content)
             }
         })
+    }
+    var ajax_upload = function (files_form, form_data, cb) {
+        $.ajax({
+            url: '/script/upload',
+            type: 'POST',
+            data: files_form,
+            success: (data) => {
+                if (data.content == 'success') {
+                    cb(form_data)
+                }
+            },
+            error: (error) => {
+                $("#output_message").text('cannot get you given file.' + error)
+            }
+        })
+    }
+    $(".command-form-area button").click(function (e) {
+
+        var form_class = this.id.replace('-$__submit', '')
+        var required_field = $('#' + form_class).find('input[required],select[required]')
+        if (required_field) {
+            var flag = false
+            required_field.each(function (index, ele) {
+                if (!$(ele).val()) flag = true
+            })
+            if (flag) {
+                $("#output_message").text('please input required parameters');
+                return false
+            }
+        }
+        var inputs = $('#' + form_class).find('input,select')
+        var cmdParameters = $('#cmd-parameter').find('span')
+        var form_data = {
+                data: [],
+                base: []
+            },
+            files_data = [];
+
+        for (var i = 0; i < inputs.length; i++) {
+            var params = {
+                name: inputs[i].name,
+                value: inputs[i].value,
+                type: inputs[i].previousElementSibling.firstElementChild.innerText.replace(/[\(\)]/g, ''),
+                isFile: inputs[i].type == 'file' ? true : false
+            }
+            if (params.isFile) {
+                files_data.push({
+                    name: params.name,
+                    value: inputs.value
+                })
+            }
+            form_data.data.push(params)
+        }
+        for (var i = 0; i < cmdParameters.length; i++) {
+            form_data.base.push({
+                [cmdParameters[i].getAttribute('name')]: cmdParameters[i].innerText
+            })
+        }
+
+        // tips in 'execute output'
+        $("#output_message").text('requests has been sent ,please waiting...')
+
+        if (files_data) {
+            ajax_upload(files_data, ajax_execute(form_data))
+        } else {
+            ajax_execute(form_data)
+        }
+
     })
 
     $(document).ajaxError((event, xhr, options) => {

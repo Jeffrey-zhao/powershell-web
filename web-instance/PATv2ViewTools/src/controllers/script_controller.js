@@ -1,7 +1,8 @@
 var psExecutor = require('../public/utils/psExecutor'),
     util = require('../public/utils/util'),
     path = require('path'),
-    fs = require('fs')
+    fs = require('fs'),
+    multipart = require('multipart')
 
 var controller = {
     // route: index 
@@ -167,7 +168,7 @@ var controller = {
         }
     },
     //route: function
-    function: function (req, res) {
+    fn: function (req, res) {
         var filepath = req.query.filepath
         if (filepath) {
             var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
@@ -205,6 +206,12 @@ var controller = {
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             var preEnvCmdString = util.GetEnvCommand(req, res)
+            // change file's path
+            if (req.body.data) {
+                req.body.data.filter(x => x.isFile).foreach(function (item) {
+                    item.value = path.join(req.app.get('root'), 'CmdLets/uploadFiles', path.basename(item.value))
+                })
+            }
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
@@ -225,6 +232,46 @@ var controller = {
                 content: 'please supply valid data...'
             })
         }
+    },
+    upload: function (req, res) {
+        var form = new multipart.Form({
+            uploadDir: './CmdLets/uploadFiles'
+        });
+        // delete folders
+        if (fs.existsSync('./CmdLets/uploadFiles', function (exists) {
+                if (exists) {
+                    fs.unlink('./CmdLets/uploadFiles')
+                } else {
+                    // create folders
+                    fs.mkdirSync('./CmdLets/uploadFiles')
+                }
+            }))
+            form.parse(req, function (err, fields, files) {
+                if (err) {
+                    console.log('parse error: ' + err);
+                    res.render('error', {
+                        err_msg: 'upload files is failed...'
+                    })
+                } else {
+                    for (var key in files) {
+                        var inputFile = files[key][0];
+                        var uploadedPath = inputFile.path;
+                        var dstPath = './CmdLets/uploadFiles' + inputFile.originalFilename;
+                        //重命名为真实文件名
+                        fs.rename(uploadedPath, dstPath, function (err) {
+                            if (err) {
+                                res.render('error', {
+                                    err_msg: 'upload files is successful,but rename file is failed...'
+                                })
+                            } else {
+                                res.send({
+                                    content: 'success'
+                                })
+                            }
+                        });
+                    }
+                }
+            });
     }
 }
 

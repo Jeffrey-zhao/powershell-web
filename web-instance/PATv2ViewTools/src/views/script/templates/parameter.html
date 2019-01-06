@@ -45,7 +45,7 @@
                         <!--default to get first item-->
                         {% if typeItem.TypeName |lower == 'validateset' %}
                         <select class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
-                            {%if arg.IsMandatory %}required{%endif%}>
+                            name="{{parameterName}}" {%if arg.IsMandatory %}required{%endif%}>
                             <option value=''>select an item</option>
                             {% for optionItem in typeItem.Arguments %}
                             <option value='{{optionItem}}'>{{optionItem}}</option>
