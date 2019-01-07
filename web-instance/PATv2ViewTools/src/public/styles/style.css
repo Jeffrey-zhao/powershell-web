@@ -1189,11 +1189,12 @@ input:focus {
   padding-right: 15px;
 }
 
-.function-detail{
+.function-detail {
   height: auto;
   padding-left: 15px;
   padding-right: 15px;
 }
+
 .error-detail {
   border: none;
   height: auto;
@@ -1221,4 +1222,9 @@ input:focus {
 .article p {
   color: white;
 }
+/* set all input height to justify ie*/
+input {
+  height: 50px !important;
+}
+
 /* ====== The End ====== */

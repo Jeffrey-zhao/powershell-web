@@ -1,86 +1,86 @@
 <div class="command-content mb-50">
-    <h3 class="mb-10">{{title}}</h3>
-    <h6 class="command-function mb-30">Function : {{function_name}}</h6>
-    <!-- command Content Area -->
-    <div class="command-content-area">
-        {% set setNames=parameters.ParameterSetName %}
-        {% set parameterArgs=parameters.BlockParameter %}
-        {% set parameterAttrs=parameters.ParameterAttrs %}
-        <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
-            {% for item in setNames%}
-            <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
-                {% if item.Name == "__AllParameterSets" %} Default <small>(no parameter set )</small>
-                {%else%}
-                {{item.Name}}
-                {% endif %}
-            </a>
-            {% endfor %}
-            <a class="nav-link active d-none" data-toggle='tab' href="#empty">empty</a>
-        </nav>
-        <!-- Contact Form Area -->
-        <div class="command-form-area tab-content" id="tab-parameter-form">
-            {% for commandset in setNames %}
-            {% set parameterset=commandset.ParameterNames %}
-            <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{{commandset.Name}}'>
-                {% for arg in parameterset %}
-                <!-- get input type :if validateset then select-option ;if alias and filepath then file -->
-                {% set typeItem=parameterAttrs|paramTypeFilter("$"+arg.Arg,['validateset','alias'])%}
-                {% set items =parameterArgs|paramFilter("$"+arg.Arg) %}
-                {% if items.length>=1 %}
-                {% set item =items[0] %}
-                {% set parameterName=item.Name.slice(1) %}
-                {% set type=item.StaticType.split('.')[1] %}
-                {% set defaultValue=item.DefaultValue %}
-                {% if arg.IsMandatory%}
-                {% set IsMandatory="Mandatory" %}
-                {% else %}
-                {% set IsMandatory= "Option" %}
-                {% endif %}
-                <div class="col-lg-12 col-12 was-validated">
-                    <div class="form-group">
-                        <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
-                            <span class='d-none'>{{item.StaticType}}</span>
-                            <small>({{type}})-({{IsMandatory}})</small> </label>
-                        {% if typeItem %}
-                        <!--default to get first item-->
-                        {% if typeItem.TypeName |lower == 'validateset' %}
-                        <select class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
-                            {%if arg.IsMandatory %}required{%endif%}>
-                            <option value=''>select an item</option>
-                            {% for optionItem in typeItem.Arguments %}
-                            <option value='{{optionItem}}'>{{optionItem}}</option>
-                            {% endfor %}
-                        </select>
-                        {% elseif typeItem.TypeName|lower == 'alias' || 'FilePath' in typeItem.Arguments %}
-                        <input type="file" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
-                            name='{{parameterName}}' {%if arg.IsMandatory %}required{%endif%}>
-                        {% else %}
-                        <input type="text" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
-                            name='{{parameterName}}' value='{{typeItem.DefaultValue}}' {%if arg.IsMandatory
-                            %}required{%endif%}>
-                        {%endif%}
-                        {% else %}
-                        <input type="text" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" {%if
-                            arg.IsMandatory %}required{%endif%} id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
-                            value='{{defaultValue}}' {%if arg.IsMandatory %}required{%endif%}>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
+        <h3 class="mb-10">{{title}}</h3>
+        <h6 class="command-function mb-30">Function : {{function_name}}</h6>
+        <!-- command Content Area -->
+        <div class="command-content-area">
+            {% set setNames=parameters.ParameterSetName %}
+            {% set parameterArgs=parameters.BlockParameter %}
+            {% set parameterAttrs=parameters.ParameterAttrs %}
+            <nav class="nav nav-tabs command-bar mb-50" id='commandsbar'>
+                {% for item in setNames%}
+                <a class="nav-link" data-toggle='tab' href="#{{item.Name}}">
+                    {% if item.Name == "__AllParameterSets" %} Default <small>(no parameter set )</small>
+                    {%else%}
+                    {{item.Name}}
+                    {% endif %}
+                </a>
                 {% endfor %}
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <button class="btn layout-btn mt-30" type="submit" id="{{commandset.Name}}-$__submit">Send</button>
+                <a class="nav-link active d-none" data-toggle='tab' href="#empty">empty</a>
+            </nav>
+            <!-- Contact Form Area -->
+            <div class="command-form-area tab-content" id="tab-parameter-form">
+                {% for commandset in setNames %}
+                {% set parameterset=commandset.ParameterNames %}
+                <div class="tab-pane fade {% if loop.first %}in active {% endif %}" id='{{commandset.Name}}'>
+                    {% for arg in parameterset %}
+                    <!-- get input type :if validateset then select-option ;if alias and filepath then file -->
+                    {% set typeItem=parameterAttrs|paramTypeFilter("$"+arg.Arg,['validateset','alias'])%}
+                    {% set items =parameterArgs|paramFilter("$"+arg.Arg) %}
+                    {% if items.length>=1 %}
+                    {% set item =items[0] %}
+                    {% set parameterName=item.Name.slice(1) %}
+                    {% set type=item.StaticType.split('.')[1] %}
+                    {% set defaultValue=item.DefaultValue %}
+                    {% if arg.IsMandatory%}
+                    {% set IsMandatory="Mandatory" %}
+                    {% else %}
+                    {% set IsMandatory= "Option" %}
+                    {% endif %}
+                    <div class="col-lg-12 col-12 was-validated">
+                        <div class="form-group">
+                            <label for='{{commandset.Name}}-{{parameterName}}'>{{parameterName}}
+                                <span class='d-none'>{{item.StaticType}}</span>
+                                <small>({{type}})-({{IsMandatory}})</small> </label>
+                            {% if typeItem %}
+                            <!--default to get first item-->
+                            {% if typeItem.TypeName |lower == 'validateset' %}
+                            <select class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
+                                name="{{parameterName}}" {%if arg.IsMandatory %}required{%endif%}>
+                                <option value=''>select an item</option>
+                                {% for optionItem in typeItem.Arguments %}
+                                <option value='{{optionItem}}'>{{optionItem}}</option>
+                                {% endfor %}
+                            </select>
+                            {% elseif typeItem.TypeName|lower == 'alias' || typeItem.Arguments.filter(x=>RegExp('^FilePath_.+').test(x)).length > 0 %}
+                            <input type="file" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
+                                name='{{parameterName}}' {%if arg.IsMandatory %}required{%endif%}>
+                            {% else %}
+                            <input type="text" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
+                                name='{{parameterName}}' value='{{typeItem.DefaultValue}}' {%if arg.IsMandatory
+                                %}required{%endif%}>
+                            {%endif%}
+                            {% else %}
+                            <input type="text" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" {%if
+                                arg.IsMandatory %}required{%endif%} id="{{commandset.Name}}-{{parameterName}}" name='{{parameterName}}'
+                                value='{{defaultValue}}' {%if arg.IsMandatory %}required{%endif%}>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-lg-12 col-12">
+                            <button class="btn layout-btn mt-30" type="submit" id="{{commandset.Name}}-$__submit">Send</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-            <div class='tab-pane fade d-none' id='empty'>
-                empty string
+                {% endfor %}
+                <div class='tab-pane fade d-none' id='empty'>
+                    empty string
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="mb-50">
-    {% include './output.html' with {title:'Execute Output',content:content,addClass:'command-output'} only %}
-</div>
+    <div class="mb-50">
+        {% include './output.html' with {title:'Execute Output',content:content,addClass:'command-output'} only %}
+    </div>

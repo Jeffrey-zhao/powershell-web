@@ -1,4 +1,7 @@
-#get folder's list
+<#
+.Description
+    get folder's list
+#>
 function Invoke-Script {
     param(
         [parameter(Mandatory = $true)]
@@ -13,7 +16,10 @@ function Invoke-Script {
     return ConvertTo-Json -InputObject @($functions)
 }
 
-#get script's functions
+<#
+.Description
+    get script's functions
+#>
 function Invoke-Function {
     param(
         [parameter(Mandatory = $true)]
@@ -28,7 +34,10 @@ function Invoke-Function {
     return ConvertTo-Json $ret -Depth 7
 }                                                               
 
-#get script's help or function help
+<#
+.Description
+    get script's help or function help
+#>
 function Get-Detail {
     param(
         [parameter(Mandatory = $true)]
@@ -44,17 +53,21 @@ function Get-Detail {
     if (-not (Test-Path -Path "$HelpFilePath\$folder")) {
         $fileFolder=New-Item -Path "$HelpFilePath\$folder" -ItemType Directory
     }else{
-        $fileFolder=Get-item -path "$HelpFilePath\$folder"
+        $fileFolder=Get-item -Path "$HelpFilePath\$folder"
     }
     # script file
-    Get-help -path $ScriptPath -Detailed |Out-File "$($fileFolder.FullName)\script.txt" -Encoding UTF8 -Force
+    Get-Help -Name $ScriptPath -Detailed |Out-File "$($fileFolder.FullName)\script.txt" -Encoding UTF8 -Force
 
     # function file
     foreach($item in $FunctionNames){
-        Get-Help $item -detailed |Out-File "$($fileFolder.FullName)\$($item).txt" -Encoding UTF8 -Force
+        Get-Help -Name $item -detailed |Out-File "$($fileFolder.FullName)\$($item).txt" -Encoding UTF8 -Force
     }
 }  
 
+<#
+.Description
+    by escaping passed string-command,and execute it
+#>
 function Execute-Function {
     param(
         [parameter(Mandatory = $true)]
@@ -64,25 +77,33 @@ function Execute-Function {
         [string] $ArgumentList
     )
 
-    $ArgumentString = [system.uri]::UnescapeDataString($ArgumentList)
-    add-type -assembly system.web.extensions
-
-    $ps_js = new-object system.web.script.serialization.javascriptSerializer
-    $ArgumentObj = $ps_js.DeserializeObject($ArgumentString)
     $express = ""
-
-    foreach ($item in $ArgumentObj) {
-        $express += "$(Format-Parameter -Key $item.name -Value $item.value -Type $item.type)"
+    if(![string]::IsNullOrEmpty($ArgumentList) -and $ArgumentList -ne 'undefined'){
+        $ArgumentString = [system.uri]::UnescapeDataString($ArgumentList)
+        add-type -assembly system.web.extensions
+    
+        $ps_js = new-object system.web.script.serialization.javascriptSerializer
+        $ArgumentObj = $ps_js.DeserializeObject($ArgumentString)
+    
+        foreach ($item in $ArgumentObj) {
+            $express += "$(Format-Parameter -Key $item.name -Value $item.value -Type $item.type)"
+        }
+        if ([string]::IsNullOrEmpty($express)) {
+            $express = " Write-Output 'No executing any functions...' "
+        }
+        else {
+            $express = " $FunctionName " + $express
+        }
+    }else{
+        $express= " Write-Output 'it doesnt execute any command' "
     }
-    if ([string]::IsNullOrEmpty($express)) {
-        $express = " Write-Output 'No executing any functions...' "
-    }
-    else {
-        $express = " $FunctionName " + $express
-    }
+    
     Invoke-Expression -Command $express
 }
-
+<#
+.Description
+    handle function parameter type from C# type to powershell type
+#>
 function Format-Parameter {
     param(
         [string] $key,

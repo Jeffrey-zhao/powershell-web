@@ -1,7 +1,8 @@
 var psExecutor = require('../public/utils/psExecutor'),
     util = require('../public/utils/util'),
     path = require('path'),
-    fs = require('fs')
+    fs = require('fs'),
+    multiparty = require('multiparty')
 
 var controller = {
     // route: index 
@@ -167,7 +168,7 @@ var controller = {
         }
     },
     //route: function
-    function: function (req, res) {
+    fn: function (req, res) {
         var filepath = req.query.filepath
         if (filepath) {
             var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
@@ -187,8 +188,9 @@ var controller = {
                     file_path: filepath
                 })
             }).catch(err => {
+                console.log(err.toString())
                 res.render('error', {
-                    err_msg: err.toString()
+                    err_msg: 'the script has something wrong,please check it...'
                 })
             })
         } else {
@@ -200,11 +202,19 @@ var controller = {
     //route: execute
     execute: function (req, res) {
         var base = req.body.base
+        var data = req.body.data
         if (base && base.length == 2) {
             var file_path = path.join(req.app.get('script_dir'), base[1].file_path).replace(/\s+/g, '` ')
             var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
             var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
             var preEnvCmdString = util.GetEnvCommand(req, res)
+            // change file's path           
+            if (data) {
+                console.log(data)
+                data.filter(x => x.isFile == 'true' && x.value != '').forEach(function (item) {
+                    item.value = path.join(req.app.get('root'), 'CmdLets/uploadFiles', path.basename(item.value))
+                })
+            }
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
@@ -225,6 +235,48 @@ var controller = {
                 content: 'please supply valid data...'
             })
         }
+    },
+    upload: function (req, res) {
+        var uploadDir = 'CmdLets/uploadFiles'
+        var form = new multiparty.Form({
+            uploadDir: uploadDir
+        });
+
+        fs.existsSync(uploadDir) || fs.mkdirSync(uploadDir)
+        form.parse(req, function (err, fields, files) {
+            console.log(JSON.stringify(files))
+            if (err) {
+                console.log('parse error: ' + err);
+                res.render('error', {
+                    err_msg: 'upload files is failed...'
+                })
+            } else {
+                var err_flag = false
+                for (var key in files) {
+                    var inputFile = files[key][0];
+                    var uploadedPath = inputFile.path;
+                    var dstPath = path.join(uploadDir, inputFile.originalFilename);
+                    //重命名为真实文件名
+                    console.log(dstPath, uploadedPath)
+                    fs.rename(uploadedPath, dstPath, function (err) {
+                        if (err) {
+                            err_flag = true
+                        }
+                    });
+                }
+                if (err_flag) {
+                    res.render('error', {
+                        err_msg: 'upload files is successful,but rename file is failed...'
+                    })
+                } else {
+                    console.log('success')
+                    res.send({
+                        content: 'send files successfully',
+                        uploadDir: uploadDir
+                    })
+                }
+            }
+        });
     }
 }
 
