@@ -40,6 +40,8 @@ How to add powershell in scripts folder
     but not support it below:
     > function function-name([string] $parameter1,[string] $parameter2)
     {}
+    >NOTE THAT :if you want to comment some codes ,please use '<##>',not use '#' ,it is good to use 'mulitply lines comment',if there are several functions , single line comment '#' will make funciton where after it not visible.
+    
 4. how to get comments from script for script and function
     get-help -name /path/to/script.ps1 -detailed  # for script comment
     get-help -name function-name -detailed  # for function but you should import it first

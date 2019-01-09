@@ -29,7 +29,7 @@ var controller = {
             })
         }
 
-        if (script_dir) {
+        if (fs.existsSync(script_dir)) {
             util.rreaddir(script_dir, false)
                 .then(pFiles => {
                     var ret_files = []
@@ -78,16 +78,17 @@ var controller = {
         var filepath = req.query.filepath
         var fn = req.query.fn
         if (filepath && fn) {
-            var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
-            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ')
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1')
+            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scriptHelps')
             var fn_path = path.join(help_file_path, path.basename(filepath, path.extname(filepath)), fn + '.txt')
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
+                dir: path.join(req.app.get('root'), 'CmdLets'),
                 file: [function_path, invoker_path, file_path],
-                command: " Invoke-Function -ScriptPath " + file_path + " -FunctionName " + fn
+                command: " Invoke-Function -ScriptPath '" + file_path + "' -FunctionName " + fn
             }
 
             psExecutor.send(cmdObject).then(data => {
@@ -123,31 +124,45 @@ var controller = {
         var filepath = req.query.filepath
         var fn = req.query.fn || ''
         if (filepath) {
-            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ')
+            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scriptHelps')
             var file_name = 'script.txt'
             if (fn) {
                 fn_param = " -FunctionName " + fn
                 file_name = fn + ".txt"
             }
             var file_path = path.join(help_file_path, path.basename(filepath, path.extname(filepath)), file_name)
-            fs.readFile(file_path, 'utf-8', (err, content) => {
-                if (err) {
-                    res.render('error', {
-                        err_msg: 'cannot find detail file or when reading file errors happended...'
+            try {
+                fs.readFile(file_path, 'utf-8', (err, content) => {
+                    if (err) {
+                        res.render('error', {
+                            err_msg: 'cannot find detail file or when reading file errors happended...'
+                        })
+                    }
+                    res.send({
+                        content: content
                     })
-                }
-                res.send({
-                    content: content
                 })
-            })
+            } catch (e) {
+                fs.render('error', {
+                    err_msg: "cannot find this function's or script's detail"
+                })
+            }
+
         }
     },
     //route: file
-    file: function (req, res) {
+    readfile: function (req, res) {
         var filepath = req.query.filepath
-        if (filepath) {
-            var file_path = path.join(req.app.get('script_dir'), filepath)
-            res.sendFile(file_path)
+        var file_path = path.join(req.app.get('script_dir'), filepath)
+        if (fs.existsSync(file_path)) {
+            try {
+                res.sendFile(file_path)
+            } catch (e) {
+                res.render('error', {
+                    err_msg: "cannot find this function's detail"
+                })
+            }
+
             /*
             util.rreadFile(file_path).then(data => {
                 console.log("file:", data)
@@ -171,18 +186,21 @@ var controller = {
     fn: function (req, res) {
         var filepath = req.query.filepath
         if (filepath) {
-            var file_path = path.join(req.app.get('script_dir'), filepath).replace(/\s+/g, '` ')
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
-            var help_file_path = path.join(req.app.get('root'), req.app.get('build_env'), 'scripthelps').replace(/\s+/g, '` ');
+            var file_path = path.join(req.app.get('script_dir'), filepath)
+            var invoker_path = "..\\" + path.join(req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = "..\\" + path.join(req.app.get('build_env'), 'public/utils/psFunction.ps1')
+            var help_file_path = "..\\" + path.join(req.app.get('build_env'), 'scriptHelps');
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
+                dir: req.app.get('cmdlets_dir'),
                 file: [function_path, invoker_path, file_path],
-                command: " Invoke-Script -ScriptPath " + file_path + " -HelpFilePath " + help_file_path
+                command: " Invoke-Script -ScriptPath '" + file_path + "' -HelpFilePath '" + help_file_path + "'"
             }
             psExecutor.send(cmdObject).then(data => {
+                console.log(data)
                 var list = JSON.parse(data)
+
                 res.render('script/function', {
                     list: list,
                     file_path: filepath
@@ -204,9 +222,9 @@ var controller = {
         var base = req.body.base
         var data = req.body.data
         if (base && base.length == 2) {
-            var file_path = path.join(req.app.get('script_dir'), base[1].file_path).replace(/\s+/g, '` ')
-            var invoker_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psInvoker.ps1').replace(/\s+/g, '` ')
-            var function_path = path.join(req.app.get('root'), req.app.get('build_env'), 'public/utils/psFunction.ps1').replace(/\s+/g, '` ')
+            var file_path = ".\\"+path.join('Scripts', base[1].file_path)
+            var invoker_path = "..\\"+path.join(req.app.get('build_env'), 'public/utils/psInvoker.ps1')
+            var function_path = "..\\"+path.join(req.app.get('build_env'), 'public/utils/psFunction.ps1')
             var preEnvCmdString = util.GetEnvCommand(req, res)
             // change file's path           
             if (data) {
@@ -218,8 +236,9 @@ var controller = {
             var cmdObject = {
                 cmd: req.app.get('cmd'),
                 type: 'file',
+                dir: req.app.get('cmdlets_dir'),
                 file: [function_path, invoker_path, file_path],
-                command: preEnvCmdString + " Execute-Function -FunctionName " + base[0].function_name + " -ArgumentList " + escape(JSON.stringify(req.body.data))
+                command: preEnvCmdString + " Execute-Function -FunctionName " + base[0].function_name + " -ArgumentList " + escape(JSON.stringify(data))
             }
             psExecutor.send(cmdObject).then(data => {
                 res.send({

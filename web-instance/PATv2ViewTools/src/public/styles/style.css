@@ -1222,9 +1222,19 @@ input:focus {
 .article p {
   color: white;
 }
+
 /* set all input height to justify ie*/
 input {
   height: 50px !important;
+}
+
+table th,
+table td {
+  vertical-align: middle !important;
+  text-align: center !important;
+}
+table td{
+  padding:0 !important;
 }
 
 /* ====== The End ====== */

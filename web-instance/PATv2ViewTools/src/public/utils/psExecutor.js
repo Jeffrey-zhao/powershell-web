@@ -6,9 +6,11 @@ var psExecutor = {
             var spawn = child_process.spawn,
 				child
             var command = util.getCommand(cmdObject)
+
             if (!command) {
                 reject('request param cmdObject enconters errors...')
             }
+            console.log(command.args)
             child = spawn(command.platform_cmd, command.args)
             child.stdout.on('data', function (data) {
                 results += data

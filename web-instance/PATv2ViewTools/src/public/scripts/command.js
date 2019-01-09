@@ -26,13 +26,11 @@ $(function () {
             url: '/script/upload',
             type: 'POST',
             data: files_data,
-            contentType:false,
-            processData:false,
+            contentType: false,
+            processData: false,
             success: (data) => {
-                if (data.content == 'success') {
-                    $("#output_message").text(data.content+'\n')
-                    cb(form_data)
-                }
+                $("#output_message").text(data.content + ",but is still executing this command...\n")
+                cb(form_data)
             },
             error: (error) => {
                 $("#output_message").text('cannot get you given file.\n' + error)
@@ -68,11 +66,11 @@ $(function () {
                 type: inputs[i].previousElementSibling.firstElementChild.innerText.replace(/[\(\)]/g, ''),
                 isFile: inputs[i].type == 'file' ? true : false
             }
-            if (params.isFile && inputs[i].files.length >0 ) {
-                if(!files_data){
-                    files_data=new FormData()
+            if (params.isFile && inputs[i].files.length > 0) {
+                if (!files_data) {
+                    files_data = new FormData()
                 }
-                files_data.append(params.name,inputs[i].files[0])
+                files_data.append(params.name, inputs[i].files[0])
             }
             form_data.data.push(params)
         }

@@ -21,7 +21,7 @@
             <tr>
                 <th scope="row">{{loop.index}}</th>
                 <td>{{item.type}}</td>
-                <td>{% if item.type == 'Directory' %}
+                <td class='file-folder-name'>{% if item.type == 'Directory' %}
                     <a href='/script/list?dirname={{ item.dirname }}' data-toggle="tooltip" data-placement="top" title="Search Directory">{{item.name}}</a>
                     {% else %}
                     {% set filepath=dirname+item.relativePath %}

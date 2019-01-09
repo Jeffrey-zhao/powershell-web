@@ -41,3 +41,14 @@ build
  > log(morgan,bunyan)
  > powershell 
  > express
+
+ #Need to optimize parts:
+   > timeout
+   > error handler
+   > log
+   > aync operation
+   > run script with authentication
+   > refactor
+   > optimize html(list if can read file's content),path (files' path)
+   > execute etc. add JSON.parse() not valid if not json format...
+   > resolve path if there are special characters

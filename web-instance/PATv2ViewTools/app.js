@@ -100,6 +100,7 @@ swig.setFilter('paramTypeFilter', function (input, arg, types) {
 })
 //custom variable
 app.set('script_dir', path.join(__dirname, 'CmdLets/Scripts'))
+app.set('cmdlets_dir', path.join(__dirname, 'CmdLets'))
 app.set('root', path.join(__dirname))
 app.set('build_env', build_env)
 app.set('deploy_env', config_args.env)

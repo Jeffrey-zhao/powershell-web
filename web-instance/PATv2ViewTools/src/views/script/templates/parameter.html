@@ -51,7 +51,7 @@
                                 <option value='{{optionItem}}'>{{optionItem}}</option>
                                 {% endfor %}
                             </select>
-                            {% elseif typeItem.TypeName|lower == 'alias' || typeItem.Arguments.filter(x=>RegExp('^FilePath_.+').test(x)).length > 0 %}
+                            {% elseif typeItem.TypeName|lower == 'alias' || typeItem.Arguments.filter(x=>RegExp("^FilePath_(\d)+").test(x)).length > 0 %}
                             <input type="file" class="form-control {%if arg.IsMandatory %}is-invalid{%endif%}" id="{{commandset.Name}}-{{parameterName}}"
                                 name='{{parameterName}}' {%if arg.IsMandatory %}required{%endif%}>
                             {% else %}

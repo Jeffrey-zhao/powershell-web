@@ -11,14 +11,15 @@ var Util = {
                 switch (cmdObjct.type) {
                     case 'file':
                         {
-                            var importFiles = ''
+                            var importFiles = ""
                             cmdObjct.file.map(file => {
-                                importFiles += " import-module " + file + " -force;"
+                                importFiles += " import-module '" + file + "' -Force; "
                             })
+                            var setLocation = " set-location -Path '" + cmdObjct.dir + "'; "
                             ret = {
                                 "platform_cmd": cmdObjct.cmd,
                                 "args": ["-Command",
-                                    "&{" + importFiles + cmdObjct.command + " }",
+                                    "&{" + setLocation + importFiles + cmdObjct.command + " }",
                                     "-ExecutionPolicy",
                                     "ByPass"
                                 ]
