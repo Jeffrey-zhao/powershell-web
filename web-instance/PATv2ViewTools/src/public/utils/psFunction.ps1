@@ -1,6 +1,21 @@
-filter Find-Function {
-    $path = $_.FullName
-    $lastwrite = $_.LastWriteTime.ToString('MM/dd/yyyy HH:mm:ss')
+<#
+    .DESCRIPTION
+        this script is as common ultil functions
+#>
+
+
+function Find-Function {
+    <#
+    .DESCRIPTION
+        this function will be to find all functions in a given file
+    #>
+    param(
+        [parameter(Mandatory=$true,ValueFromPipeline=$true)]
+        $item
+    )
+
+    $path = $item.FullName
+    $lastwrite = $item.LastWriteTime.ToString('MM/dd/yyyy HH:mm:ss')
     $text = Get-Content -Path $path
     if ($text.Length -gt 0) {
 
@@ -18,6 +33,10 @@ filter Find-Function {
 }
 
 function Get-CommandParameter {
+    <#
+    .DESCRIPTION
+        this function will get a function's parameters information
+    #>
     param(
         [parameter(Mandatory = $true)]
         [string] $ScriptPath,
@@ -49,6 +68,7 @@ function Get-CommandParameter {
         $blockParameters = @()
         $parameterSetNames = @()
         $parameters = @()
+        $paramAttrs=@()
 
         foreach ($item in $temp.ParameterSets) {
             $name = $item.Name
@@ -71,9 +91,9 @@ function Get-CommandParameter {
         
         foreach ($item in $paramBlock) {
             $staticType = $item.StaticType.ToString()
-
-            if ($null -ne $item.DefaultValue) {
-                $defaultValue = $item.DefaultValue.ToString()
+            if ($null -ne $item.DefaultValue) 
+            {
+                $defaultValue="'"+((invoke-expression $item.DefaultValue.ToString()) -join "','")+"'"
             }
             else {
                 $defaultValue = $null
@@ -82,9 +102,6 @@ function Get-CommandParameter {
                 $staticType = 'System.Switch'
                 if ($null -eq $defaultValue) {
                     $defaultValue = $false
-                }
-                else {
-                    $defaultValue = $true
                 }
             }
 
@@ -95,10 +112,43 @@ function Get-CommandParameter {
             }
         }
         
-        @{Name               = $_.Name
+        $paramAttrs+=[PSCustomObject]($paramBlock |ForEach-Object {
+            $name=$_.name.ToString();
+            if($null -ne $_.DefaultValue)
+            {
+               $defaultValue=[PSCustomObject]@{Static=$_.DefaultValue.Static;Value=((invoke-expression $_.DefaultValue.ToString()) -join "','")}
+            }else
+            {
+               $defaultValue=$null
+            }
+            @{
+                Name=$name;
+                DefaultValue=$defaultValue;
+                
+                Attributes=@($_.Attributes | foreach-object {
+                    if($_.PositionalArguments)
+                    {
+                        $potionalArguments=@($_.PositionalArguments |ForEach-Object{@($_.toString())})
+                    }else
+                    {
+                        $potionalArguments=$null
+                    }
+                    @{
+                        'TypeName'=$_.TypeName.ToString();
+                        'PositionalArguments'=$potionalArguments;
+                        'NamedArguments'=@($_.NamedArguments|foreach-object {$index=0}{@{Index=($index++);ArgumentName=$_.ArgumentName;Argument=$_.Argument}})
+                     }
+                  })
+               }
+            })
+           
+
+        [PSCustomObject]@{
+            Name             = $_.Name
             BlockParameter   = $blockParameters
             Parameter        = $parameters      
             ParameterSetName = $parameterSetNames
+            ParameterAttrs   = $paramAttrs
         }
     }
     return $paramtersInfo 

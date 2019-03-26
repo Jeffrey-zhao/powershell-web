@@ -1,17 +1,38 @@
-#get folder's list
+<#
+    .Description
+        this script will invoke util functions to implement some scenarios
+#>
+
+
 function Invoke-Script {
+    <#
+    .Description
+        get folder's function list
+    #>
     param(
         [parameter(Mandatory = $true)]
-        [string] $ScriptPath
+        [string] $ScriptPath,
+
+        [parameter(Mandatory = $false)]
+        [string] $HelpFilePath
     )
 
-    $results = Get-ChildItem -Path $ScriptPath |Find-Function
-
-    return ConvertTo-Json -InputObject @($results)  
+    try{
+        $functions = Get-ChildItem -Path $ScriptPath |Find-Function
+        if(![string]::IsNullOrEmpty($HelpFilePath))
+        {
+            Get-Detail -ScriptPath $ScriptPath -FunctionNames $functions.Name -HelpFilePath $HelpFilePath
+        }
+        return ConvertTo-Json -InputObject @($functions)
+    }catch{}
 }
 
-#get script's functions
+
 function Invoke-Function {
+    <#
+    .Description
+        get script's functions's parameters
+    #>
     param(
         [parameter(Mandatory = $true)]
         [string] $ScriptPath,
@@ -20,13 +41,48 @@ function Invoke-Function {
         [string] $FunctionName
     )
     $parameters = Get-CommandParameter -ScriptPath $ScriptPath -FunctionName $FunctionName
-    $detail = Get-Help $FunctionName -detailed
-    $ret = [PSCustomObject]@{parameters = $parameters; detail = $detail}
+    $ret = [PSCustomObject]@{parameters = $parameters}
     
-    return ConvertTo-Json $ret -Depth 5
-}
+    return ConvertTo-Json $ret -Depth 7
+}                                                               
+
+
+function Get-Detail {
+    <#
+    .Description
+        get script's help or function help
+    #>
+    param(
+        [parameter(Mandatory = $true)]
+        [string] $ScriptPath,
+
+        [parameter(Mandatory = $false)]
+        [string[]] $FunctionNames,
+
+        [parameter(Mandatory = $true)]
+        [string] $HelpFilePath
+    )
+    $folder = (Get-Item -Path $ScriptPath).BaseName
+    if (-not (Test-Path -Path "$HelpFilePath\$folder")) {
+        $fileFolder=New-Item -Path "$HelpFilePath\$folder" -ItemType Directory
+    }else{
+        $fileFolder=Get-item -Path "$HelpFilePath\$folder"
+    }
+    <# script file #>
+    Get-Help -Name $ScriptPath -Detailed |Out-File "$($fileFolder.FullName)\script.txt" -Encoding UTF8 -Force
+
+    <# function file #>
+    foreach($item in $FunctionNames){
+        Get-Help -Name $item -detailed |Out-File "$($fileFolder.FullName)\$($item).txt" -Encoding UTF8 -Force
+    }
+}  
+
 
 function Execute-Function {
+    <#
+    .Description
+        execute an escaped string-command
+    #>
     param(
         [parameter(Mandatory = $true)]
         [string] $FunctionName,
@@ -35,26 +91,36 @@ function Execute-Function {
         [string] $ArgumentList
     )
 
-    $ArgumentString = [system.uri]::UnescapeDataString($ArgumentList)
-    add-type -assembly system.web.extensions
-
-    $ps_js = new-object system.web.script.serialization.javascriptSerializer
-    $ArgumentObj = $ps_js.DeserializeObject($ArgumentString)
     $express = ""
-
-    foreach ($item in $ArgumentObj) {
-        $express += "$(Format-Parameter -Key $item.name -Value $item.value -Type $item.type)"
+    if(![string]::IsNullOrEmpty($ArgumentList) -and $ArgumentList -ne 'undefined'){
+        $ArgumentString = [system.uri]::UnescapeDataString($ArgumentList)
+        add-type -assembly system.web.extensions
+    
+        $ps_js = new-object system.web.script.serialization.javascriptSerializer
+        $ArgumentObj = $ps_js.DeserializeObject($ArgumentString)
+        
+        foreach ($item in $ArgumentObj) {
+            $express += "$(Format-Parameter -Key $item.name -Value $item.value -Type $item.type)"
+        }
+        if ([string]::IsNullOrEmpty($express)) {
+            $express = " Write-Output 'No executing any functions...' "
+        }
+        else {
+            $express = " $FunctionName " + $express
+        }
+    }else{
+        $express= " $FunctionName "
     }
-    if ([string]::IsNullOrEmpty($express)) {
-        $express = " Write-Output 'No executing any functions...' "
-    }
-    else {
-        $express = " $FunctionName " + $express
-    }
+    Write-Host $express
     Invoke-Expression -Command $express
 }
 
+
 function Format-Parameter {
+    <#
+    .Description
+        handle function parameter type from C# type to powershell type
+    #>
     param(
         [string] $key,
         [string] $value,
@@ -93,12 +159,14 @@ function Format-Parameter {
                 break
             }
             "System.DateTime" {
-                $temp = [DateTime]::TryParse($value, [ref] $retValue);
+                [DateTime] $date=new-object DateTime
+                $temp = [DateTime]::TryParse($value.trim("'"), [ref] $date);
+                $retValue=$value
                 break
             }
-            "System.Object" {
-                $temp = [Double]::TryParse($value, [ref] $retValue);
-                break
+            "System.String[]" {
+                $retValue=($value -split ',') -join ','
+                $temp=$true
             }
             default {
                 $retValue = $value; 

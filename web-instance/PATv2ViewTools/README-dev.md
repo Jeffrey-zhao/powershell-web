@@ -28,8 +28,27 @@ build
 # gulp server # default to production
 # gulp server --env development
 # gulp server --env production
-#gulp default
-#gulp build
+# gulp default
+# gulp build
 
 # how to execute in prod env
-#node index
+# node index
+
+# what to lean about this app
+ > html template swig.js
+ > node(nodemon)
+ > gulp
+ > log(morgan,bunyan)
+ > powershell 
+ > express
+
+ #Need to optimize parts:
+   > timeout
+   > error handler
+   > log
+   > aync operation
+   > run script with authentication
+   > refactor
+   > optimize html(list if can read file's content),path (files' path)
+   > execute etc. add JSON.parse() not valid if not json format...
+   > resolve path if there are special characters

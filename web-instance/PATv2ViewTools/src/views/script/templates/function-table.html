@@ -1,12 +1,14 @@
-<h3 class="mb-50">{{title}} <small>-- File: {{file_path}}</small></h3>
+<h3 class="mb-50">{{title}} <small>-- File: <span class='fn_file_path'>{{file_path}}</span></small></h3>
 <div class="table-responsive">
     <table class="table">
+        <caption><button type="button" class="btn btn-default fn-script-detail">Script Detail</button></caption>
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Function Name</th>
                 <th scope="col" class='d-none'>Path</th>
                 <th scope="col">Last Modified Time</th>
+                <th scope="col">Function Detail</th>
             </tr>
         </thead>
         <tbody>
@@ -16,6 +18,7 @@
                 <td><a href="/script/command?filepath={{file_path}}&fn={{item.Name}}">{{item.Name}}</a></td>
                 <td class='d-none'>{{item.Path}}</td>
                 <td>{{item.LastWriteTime}}</td>
+                <td class='function-line-detail' data-toggle='tooltip' title='get detail'><a href="#">detail</a></td>
             </tr>
             {% endfor %}
         </tbody>

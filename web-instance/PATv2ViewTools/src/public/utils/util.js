@@ -3,38 +3,25 @@ var path = require('path'),
 
 var Util = {
     // format req object to command object
-    getCommand: function (cmdObjct) {
-        var ret = null
+    getCommand: function (ps,cmdObjct) {
         try {
             if (cmdObjct) {
                 console.log(cmdObjct)
                 switch (cmdObjct.type) {
                     case 'file':
                         {
-                            var importFiles = ''
-                            cmdObjct.file.map(file => {
-                                importFiles += " import-module " + file + " -force;"
+                            ps.clear()
+                            ps.addCommand(" set-location -Path '" + cmdObjct.dir + "' ")
+                            cmdObjct.files.map(file => {
+                                ps.addCommand(" Import-Module '" + file + "'")
                             })
-                            ret = {
-                                "platform_cmd": cmdObjct.cmd,
-                                "args": ["-Command",
-                                    "&{" + importFiles + cmdObjct.command + " }",
-                                    "-ExecutionPolicy",
-                                    "ByPass"
-                                ]
-                            }
+							ps.addCommand(cmdObjct.command)
                             break;
                         }
                     case 'cmd':
                         {
-                            ret = {
-                                "platform_cmd": cmdObjct.cmd,
-                                "args": ["-Command",
-                                    "&{" + cmdObjct.command + " }",
-                                    "-ExecutionPolicy",
-                                    "ByPass"
-                                ]
-                            }
+                            ps.clear()
+                            ps.addCommand(cmdObjct.command)
                             break;
                         }
                 }
@@ -42,7 +29,7 @@ var Util = {
         } catch (e) {
             console.log('passed string is not json format...')
         } finally {
-            return ret
+            return ps
         }
     },
     rreaddir: async function (dir, isRecurise = false, allFiles = []) {
@@ -55,31 +42,16 @@ var Util = {
         }
         return allFiles
     },
+    rreadFile: async function (filePath) {
+        return await fs_promise.readFile(filePath, {
+            encoding: 'utf-8'
+        })
+    },
     GetEnvCommand: function (req, res) {
         var retcmdString = ''
-        var root_dir = path.join(req.app.get('root'), 'Cmdlets')
-        retcmdString += path.join(root_dir, 'SetupEnvironment.ps1')
-        retcmdString += ' -Environment ' + req.app.get('deploy_env') + ' -WorkingDir ' + root_dir + ";"
+        retcmdString += '.\\' + path.join('Scripts', 'SetupEnvironment.ps1')
+        retcmdString += ' -Environment ' + req.app.get('deploy_env') + ' -WorkingDir ' + req.app.get('cmdlets_dir') + ";"
         return retcmdString
-        /*
-        var hostname = req.hostname || ''
-        var retcmdString = ''
-        switch (hostname) {
-            case 'patv2.tools-int.com':
-                {
-                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
-                    retcmdString += ' -Environment int;'
-                    break;
-                }
-            case 'patv2.tools-prod.com':
-                {
-                    retcmdString += path.join(req.app.get('root'), 'Cmdlets/SetupEnvironment.ps1')
-                    retcmdString += ' -Environment prod;'
-                    break;
-                }
-        }
-        return retcmdString
-        */
     }
 }
 module.exports = Util

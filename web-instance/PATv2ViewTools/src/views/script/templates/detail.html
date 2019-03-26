@@ -2,8 +2,14 @@
     <!-- command Content Area -->
     <div class="command-content-area mb-50">
         <h3 class="mb-50">{{title}}</h3>
-        <div class="form-group">
-            <textarea name="detail_message" class="form-control" id="detail_message" cols="10" rows='30' placeholder="function or comand information">{{content}}</textarea>
+        <div class="border rounded {{addClass}}">
+            {% if content.path %}
+            {% include content.path %}
+            {% else %}
+            <pre>
+                {{ content.content }}
+            </pre>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -1,13 +1,13 @@
 {
   "name": "patv2viewtools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "a simple ,powerful,and extendable templating engine for browers to display info",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "gulp-build": "gulp default",
-    "start": " node index.js --build_env development",
-    "start-int":"npm run start",
-    "start-prod":"node index.js --port 3000 --env prod"
+    "start": " nodemon app.js --build_env development",
+    "int": "npm run start",
+    "prod": "nodemon app.js --port 3000 --env prod"
   },
   "keywords": [
     "template",
@@ -21,11 +21,18 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
+    "bunyan": "^1.8.12",
+    "bunyan-express-serializer": "^1.0.0",
     "express": "^4.12.3",
+    "express-request-id": "^1.4.0",
     "font-awesome": "^4.7.0",
     "fs-promise": "^2.0.3",
     "jquery": "^2.2.4",
     "minimist": "^1.2.0",
+    "morgan": "^1.9.0",
+    "multiparty": "^4.2.1",
+    "node-powershell": "^4.0.0",
+    "nodemon": "^1.17.3",
     "popper.js": "^1.14.6",
     "swig": "^1.4.2"
   },
@@ -42,6 +49,7 @@
     "gulp-scss": "^1.4.0",
     "gulp-sequence": "^1.0.0",
     "gulp-uglify": "^3.0.1",
+    "morgan": "^1.9.1",
     "open": "0.0.5"
   }
 }

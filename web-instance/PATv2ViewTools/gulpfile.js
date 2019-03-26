@@ -30,11 +30,11 @@ function lib(paths) {
 }
 
 var content_path = [app.srcPath + 'controllers*/**/*',
-app.srcPath + 'routes*/**/*',
-app.srcPath + 'models*/**/*',
-app.srcPath + 'middlewares*/**/*',
-app.srcPath + 'public*/utils*/**/*',
-app.srcPath + 'tests*/**/*'
+    app.srcPath + 'routes*/**/*',
+    app.srcPath + 'models*/**/*',
+    app.srcPath + 'middlewares*/**/*',
+    app.srcPath + 'public*/utils*/**/*',
+    app.srcPath + 'tests*/**/*'
 ];
 gulp.task("content", function () {
     return mv(content_path)
@@ -54,6 +54,13 @@ gulp.task('view', function () {
         .pipe(gulp.dest(app.prdPath))
         .pipe($.connect.reload())
 });
+
+gulp.task('docs', function () {
+    return gulp.src('src/public/docs*/**/*')
+        .pipe(gulp.dest(app.devPath+'public'))
+        .pipe(gulp.dest(app.prdPath+'public'))
+        .pipe($.connect.reload())
+})
 
 gulp.task('json', function () {
     return gulp.src(app.srcPath + 'public/data/**/*.json')
@@ -92,7 +99,7 @@ gulp.task('clean', function () {
         .pipe($.clean())
 });
 
-gulp.task('build', ['image', 'js', 'less', 'lib', 'view', 'json', 'content']);
+gulp.task('build', ['image', 'js', 'less', 'lib', 'view', 'json', 'content','docs']);
 
 gulp.task('default', $.sequence('clean', 'server'))
 
@@ -109,6 +116,7 @@ gulp.task('server', ['build'], function () {
     gulp.watch(app.srcPath + 'public/styles/**/*', ['less']);
     gulp.watch(lib_path, ['lib']);
     gulp.watch(app.srcPath + '**/*.html', ['view']);
+    gulp.watch(app.srcPath + 'public/docs/**/*', ['docs']);
     gulp.watch(app.srcPath + 'public/data/**/*.json', ['json']);
     gulp.watch(content_path, ['content']);
 });
