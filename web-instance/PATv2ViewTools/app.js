@@ -7,6 +7,7 @@ var express = require('express'),
     morgan = require('morgan'),
     fs = require('fs'),
     app = express(),
+    Shell = require('node-powershell'),
     config_args = util.config_args(),
     platform_cmd = util.platform_cmd(),
     build_env
@@ -74,8 +75,8 @@ swig.setFilter('paramTypeFilter', function (input, arg, types) {
     if (filterItems) {
         typeItems = filterItems.map(x => {
             return {
-                Name:x.Name,
-                DefaultValue:x.DefaultValue,
+                Name: x.Name,
+                DefaultValue: x.DefaultValue,
                 Attributes: x.Attributes.filter(y => validCol.includes(y.TypeName.toLowerCase()))
                     .map(y => {
                         return {
@@ -92,12 +93,21 @@ swig.setFilter('paramTypeFilter', function (input, arg, types) {
                 Arguments: x.Attributes[0].Arguments
             }
         })
-        if(typeItems){
+        if (typeItems) {
             return typeItems[0]
         }
     }
     return typeItems
 })
+
+// powershell process
+
+ var ps = new Shell({
+    executionPolicy: 'Bypass',
+    noProfile: true
+});
+app.set('ps', ps)
+
 //custom variable
 app.set('script_dir', path.join(__dirname, 'CmdLets/Scripts'))
 app.set('cmdlets_dir', path.join(__dirname, 'CmdLets'))

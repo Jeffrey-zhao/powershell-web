@@ -28,13 +28,13 @@ build
 # gulp server # default to production
 # gulp server --env development
 # gulp server --env production
-#gulp default
-#gulp build
+# gulp default
+# gulp build
 
 # how to execute in prod env
-#node index
+# node index
 
-#what to lean about this app
+# what to lean about this app
  > html template swig.js
  > node(nodemon)
  > gulp
